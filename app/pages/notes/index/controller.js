@@ -11,16 +11,19 @@ angular.module('notes.index', [
     $scope.newNote = {};
     $scope.NotesService = NotesService;
 
+    function resetForm() {
+      $scope.showNewNoteForm = false;
+      delete $scope.form.title;
+      delete $scope.form.text;
+    }
+
     $scope.toggleNewNoteForm = function() {
       $scope.showNewNoteForm = true;
     };
 
     $scope.addNote = function() {
       NotesService.post($scope.form).then(function(resp) {
-        $scope.showNewNoteForm = false;
-        delete $scope.form.title;
-        delete $scope.form.text;
-
+        resetForm();
         $state.go('notes.show', { id: resp.id });
       });
     };
