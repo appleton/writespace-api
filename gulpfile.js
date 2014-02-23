@@ -3,6 +3,12 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
 var injecter = require('gulp-inject');
+var path = require('path');
+
+function serveIndex(req, res, next) {
+  if (!path.extname(req.url)) req.url = '/index.html';
+  next();
+}
 
 gulp.task('inject', function() {
   gulp.src(['./app/**/*.js', './css/**/*.css'], { read: false })
@@ -14,7 +20,8 @@ gulp.task('connect', connect.server({
   root: [__dirname, 'dist'],
   port: 1337,
   livereload: true,
-  open: { browser: 'Google Chrome' }
+  open: { browser: 'Google Chrome' },
+  middleware: function() { return [ serveIndex ]; }
 }));
 
 gulp.task('html', function () {
