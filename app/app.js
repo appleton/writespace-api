@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('notesy', [
-  'notes'
+  'notes',
+  'toggle'
 ]).config([
   '$locationProvider',
   function($locationProvider) {
