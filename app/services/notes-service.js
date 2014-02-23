@@ -2,7 +2,7 @@
 
 angular.module('notes.service', [
   'pouchdb'
-]).service('NotesService', [
+]).factory('NotesService', [
   'pouchdb',
   function(pouchdb){
     var notes = pouchdb.create('notes');
