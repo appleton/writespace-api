@@ -1,10 +1,11 @@
-<form ng-submit="addNote()">
-  <input ng-model="form.title" />
-  <input ng-model="form.text" />
-  <button>Save</button>
-</form>
+<button ng-click="toggleNewNoteForm()">Add a note</button>
 
 <ul>
+  <li ng-show="showNewNoteForm">
+    <form ng-submit="addNote()">
+      <input ng-model="form.title" />
+    </form>
+  </li>
   <li pouch-repeat="note in NotesService">
     <a ui-sref="notes.show({id: note._id})">{{note.title}}</a>
   </li>
