@@ -2,6 +2,7 @@
 
 angular.module('notes', [
   'ui.router',
+  'ui.ace',
   'notes.index',
   'notes.show'
 ]).config(['$stateProvider', function($stateProvider) {

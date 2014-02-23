@@ -8,5 +8,10 @@ angular.module('notes.show', [
   'NotesService',
   function($scope, note, NotesService) {
     $scope.note = note;
+
+    $scope.onEditorLoaded = function(editor) {
+      editor.setFontSize(16);
+      editor.setHighlightActiveLine(false);
+    };
   }
 ]);
