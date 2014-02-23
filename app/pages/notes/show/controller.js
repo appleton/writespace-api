@@ -13,5 +13,11 @@ angular.module('notes.show', [
       editor.setFontSize(16);
       editor.setHighlightActiveLine(false);
     };
+
+    $scope.$watch('note.text', function() {
+      NotesService.put($scope.note).then(function(resp) {
+        $scope.note._rev = resp.rev;
+      });
+    });
   }
 ]);
