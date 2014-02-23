@@ -18,13 +18,11 @@ gulp.task('connect', connect.server({
 }));
 
 gulp.task('html', function () {
-  gulp.src('./*.html').pipe(connect.reload());
+  gulp.src('./**/*.html').pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./**/*.html'], ['html']);
-  gulp.watch(['./app/**/*'], ['inject']);
-  gulp.watch(['./css/**/*'], ['inject']);
+  gulp.watch(['./app/**/*', './css/**/*'], ['inject', 'html']);
 });
 
 gulp.task('default', ['inject', 'connect', 'watch']);
