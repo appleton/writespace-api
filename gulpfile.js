@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var connect = require('gulp-connect');
 var injecter = require('gulp-inject');
+var changed = require('gulp-changed');
 var path = require('path');
 
 function serveIndex(req, res, next) {
@@ -32,12 +33,33 @@ gulp.task('sass', function () {
 });
 
 gulp.task('html', function () {
-  gulp.src('./**/*.html').pipe(connect.reload());
+  var src = './dist/**/*.html';
+  gulp.src(src)
+      .pipe(changed(src))
+      .pipe(connect.reload());
+});
+
+gulp.task('css', function () {
+  var src = './dist/**/*.css';
+  gulp.src(src)
+      .pipe(changed(src))
+      .pipe(connect.reload());
+});
+
+gulp.task('js', function () {
+  var src = './app/**/*.js';
+  gulp.src(src)
+      .pipe(changed(src))
+      .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./assets/css/**/*'], ['sass']);
-  gulp.watch(['./app/**/*', './dist/css/**/*'], ['inject', 'html']);
+  gulp.watch(['./app/**/*.html'], ['inject']);
+  gulp.watch(['./assets/css/**/*.scss'], ['sass']);
+
+  gulp.watch(['./app/**/*.js'], ['js']);
+  gulp.watch(['./dist/**/*.css'], ['css']);
+  gulp.watch(['./dist/**/*.html'], ['html']);
 });
 
-gulp.task('default', ['inject', 'connect', 'watch']);
+gulp.task('default', ['inject', 'sass', 'connect', 'watch']);
