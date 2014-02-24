@@ -6,9 +6,10 @@
       <input ng-model="form.title" />
     </form>
   </li>
-  <li pouch-repeat="note in NotesService">
+  <li ng-repeat="note in notes">
     <a ui-sref="notes.show({id: note._id})">{{note.title}}</a>
+    <span ng-show="note.updatedAt">{{note.updatedAt}}</span>
   </li>
 </ul>
 
-<div ui-view></div>
+<ui-view autoscroll="false"></ui-view>

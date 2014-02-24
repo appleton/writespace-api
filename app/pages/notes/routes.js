@@ -10,7 +10,15 @@ angular.module('notes', [
   $stateProvider.state('notes', {
     url: '/',
     templateUrl: '/app/pages/notes/index/template.html',
-    controller: 'NotesIndexController'
+    controller: 'NotesIndexController',
+    resolve: {
+      notes: [
+        'NotesService',
+        function(NotesService) {
+          return NotesService.allDocs({ include_docs: true });
+        }
+      ]
+    }
   });
 
   $stateProvider.state('notes.show', {
