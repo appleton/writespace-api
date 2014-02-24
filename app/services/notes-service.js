@@ -17,6 +17,7 @@ angular.module('notes.service', [
       create_target: true
     });
 
+    // TODO: wrap post and put to add created at and updated at timestamps
     return notes;
   }
 ]);

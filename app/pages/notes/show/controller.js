@@ -15,6 +15,7 @@ angular.module('notes.show', [
     };
 
     $scope.$watch('note.text', function() {
+      $scope.note.updatedAt = (new Date()).valueOf();
       NotesService.put($scope.note).then(function(resp) {
         $scope.note._rev = resp.rev;
       });
