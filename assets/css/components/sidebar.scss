@@ -11,7 +11,7 @@
 }
 
 .sidebar__header {
-  height: 50px;
+  height: $s-header-height;
   margin-bottom: -1px;
   padding: 10px;
   border-bottom: 1px solid lighten($c-light-grey, 20%);

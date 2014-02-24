@@ -35,7 +35,7 @@ angular.module('notes.show', [
       editor.setHighlightActiveLine(false);
     };
 
-    $scope.$watch('note.text', (function() {
+    $scope.$watchCollection('[note.text, note.title]', (function() {
       // Do not trigger watch function until after the first digest cycle
       var initializing = true;
       $timeout(function() { initializing = false; });
