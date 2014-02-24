@@ -6,7 +6,7 @@
       <input ng-model="form.title" />
     </form>
   </li>
-  <li ng-repeat="note in notes">
+  <li ng-repeat="note in notes | orderBy:'updatedAt':true">
     <a ui-sref="notes.show({id: note._id})">{{note.title}}</a>
     <span ng-show="note.updatedAt">{{note.updatedAt}}</span>
   </li>
