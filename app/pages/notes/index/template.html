@@ -1,15 +1,31 @@
-<button ng-click="toggleNewNoteForm()">Add a note</button>
+<section class="sidebar">
+  <header class="sidebar__header">
+    <button ng-click="toggleNewNoteForm()">Add a note</button>
+  </header>
 
-<ul>
-  <li ng-show="showNewNoteForm">
-    <form ng-submit="addNote()">
-      <input ng-model="form.title" />
-    </form>
-  </li>
-  <li ng-repeat="note in notes | orderBy:'updatedAt':true">
-    <a ui-sref="notes.show({id: note._id})">{{note.title}}</a>
-    <span ng-show="note.updatedAt">{{note.updatedAt}}</span>
-  </li>
-</ul>
+  <div class="sidebar__body">
+    <ul class="sidebar__body__list">
+      <li ng-show="showNewNoteForm" class="sidebar__body__list__item">
+        <form ng-submit="addNote()" class="sidebar__body__list__item__link">
+          <input ng-model="form.title" />
+        </form>
+      </li>
+      <li ng-repeat="note in notes | orderBy:'updatedAt':true"
+          class="sidebar__body__list__item"
+          ng-class="{ 'is-active': isState(note._id) }">
+        <a ui-sref="notes.show({id: note._id})"
+           class="sidebar__body__list__item__link">
+          {{note.title}}
+          <span ng-show="note.updatedAt"
+                class="sidebar__body__list__item__link__meta">
+            updated <span am-time-ago="note.updatedAt"></span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
 
-<ui-view autoscroll="false"></ui-view>
+<main class="main">
+  <ui-view autoscroll="false"></ui-view>
+</main>

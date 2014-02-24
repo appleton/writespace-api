@@ -3,6 +3,7 @@
 angular.module('notes', [
   'ui.router',
   'ui.ace',
+  'angularMoment',
   'notes.index',
   'notes.show'
 ]).config(['$stateProvider', function($stateProvider) {

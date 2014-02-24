@@ -1,0 +1,9 @@
+@import "base/sizes.scss";
+
+.main {
+  position: absolute;
+  left: $sidebar-width;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}

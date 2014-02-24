@@ -1,3 +1,16 @@
+@import "base/colours.scss";
+
+* {
+  box-sizing: border-box;
+}
+
 html {
-  background: #eee;
+  background: $c-page-bg;
+  color: $c-grey;
+  font: normal normal 100%/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }

@@ -1,0 +1,62 @@
+@import "base/sizes.scss";
+@import "base/colours.scss";
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $sidebar-width;
+  border-right: 1px solid lighten($c-light-grey, 20%);
+}
+
+.sidebar__header {
+  height: 50px;
+  margin-bottom: -1px;
+  padding: 10px;
+  border-bottom: 1px solid lighten($c-light-grey, 20%);
+}
+
+.sidebar__body {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.sidebar__body__list {
+  overflow: scroll;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar__body__list__item {
+  border-bottom: 1px solid lighten($c-light-grey, 20%);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.is-active {
+    background: #fff;
+  }
+}
+
+.sidebar__body__list__item__link {
+  display: block;
+  padding: 10px 10px;
+
+  &:hover {
+    border-bottom: none;
+  }
+}
+
+.sidebar__body__list__item__link__meta {
+  display: block;
+  color: $c-light-grey;
+  font-size: $t-xs;
+}

@@ -37,6 +37,10 @@ angular.module('notes.index', [
       }
     });
 
+    $scope.isState = function(id) {
+      return $state.is('notes.show', { id: id });
+    };
+
     $scope.toggleNewNoteForm = function() {
       $scope.showNewNoteForm = true;
     };
