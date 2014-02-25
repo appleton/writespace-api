@@ -18,7 +18,6 @@ angular.module('notes.show', [
       editor.setFontSize(16);
       editor.setShowPrintMargin(false);
       editor.setHighlightActiveLine(false);
-      editor.on('keyup', console.log.bind(console));
     };
 
     $scope.$watchCollection('currentNote.text', function() {
