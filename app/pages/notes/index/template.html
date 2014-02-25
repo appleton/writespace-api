@@ -10,7 +10,9 @@
           ng-class="{ 'is-active': isState(note._id) }">
         <a ui-sref="notes.show({id: note._id})"
            class="sidebar__body__list__item__link">
-          {{ note.title || "untitled" }}
+          <span class="u-text-truncate u-inline-block">
+            {{ (note.text | firstLine) || "untitled" }}
+          </span>
           <span ng-show="note.updatedAt"
                 class="sidebar__body__list__item__link__meta">
             updated <span am-time-ago="note.updatedAt"></span>
