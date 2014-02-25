@@ -5,6 +5,7 @@ angular.module('notes', [
   'ui.ace',
   'angularMoment',
   'firstLine.filter',
+  'notes.service',
   'notes.index',
   'notes.show'
 ]).config(['$stateProvider', function($stateProvider) {
@@ -17,10 +18,7 @@ angular.module('notes', [
       notes: [
         'NotesService',
         function(NotesService) {
-          return NotesService.allDocs({ include_docs: true })
-            .then(function(notes) {
-              return _.pluck(notes.rows, 'doc');
-            });
+          return NotesService.allDocs();
         }
       ]
     }
@@ -29,7 +27,15 @@ angular.module('notes', [
   $stateProvider.state('notes.show', {
     url: ':id',
     templateUrl: '/app/pages/notes/show/template.html',
-    controller: 'NotesShowController'
+    controller: 'NotesShowController',
+    resolve: {
+      note: [
+        'NotesService', '$stateParams',
+        function(NotesService, $stateParams) {
+          return NotesService.get($stateParams.id);
+        }
+      ]
+    }
   });
 
 }]);
