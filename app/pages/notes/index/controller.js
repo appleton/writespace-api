@@ -12,9 +12,9 @@ angular.module('notes.index', [
   function($scope, $rootScope, $state, notes, NotesService) {
     $scope.notes = notes;
 
-    function isChanged(current, revision) {
-      current = (current || { _rev: null });
-      return current._rev !== _.last(revision.changes).rev;
+    function hasChanged(revision, oldNote) {
+      oldNote = (oldNote || { _rev: null });
+      return oldNote._rev !== revision.rev;
     }
 
     function handleChange(newNote, oldNote) {
@@ -36,9 +36,10 @@ angular.module('notes.index', [
     NotesService.changes({
       include_docs: true,
       continuous: true,
-      onChange: function(newNote) {
-        var oldNote = _.find($scope.notes, { _id: newNote.id });
-        if (isChanged(oldNote, newNote)) handleChange(newNote.doc, oldNote);
+      onChange: function(revision) {
+        var oldNote = _.find($scope.notes, { _id: revision.id });
+        var newNote = revision.doc;
+        if (hasChanged(newNote, oldNote)) handleChange(newNote, oldNote);
       }
     });
 

@@ -5,7 +5,7 @@
 
   <div class="sidebar__body">
     <ul class="sidebar__body__list">
-      <li ng-repeat="note in notes | orderBy:'updatedAt':true"
+      <li ng-repeat="note in notes | orderBy:'updatedAt':true track by note._id"
           class="sidebar__body__list__item"
           ng-class="{ 'is-active': isState(note._id) }">
         <a ui-sref="notes.show({id: note._id})"
