@@ -17,8 +17,14 @@ angular.module('notes.index', [
       return current._rev !== _.last(revision.changes).rev;
     }
 
-    function updateNote(newNote, oldNote) {
-      _.assign(oldNote, newNote);
+    function handleChange(newNote, oldNote) {
+      if (newNote._deleted) {
+        _.pull($scope.notes, oldNote);
+      } else if (oldNote) {
+        _.assign(oldNote, newNote);
+      } else {
+        $scope.notes.push(newNote);
+      }
     }
 
     function setActiveNote(ev, toState, toParams) {
@@ -32,7 +38,7 @@ angular.module('notes.index', [
       continuous: true,
       onChange: function(newNote) {
         var oldNote = _.find($scope.notes, { _id: newNote.id });
-        if (isChanged(oldNote, newNote)) updateNote(newNote.doc, oldNote);
+        if (isChanged(oldNote, newNote)) handleChange(newNote.doc, oldNote);
       }
     });
 
@@ -51,7 +57,7 @@ angular.module('notes.index', [
       NotesService.post(note).then(function(resp) {
         note._id = resp.id;
         note._rev = resp.rev;
-        $scope.notes.push(note);
+        handleChange(note);
 
         $state.go('notes.show', { id: resp.id });
       });
