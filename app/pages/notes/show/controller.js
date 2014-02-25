@@ -8,24 +8,31 @@ angular.module('notes.show', [
   'NotesService',
   function($scope, $timeout, NotesService) {
 
+    function isTextUnchanged() {
+      return NotesService.get($scope.currentNote._id).then(function(note) {
+        return $scope.currentNote.text === note.text;
+      });
+    }
+
     $scope.onEditorLoaded = function(editor) {
       editor.setFontSize(16);
       editor.setShowPrintMargin(false);
       editor.setHighlightActiveLine(false);
+      editor.on('keyup', console.log.bind(console));
     };
 
-    $scope.$watchCollection('currentNote.text', (function() {
-      // Do not trigger watch function until after the first digest cycle
-      var isInitializing = true;
-      $timeout(function() { isInitializing = false; });
+    $scope.$watchCollection('currentNote.text', function() {
+      // Only trigger a put if the text of the note is different to the text
+      // in the database. This prevents a remote update from triggering an
+      // immediate put with the same data.
+      isTextUnchanged().then(function(isUnchanged) {
+        if (isUnchanged) return;
 
-      return function() {
-        if (isInitializing) return;
         $scope.currentNote.updatedAt = (new Date()).valueOf();
         NotesService.put($scope.currentNote).then(function(resp) {
           $scope.currentNote._rev = resp.rev;
         });
-      };
-    })());
+      });
+    });
   }
 ]);
