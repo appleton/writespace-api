@@ -17,15 +17,9 @@ angular.module('notes.index', [
       return current._rev !== _.last(revision.changes).rev;
     }
 
-    function insertNote(current, revision) {
-      _.pull($scope.notes, current);
-      $scope.notes.push(revision.doc);
-    }
-
-    function resetForm() {
-      $scope.showNewNoteForm = false;
-      delete $scope.form.title;
-      delete $scope.form.text;
+    function insertNote(newNote, oldNote) {
+      _.pull($scope.notes, oldNote);
+      $scope.notes.push(newNote);
     }
 
     NotesService.changes({
@@ -33,7 +27,7 @@ angular.module('notes.index', [
       continuous: true,
       onChange: function(newNote) {
         var oldNote = _.find($scope.notes, { _id: newNote.id });
-        if (isChanged(oldNote, newNote)) insertNote(oldNote, newNote);
+        if (isChanged(oldNote, newNote)) insertNote(newNote.doc, oldNote);
       }
     });
 
@@ -41,14 +35,13 @@ angular.module('notes.index', [
       return $state.is('notes.show', { id: id });
     };
 
-    $scope.toggleNewNoteForm = function() {
-      $scope.showNewNoteForm = true;
-    };
-
     $scope.addNote = function() {
-      $scope.form.updatedAt = (new Date()).valueOf();
-      NotesService.post($scope.form).then(function(resp) {
-        resetForm();
+      var note = { updatedAt: (new Date()).valueOf(), text: '' };
+      NotesService.post(note).then(function(resp) {
+        note._id = resp.id;
+        note._rev = resp.rev;
+        insertNote(note);
+
         $state.go('notes.show', { id: resp.id });
       });
     };
