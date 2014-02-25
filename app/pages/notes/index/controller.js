@@ -5,21 +5,27 @@ angular.module('notes.index', [
   'notes.service'
 ]).controller('NotesIndexController', [
   '$scope',
+  '$rootScope',
   '$state',
   'notes',
   'NotesService',
-  function($scope, $state, notes, NotesService) {
-    $scope.newNote = {};
-    $scope.notes = _.pluck(notes.rows, 'doc');
+  function($scope, $rootScope, $state, notes, NotesService) {
+    $scope.notes = notes;
 
     function isChanged(current, revision) {
       current = (current || { _rev: null });
       return current._rev !== _.last(revision.changes).rev;
     }
 
-    function insertNote(newNote, oldNote) {
-      _.pull($scope.notes, oldNote);
-      $scope.notes.push(newNote);
+    function addOrUpdate(newNote, oldNote) {
+      var note = _.pull($scope.notes, oldNote) || {};
+      $scope.notes.push(_.assign(note, newNote));
+    }
+
+    function setActiveNote(ev, toState, toParams) {
+      if (toState.name === 'notes.show') {
+        $scope.currentNote = _.find(notes, { _id: toParams.id });
+      }
     }
 
     NotesService.changes({
@@ -27,9 +33,15 @@ angular.module('notes.index', [
       continuous: true,
       onChange: function(newNote) {
         var oldNote = _.find($scope.notes, { _id: newNote.id });
-        if (isChanged(oldNote, newNote)) insertNote(newNote.doc, oldNote);
+        if (isChanged(oldNote, newNote)) addOrUpdate(newNote.doc, oldNote);
       }
     });
+
+    $rootScope.$on('$stateChangeStart', setActiveNote);
+
+    if ($state.is('notes.show')) {
+      setActiveNote(null, { name: 'notes.show' }, $state.params);
+    }
 
     $scope.isState = function(id) {
       return $state.is('notes.show', { id: id });
@@ -40,7 +52,7 @@ angular.module('notes.index', [
       NotesService.post(note).then(function(resp) {
         note._id = resp.id;
         note._rev = resp.rev;
-        insertNote(note);
+        addOrUpdate(note);
 
         $state.go('notes.show', { id: resp.id });
       });

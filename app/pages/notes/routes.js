@@ -17,7 +17,10 @@ angular.module('notes', [
       notes: [
         'NotesService',
         function(NotesService) {
-          return NotesService.allDocs({ include_docs: true });
+          return NotesService.allDocs({ include_docs: true })
+            .then(function(notes) {
+              return _.pluck(notes.rows, 'doc');
+            });
         }
       ]
     }
@@ -26,15 +29,7 @@ angular.module('notes', [
   $stateProvider.state('notes.show', {
     url: ':id',
     templateUrl: '/app/pages/notes/show/template.html',
-    controller: 'NotesShowController',
-    resolve: {
-      note: [
-        '$stateParams', 'NotesService',
-        function($stateParams, NotesService) {
-          return NotesService.get($stateParams.id);
-        }
-      ]
-    }
+    controller: 'NotesShowController'
   });
 
 }]);
