@@ -4,14 +4,15 @@ angular.module('notes.show', [
   'notes.service'
 ]).controller('NotesShowController', [
   '$scope',
-  '$timeout',
+  '$state',
   'NotesService',
-  function($scope, $timeout, NotesService) {
+  function($scope, $state, NotesService) {
 
     function isTextUnchanged() {
-      return NotesService.get($scope.currentNote._id).then(function(note) {
+      var id = ($scope.currentNote && $scope.currentNote._id) || '';
+      return NotesService.get(id).then(function(note) {
         return $scope.currentNote.text === note.text;
-      });
+      }, $state.go.bind($state, 'notes'));
     }
 
     $scope.onEditorLoaded = function(editor) {
