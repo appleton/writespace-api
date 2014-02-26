@@ -114,7 +114,8 @@ angular.module('notes.service', [
       allDocs: allDocs,
       get: get,
       put: put,
-      post: post
+      post: post,
+      remove: NotesResource.remove
     };
   }
 ]);

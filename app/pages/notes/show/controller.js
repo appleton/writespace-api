@@ -4,9 +4,10 @@ angular.module('notes.show', [
   'notes.service'
 ]).controller('NotesShowController', [
   '$scope',
+  '$state',
   'note',
   'NotesService',
-  function($scope, note, NotesService) {
+  function($scope, $state, note, NotesService) {
     $scope.note = note;
 
     // Add a shortcut to turn it off in the ace instance
@@ -30,6 +31,12 @@ angular.module('notes.show', [
       }));
 
       editor.focus();
+    };
+
+    $scope.deleteNote = function() {
+      NotesService.remove($scope.note).then(function() {
+        $state.go('notes');
+      });
     };
 
     $scope.$watchCollection('note.text', function() {
