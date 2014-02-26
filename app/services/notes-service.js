@@ -64,12 +64,13 @@ angular.module('notes.service', [
       // Only trigger a put if the text of the note is different to the text
       // in the database. This prevents a remote update from triggering an
       // immediate put with the same data.
-      isTextUnchanged(note._id).then(function(isUnchanged) {
-        if (isUnchanged) return;
+      return isTextUnchanged(note._id).then(function(isUnchanged) {
+        if (isUnchanged) return findInCache(note._id);
 
         note.updatedAt = (new Date()).valueOf();
-        NotesResource.put(note).then(function(resp) {
+        return NotesResource.put(note).then(function(resp) {
           note._rev = resp.rev;
+          return note;
         });
       });
     }
