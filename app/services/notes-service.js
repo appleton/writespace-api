@@ -12,6 +12,12 @@ angular.module('notes.service', [
       return _.find(notes, { _id: id });
     }
 
+    function addToCache(id) {
+      NotesResource.get(id).then(function(newNote) {
+        notes.push(newNote);
+      });
+    }
+
     function removeFromCache(id) {
       return _.remove(notes, { _id: id });
     }
@@ -26,7 +32,6 @@ angular.module('notes.service', [
     function assignIfChanged(dest, src) {
       if (dest._rev === src._rev) return;
       isTextUnchanged(dest._id).then(function(isUnchanged) {
-        console.log(isUnchanged);
         if (isUnchanged) delete src.text;
         return _.assign(dest, src);
       });
@@ -83,17 +88,22 @@ angular.module('notes.service', [
     NotesResource.changes({
       continuous: true,
       onChange: function(revision) {
-        var existing = findInCache(revision.id) || {};
-        var existingRev = existing._rev;
+        var noteId = revision.id;
+        var existing = findInCache(noteId);
+        var existingRev = existing && existing._rev;
         var newRev = _.last(revision.changes).rev;
 
         // No need to update if we already have the same revision in memory
         if (existingRev === newRev) return;
 
         // Handle deletion
-        if (existing && revision.deleted) return removeFromCache(revision.id);
+        if (existing && revision.deleted) return removeFromCache(noteId);
 
-        NotesResource.get(revision.id).then(function(newNote) {
+        // Handle addition
+        if (!existing) return addToCache(noteId);
+
+        // Not unchanged, deleted or new so it must be an update
+        NotesResource.get(noteId).then(function(newNote) {
           assignIfChanged(existing, newNote);
         });
       }
