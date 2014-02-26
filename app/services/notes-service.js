@@ -4,12 +4,16 @@ angular.module('notes.service', [
   'notes.resource'
 ]).factory('NotesService', [
   'NotesResource',
-  '$state',
-  function(NotesResource, $state){
+  function(NotesResource){
     var notes = [];
 
+    // Private functions
     function findInCache(id) {
       return _.find(notes, { _id: id });
+    }
+
+    function removeFromCache(id) {
+      return _.remove(notes, { _id: id });
     }
 
     function isTextUnchanged(id) {
@@ -20,12 +24,15 @@ angular.module('notes.service', [
     }
 
     function assignIfChanged(dest, src) {
+      if (dest._rev === src._rev) return;
       isTextUnchanged(dest._id).then(function(isUnchanged) {
+        console.log(isUnchanged);
         if (isUnchanged) delete src.text;
         return _.assign(dest, src);
       });
     }
 
+    // Public functions
     function allDocs() {
       return NotesResource.allDocs({ include_docs: true }).then(function(resp) {
         _.each(_.pluck(resp.rows, 'doc'), function(newNote) {
@@ -41,6 +48,7 @@ angular.module('notes.service', [
       });
     }
 
+    // TODO: reconsider full query and merge on every get?
     function get(id) {
       return allDocs().then(function() {
         return findInCache(id);
@@ -71,10 +79,24 @@ angular.module('notes.service', [
       });
     }
 
+    // Bootstrap
     NotesResource.changes({
-      include_docs: true,
       continuous: true,
-      onChange: allDocs
+      onChange: function(revision) {
+        var existing = findInCache(revision.id) || {};
+        var existingRev = existing._rev;
+        var newRev = _.last(revision.changes).rev;
+
+        // No need to update if we already have the same revision in memory
+        if (existingRev === newRev) return;
+
+        // Handle deletion
+        if (existing && revision.deleted) return removeFromCache(revision.id);
+
+        NotesResource.get(revision.id).then(function(newNote) {
+          assignIfChanged(existing, newNote);
+        });
+      }
     });
 
     return {
