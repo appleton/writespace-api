@@ -1,8 +1,9 @@
 .ace_editor {
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  left: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  left: 0;
+  margin: 30px;
   height: 100%;
   // Gotta be important as ace adds its own styles
   font-family: "Nitti", "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace !important;

@@ -1,0 +1,23 @@
+@import "base/sizes.scss";
+@import "base/colours.scss";
+
+.action {
+  border: none;
+  background: none;
+  color: $c-light-grey;
+  font-size: $t-l;
+  line-height: 1.3;
+
+  &:hover {
+    color: darken($c-light-grey, 10%);
+  }
+
+  &:active {
+    outline: none;
+    color: darken($c-light-grey, 15%);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
