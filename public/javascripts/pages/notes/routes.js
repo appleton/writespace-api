@@ -12,7 +12,7 @@ angular.module('notes', [
 
   $stateProvider.state('notes', {
     url: '/',
-    templateUrl: '/app/pages/notes/index/template.html',
+    templateUrl: '/javascripts/pages/notes/index/template.html',
     controller: 'NotesIndexController',
     resolve: {
       notes: [
@@ -26,7 +26,7 @@ angular.module('notes', [
 
   $stateProvider.state('notes.show', {
     url: ':id',
-    templateUrl: '/app/pages/notes/show/template.html',
+    templateUrl: '/javascripts/pages/notes/show/template.html',
     controller: 'NotesShowController',
     resolve: {
       note: [
