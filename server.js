@@ -3,8 +3,9 @@
 var path = require('path');
 
 var express = require('express');
-// var nano = require('nano');
-
+var dotenv = require('dotenv');
+dotenv.load();
+var nano = require('nano')(process.env.COUCH_DB_URL);
 var app = express();
 
 // Environment specific app configuration
@@ -21,6 +22,21 @@ app.configure(function(){
   app.use(app.router);
   app.use(require('./middleware/serve-ng'));
   app.use(express.static(path.join(__dirname, 'dist')));
+});
+
+app.post('/users', function(req, res) {
+  req.accepts('application/json');
+
+  nano.db.use('_users').insert({
+    _id: 'org.couchdb.user:' + req.body.email,
+    name: req.body.email,
+    type: 'user',
+    roles: [],
+    password: req.body.email
+  }, function(err, body) {
+    if (err) return res.json(err.status_code, { message: err.message });
+    res.json(201, body);
+  });
 });
 
 module.exports = app;

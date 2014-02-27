@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "express": "~3.4.8",
-    "nano": "~5.7.1"
+    "nano": "~5.7.1",
+    "dotenv": "~0.2.4"
   }
 }
