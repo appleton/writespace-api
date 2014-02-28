@@ -44,11 +44,15 @@ app.post('/users', function(req, res) {
 
   user.notes_db = generateNotesDbName(user.name);
 
+  // TODO: this should be refactored to use promises
   nano.db.use('_users').insert(user, function(err, userBody) {
     if (err) return res.json(422, { errors: [err.message]});
 
     nano.db.create(user.notes_db, function(err, notesBody) {
-      if (err) console.log('User db creation error: ', err, notesBody);
+      if (err) {
+        console.log('User db creation error: ', err, notesBody);
+        return res.json(422, { errors: [err.message]});
+      }
 
       var notes = nano.db.use(user.notes_db);
       var securityDesign = { readers: { names: [ user.name ], roles: [] } };
@@ -56,6 +60,7 @@ app.post('/users', function(req, res) {
       notes.insert(securityDesign, '_security', function(err, securityBody) {
         if (err) {
           console.log('User db security update error: ', err, securityBody);
+          return res.json(422, { errors: [err.message]});
         }
 
         res.json(201, userBody);
