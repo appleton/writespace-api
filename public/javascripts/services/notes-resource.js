@@ -1,23 +1,24 @@
 'use strict';
 
 angular.module('notes.resource', [
-  'pouchdb'
+  'pouchdb',
+  'constants'
 ]).factory('NotesResource', [
   'pouchdb',
-  function(pouchdb){
+  'COUCH_URL',
+  function(pouchdb, COUCH_URL){
     var notes = pouchdb.create('notes');
 
-    pouchdb.replicate('notes', 'http://localhost:5984/notes', {
+    pouchdb.replicate('notes', COUCH_URL + '/notes', {
       continuous: true,
       create_target: true
     });
 
-    pouchdb.replicate('http://localhost:5984/notes', 'notes', {
+    pouchdb.replicate(COUCH_URL + '/notes', 'notes', {
       continuous: true,
       create_target: true
     });
 
-    // TODO: wrap post and put to add created at and updated at timestamps
     return notes;
   }
 ]);
