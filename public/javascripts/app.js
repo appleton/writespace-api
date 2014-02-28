@@ -3,6 +3,7 @@
 angular.module('notesy', [
   'notes',
   'users',
+  'sessions',
   'toggle'
 ]).config([
   '$locationProvider',
