@@ -5,7 +5,8 @@ var path = require('path');
 var express = require('express');
 var dotenv = require('dotenv');
 dotenv.load();
-var nano = require('nano')(process.env.COUCH_DB_URL);
+
+var nano = require('./db/couch');
 var app = express();
 
 // Environment specific app configuration
