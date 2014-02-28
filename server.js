@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require('path');
+var crypto = require('crypto');
 
 var express = require('express');
 var dotenv = require('dotenv');
@@ -26,6 +27,10 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'dist')));
 });
 
+function generateNotesDbName(email) {
+  return 'notes_' + crypto.createHash('sha1').update(email).digest('hex');
+}
+
 app.post('/users', function(req, res) {
   req.accepts('application/json');
 
@@ -37,9 +42,25 @@ app.post('/users', function(req, res) {
     password: req.body.password
   };
 
-  nano.db.use('_users').insert(user, function(err, body) {
+  user.notes_db = generateNotesDbName(user.name);
+
+  nano.db.use('_users').insert(user, function(err, userBody) {
     if (err) return res.json(422, { errors: [err.message]});
-    res.json(201, body);
+
+    nano.db.create(user.notes_db, function(err, notesBody) {
+      if (err) console.log('User db creation error: ', err, notesBody);
+
+      var notes = nano.db.use(user.notes_db);
+      var securityDesign = { readers: { names: [ user.name ], roles: [] } };
+
+      notes.insert(securityDesign, '_security', function(err, securityBody) {
+        if (err) {
+          console.log('User db security update error: ', err, securityBody);
+        }
+
+        res.json(201, userBody);
+      });
+    });
   });
 });
 
