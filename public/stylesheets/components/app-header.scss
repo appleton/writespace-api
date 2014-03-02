@@ -2,7 +2,7 @@
 @import "base/colours.scss";
 
 .app-header {
-  left: $sidebar-width;
+  margin-left: $sidebar-width;
   height: $s-header-height;
   margin-bottom: -1px;
   padding: 10px;

@@ -6,13 +6,14 @@ angular.module('notes.index', [
   'sessions.service'
 ]).controller('NotesIndexController', [
   '$scope',
-  '$rootScope',
   '$state',
   'notes',
+  'user',
   'NotesService',
   'SessionsService',
-  function($scope, $rootScope, $state, notes, NotesService, SessionsService) {
+  function($scope, $state, notes, user, NotesService, SessionsService) {
     $scope.notes = notes;
+    $scope.user = user;
 
     $scope.isState = function(id) {
       return $state.is('auth.notes.show', { id: id });
