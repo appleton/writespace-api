@@ -8,5 +8,5 @@ module.exports = function(newDoc) {
     if (value.indexOf('@') === -1) throw({ forbidden : message });
   }
 
-  isEmail('name', 'email is not a valid email');
+  isEmail('name', 'Email is not a valid');
 };

@@ -28,6 +28,7 @@ app.configure(function(){
 });
 
 function generateNotesDbName(email) {
+  email = (email || '');
   return 'notes_' + crypto.createHash('sha1').update(email).digest('hex');
 }
 
