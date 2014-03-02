@@ -35,7 +35,7 @@ angular.module('notes.show', [
 
     $scope.deleteNote = function() {
       NotesService.remove($scope.note).then(function() {
-        $state.go('notes');
+        $state.go('auth.notes');
       });
     };
 

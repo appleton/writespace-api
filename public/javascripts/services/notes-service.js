@@ -120,7 +120,7 @@ angular.module('notes.service', [
       get: get,
       put: put,
       post: post,
-      remove: NotesResource.remove
+      remove: function(note) { return NotesResource.remove(note); }
     };
   }
 ]);
