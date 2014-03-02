@@ -13,12 +13,12 @@ angular.module('notes.index', [
     $scope.notes = notes;
 
     $scope.isState = function(id) {
-      return $state.is('notes.show', { id: id });
+      return $state.is('auth.notes.show', { id: id });
     };
 
     $scope.addNote = function() {
       NotesService.post({ text: '' }).then(function(resp) {
-        $state.go('notes.show', { id: resp._id });
+        $state.go('auth.notes.show', { id: resp._id });
       });
     };
   }
