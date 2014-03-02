@@ -34,7 +34,9 @@ angular.module('notes', [
     resolve: {
       notes: [
         'NotesService',
-        function(NotesService) {
+        'user',
+        function(NotesService, user) {
+          NotesService.init(user.notes_db);
           return NotesService.allDocs();
         }
       ]
@@ -47,8 +49,11 @@ angular.module('notes', [
     controller: 'NotesShowController',
     resolve: {
       note: [
-        'NotesService', '$stateParams',
-        function(NotesService, $stateParams) {
+        'NotesService',
+        '$stateParams',
+        'user',
+        function(NotesService, $stateParams, user) {
+          NotesService.init(user.notes_db);
           return NotesService.get($stateParams.id);
         }
       ]

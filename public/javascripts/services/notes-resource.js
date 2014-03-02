@@ -7,18 +7,27 @@ angular.module('notes.resource', [
   'pouchdb',
   'COUCH_URL',
   function(pouchdb, COUCH_URL){
-    var notes = pouchdb.create('notes');
 
-    pouchdb.replicate('notes', COUCH_URL + '/notes', {
-      continuous: true,
-      create_target: true
-    });
+    function init(dbName) {
+      var notes = pouchdb.create(dbName);
+      var remote = COUCH_URL + '/' + dbName;
 
-    pouchdb.replicate(COUCH_URL + '/notes', 'notes', {
-      continuous: true,
-      create_target: true
-    });
+      pouchdb.replicate(dbName, remote, {
+        continuous: true,
+        create_target: true
+      });
 
-    return notes;
+      pouchdb.replicate(remote, dbName, {
+        continuous: true,
+        create_target: true
+      });
+
+      return notes;
+    }
+
+    return {
+      init: init
+    };
+
   }
 ]);

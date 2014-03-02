@@ -5,7 +5,7 @@ angular.module('notes.service', [
 ]).factory('NotesService', [
   'NotesResource',
   function(NotesResource){
-    var notes = [];
+    var notes;
 
     // Private functions
     function findInCache(id) {
@@ -37,7 +37,36 @@ angular.module('notes.service', [
       });
     }
 
+    function onChange(revision) {
+      var noteId = revision.id;
+      var existing = findInCache(noteId);
+      var existingRev = existing && existing._rev;
+      var newRev = _.last(revision.changes).rev;
+
+      // No need to update if we already have the same revision in memory
+      if (existingRev === newRev) return;
+
+      // Handle deletion
+      if (existing && revision.deleted) return removeFromCache(noteId);
+
+      // Handle addition
+      if (!existing) return addToCache(noteId);
+
+      // Not unchanged, deleted or new so it must be an update
+      NotesResource.get(noteId).then(function(newNote) {
+        assignIfChanged(existing, newNote);
+      });
+    }
+
     // Public functions
+    function init(dbName) {
+      // Only init once
+      if (notes) return;
+      NotesResource = NotesResource.init(dbName);
+      notes = [];
+      NotesResource.changes({ continuous: true, onChange: onChange });
+    }
+
     function allDocs() {
       return NotesResource.allDocs({ include_docs: true }).then(function(resp) {
         _.each(_.pluck(resp.rows, 'doc'), function(newNote) {
@@ -85,32 +114,8 @@ angular.module('notes.service', [
       });
     }
 
-    // Bootstrap
-    NotesResource.changes({
-      continuous: true,
-      onChange: function(revision) {
-        var noteId = revision.id;
-        var existing = findInCache(noteId);
-        var existingRev = existing && existing._rev;
-        var newRev = _.last(revision.changes).rev;
-
-        // No need to update if we already have the same revision in memory
-        if (existingRev === newRev) return;
-
-        // Handle deletion
-        if (existing && revision.deleted) return removeFromCache(noteId);
-
-        // Handle addition
-        if (!existing) return addToCache(noteId);
-
-        // Not unchanged, deleted or new so it must be an update
-        NotesResource.get(noteId).then(function(newNote) {
-          assignIfChanged(existing, newNote);
-        });
-      }
-    });
-
     return {
+      init: init,
       allDocs: allDocs,
       get: get,
       put: put,
