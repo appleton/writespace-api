@@ -4,6 +4,9 @@ angular.module('notesy', [
   'notes',
   'users',
   'sessions',
+
+  'auth.interceptor',
+
   'toggle'
 ]).config([
   '$locationProvider',
