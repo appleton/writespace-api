@@ -1,10 +1,20 @@
-<h1>Login</h1>
+<main class="user-form">
+  <div class="form-errors" ng-show="error">{{error}}</div>
 
-<form novalidate ng-submit="login()">
-  <div class="errors" ng-show="error">{{error}}</div>
-  <label for="email">Email:</label>
-  <input type="email" ng-model="form.name" />
-  <label for="email">Password:</label>
-  <input type="password" ng-model="form.password" />
-  <button class="btn btn--green">Log in</button>
-</form>
+  <form novalidate class="user-form__body" ng-submit="login()">
+
+    <label class="label" for="email">Email address</label>
+    <input class="input" type="email" ng-model="form.name" />
+
+    <label class="label" for="email">Password</label>
+    <input class="input" type="password" ng-model="form.password" />
+
+    <button class="user-form__body__btn btn btn--green btn--large">
+      Log in
+    </button>
+
+    <div class="u-text-t-s u-text-center">
+      Don't have an account? <a ui-sref="users()">Sign up here</a>
+    </div>
+  </form>
+</main>

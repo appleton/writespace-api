@@ -1,0 +1,9 @@
+@import "base/sizes.scss";
+
+$sizes: $s-xxs, $s-xs, $s-s, $s-m, $s-xm, $s-xxm, $s-l, $s-xl, $s-xxl;
+
+@each $size in $sizes {
+  .u-margin-T#{$size} {
+    margin: $size;
+  }
+}

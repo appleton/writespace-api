@@ -11,6 +11,7 @@ angular.module('users.new', [
 
     $scope.createUser = function() {
       UsersService.create($scope.form).then(function() {
+        // TODO: show errors
         console.log(arguments);
       });
     };

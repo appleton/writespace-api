@@ -35,8 +35,8 @@ app.post('/users', function(req, res) {
   req.accepts('application/json');
 
   var user = {
-    _id: 'org.couchdb.user:' + req.body.email,
-    name: req.body.email,
+    _id: 'org.couchdb.user:' + req.body.name,
+    name: req.body.name,
     type: 'user',
     roles: [],
     password: req.body.password

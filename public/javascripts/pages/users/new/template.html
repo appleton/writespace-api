@@ -1,9 +1,22 @@
-<h1>Add a user</h1>
+<main class="user-form">
+  <h1 class="user-form__heading">Create an account</h1>
 
-<form novalidate ng-submit="createUser()">
-  <label for="email">Email:</label>
-  <input type="email" ng-model="form.email" />
-  <label for="email">Password:</label>
-  <input type="password" ng-model="form.password" />
-  <button class="btn btn--green">Sign up</button>
-</form>
+  <div class="form-errors" ng-show="error">{{error}}</div>
+
+  <form novalidate class="user-form__body" ng-submit="createUser()">
+
+    <label class="label" for="email">Email address</label>
+    <input class="input" type="email" ng-model="form.name" />
+
+    <label class="label" for="email">Password</label>
+    <input class="input" type="password" ng-model="form.password" />
+
+    <button class="user-form__body__btn btn btn--green btn--large">
+      Sign up
+    </button>
+
+    <div class="u-text-t-s u-text-center">
+      Already have an account? <a ui-sref="sessions()">Log in here</a>
+    </div>
+  </form>
+</main>

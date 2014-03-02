@@ -1,13 +1,15 @@
-<header class="main__header">
-  <button class="action u-c-light-grey" ng-click="deleteNote(note._id)">
-    <i class="fa fa-trash-o"></i>
-  </button>
-</header>
+<main class="main">
+  <header class="main__header">
+    <button class="action u-c-light-grey" ng-click="deleteNote(note._id)">
+      <i class="fa fa-trash-o"></i>
+    </button>
+  </header>
 
-<div ui-ace="{
-  useWrapMode : true,
-  showGutter: false,
-  theme: 'tomorrow',
-  mode: 'markdown',
-  onLoad: onEditorLoaded
-}" ng-model="note.text"></div>
+  <div ui-ace="{
+    useWrapMode : true,
+    showGutter: false,
+    theme: 'tomorrow',
+    mode: 'markdown',
+    onLoad: onEditorLoaded
+  }" ng-model="note.text"></div>
+</main>
