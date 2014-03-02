@@ -114,13 +114,17 @@ angular.module('notes.service', [
       });
     }
 
+    function remove(note) {
+      return NotesResource.remove(note);
+    }
+
     return {
       init: init,
       allDocs: allDocs,
       get: get,
       put: put,
       post: post,
-      remove: function(note) { return NotesResource.remove(note); }
+      remove: remove
     };
   }
 ]);
