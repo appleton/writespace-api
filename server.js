@@ -35,6 +35,11 @@ function generateNotesDbName(email) {
 app.post('/users', function(req, res) {
   req.accepts('application/json');
 
+  // TODO: re-add express-validation and provide consistent error messages
+  if (!req.body.password || req.body.password === '') {
+    return res.json(422, { errors: ['Password cannot be blank']});
+  }
+
   var user = {
     _id: 'org.couchdb.user:' + req.body.name,
     name: req.body.name,

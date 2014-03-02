@@ -13,8 +13,6 @@ angular.module('users.new', [
     $scope.form = {};
 
     $scope.createUser = function() {
-      delete $scope.error;
-
       UsersService.create($scope.form).then(function() {
         return SessionsService.create($scope.form).then(function() {
           $state.go('auth.notes');
