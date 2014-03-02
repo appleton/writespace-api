@@ -1,6 +1,7 @@
 <h1>Login</h1>
 
 <form novalidate ng-submit="login()">
+  <div class="errors" ng-show="error">{{error}}</div>
   <label for="email">Email:</label>
   <input type="email" ng-model="form.name" />
   <label for="email">Password:</label>
