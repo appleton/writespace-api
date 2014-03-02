@@ -22,3 +22,10 @@
   font-size: $t-s;
   font-weight: bold;
 }
+
+.form-errors {
+  padding: $s-xxs $s-m;
+  background: rgba($c-red, 0.1);
+  color: $c-red;
+  text-align: center;
+}
