@@ -4,14 +4,15 @@ angular.module('sessions.new', [
   'sessions.service'
 ]).controller('SessionsNewController', [
   '$scope',
+  '$state',
   'SessionsService',
-  function($scope, SessionsService) {
+  function($scope, $state, SessionsService) {
 
     $scope.form = {};
 
     $scope.login = function() {
       SessionsService.create($scope.form).then(function() {
-        console.log(arguments);
+        $state.go('auth.notes');
       });
     };
 
