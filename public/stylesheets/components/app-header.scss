@@ -1,0 +1,11 @@
+@import "base/sizes.scss";
+@import "base/colours.scss";
+
+.app-header {
+  left: $sidebar-width;
+  height: $s-header-height;
+  margin-bottom: -1px;
+  padding: 10px;
+  background: #fff;
+  border-bottom: 1px solid lighten($c-light-grey, 20%);
+}

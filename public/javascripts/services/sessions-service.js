@@ -20,9 +20,14 @@ angular.module('sessions.service', [
       });
     }
 
+    function destroy() {
+      return $http.delete(COUCH_URL + '/_session', { withCredentials: true });
+    }
+
     return {
       get: get,
-      create: create
+      create: create,
+      destroy: destroy
     };
   }
 ]);

@@ -3,18 +3,16 @@
 
 .main {
   position: absolute;
-  overflow: hidden;
   left: $sidebar-width;
-  top: 0;
+  top: $s-header-height;
   right: 0;
   bottom: 0;
-  background: #fff;
 }
 
 .main__header {
   height: $s-header-height;
-  margin-bottom: -1px;
+  margin-top: -$s-header-height;
+  float: left;
   padding: 10px;
-  background: #fff;
-  border-bottom: 1px solid lighten($c-light-grey, 20%);
+  z-index: 2;
 }
