@@ -6,7 +6,7 @@
   </header>
 
   <div class="sidebar__body">
-    <ul class="sidebar__body__list">
+    <ul ng-show="notes.length" class="sidebar__body__list">
       <li ng-repeat="note in notes | orderBy:'updatedAt':true track by note._id"
           class="sidebar__body__list__item"
           ng-class="{ 'is-active': isState(note._id) }">
@@ -22,6 +22,13 @@
         </a>
       </li>
     </ul>
+
+    <div ng-hide="notes.length" class="sidebar__body__empty">
+      <p class="u-text-center">
+        Welcome to Notesy<br />
+        Add your first note here!
+      </p>
+    </div>
   </div>
 </section>
 

@@ -7,6 +7,7 @@ var injecter = require('gulp-inject');
 
 var srcFiles = {
   js:   './public/javascripts/**/*.js',
+  img:  './public/images/**/*',
   sass: './public/stylesheets/**/*.scss',
   tmpl: './public/javascripts/**/*.html',
   html: './public/index.html'
@@ -14,6 +15,7 @@ var srcFiles = {
 
 var destFolders = {
   js:   './dist/javascripts',
+  img:  './dist/images',
   css:  './dist/stylesheets',
   tmpl: './dist/javascripts',
   html: './dist'
@@ -54,7 +56,13 @@ gulp.task('templates', function() {
       .pipe(gulp.dest(destFolders.tmpl));
 });
 
+gulp.task('images', function() {
+  gulp.src(srcFiles.img)
+      .pipe(gulp.dest(destFolders.img));
+});
+
 gulp.task('watch', function () {
+  gulp.watch([srcFiles.img], ['images']);
   gulp.watch([srcFiles.js], ['js']);
   gulp.watch([srcFiles.sass], ['sass']);
   gulp.watch([srcFiles.tmpl], ['templates']);
@@ -62,4 +70,4 @@ gulp.task('watch', function () {
   gulp.watch([destFiles.js, destFiles.css], ['inject']);
 });
 
-gulp.task('default', ['sass', 'js', 'templates', 'inject', 'server', 'watch']);
+gulp.task('default', ['sass', 'js', 'images', 'templates', 'inject', 'server', 'watch']);

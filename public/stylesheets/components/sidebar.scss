@@ -49,7 +49,7 @@
 
 .sidebar__body__list__item__link {
   display: block;
-  padding: 10px 10px;
+  padding: 10px;
 
   &:hover {
     border-bottom: none;
@@ -60,4 +60,10 @@
   display: block;
   color: $c-light-grey;
   font-size: $t-xs;
+}
+
+.sidebar__body__empty {
+  padding: 10px;
+  background: url(/images/arrow.png) no-repeat 12px 5px;
+  background-size: 41px;
 }
