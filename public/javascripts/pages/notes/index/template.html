@@ -13,11 +13,13 @@
         <a ui-sref="auth.notes.show({id: note._id})"
            class="sidebar__body__list__item__link">
           <span class="u-text-truncate u-inline-block">
-            {{ (note.text | firstLine) || "untitled" }}
+            {{ (note.text | line:1) || "untitled" }}
           </span>
           <span class="sidebar__body__list__item__link__meta"
                 am-time-ago="note.updatedAt"></span>
-          <span class="sidebar__body__list__item__link__body">add one line of note body here</span>
+          <span class="sidebar__body__list__item__link__body u-text-truncate u-inline-block">
+            {{ note.text | line:2 }}
+          </span>
         </a>
       </li>
     </ul>

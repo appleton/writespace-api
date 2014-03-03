@@ -4,7 +4,7 @@ angular.module('notes', [
   'ui.router',
   'ui.ace',
   'angularMoment',
-  'firstLine.filter',
+  'line.filter',
   'printErrors.filter',
   'users.service',
   'notes.service',
