@@ -4,10 +4,12 @@ var path = require('path');
 var crypto = require('crypto');
 
 var express = require('express');
+var expressValidator = require('express-validator');
 var dotenv = require('dotenv');
 dotenv.load();
 
 var nano = require('./db/couch');
+var userValidation = require('./middleware/user-validator');
 
 var app = express();
 
@@ -22,6 +24,7 @@ app.configure(function(){
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(expressValidator());
   app.use(app.router);
   app.use(require('./middleware/serve-ng'));
   app.use(express.static(path.join(__dirname, 'dist')));
@@ -32,17 +35,16 @@ function generateNotesDbName(email) {
   return 'notes_' + crypto.createHash('sha1').update(email).digest('hex');
 }
 
-app.post('/users', function(req, res) {
+function formatError(error) {
+  return { errors: [{ msg: error.message }] };
+}
+
+app.post('/users', userValidation, function(req, res) {
   req.accepts('application/json');
 
-  // TODO: re-add express-validation and provide consistent error messages
-  if (!req.body.password || req.body.password === '') {
-    return res.json(422, { errors: ['Password cannot be blank']});
-  }
-
   var user = {
-    _id: 'org.couchdb.user:' + req.body.name,
-    name: req.body.name,
+    _id: 'org.couchdb.user:' + req.body.email,
+    name: req.body.email,
     type: 'user',
     roles: [],
     password: req.body.password
@@ -52,12 +54,12 @@ app.post('/users', function(req, res) {
 
   // TODO: this should be refactored to use promises
   nano.db.use('_users').insert(user, function(err, userBody) {
-    if (err) return res.json(422, { errors: [err.message]});
+    if (err) return res.json(422, formatError(err));
 
     nano.db.create(user.notes_db, function(err, notesBody) {
       if (err) {
         console.log('User db creation error: ', err, notesBody);
-        return res.json(422, { errors: [err.message]});
+        return res.json(422, formatError(err));
       }
 
       var notes = nano.db.use(user.notes_db);
@@ -66,7 +68,7 @@ app.post('/users', function(req, res) {
       notes.insert(securityDesign, '_security', function(err, securityBody) {
         if (err) {
           console.log('User db security update error: ', err, securityBody);
-          return res.json(422, { errors: [err.message]});
+          return res.json(422, formatError(err));
         }
 
         res.json(201, userBody);

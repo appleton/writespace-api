@@ -3,10 +3,10 @@
 
   <div class="form-errors" ng-show="error">{{error}}</div>
 
-  <form novalidate class="user-form__body" ng-submit="createUser()">
+  <form class="user-form__body" ng-submit="createUser()">
 
     <label class="label" for="email">Email address</label>
-    <input class="input" type="email" ng-model="form.name" />
+    <input class="input" type="email" ng-model="form.email" />
 
     <label class="label" for="email">Password</label>
     <input class="input" type="password" ng-model="form.password" />
