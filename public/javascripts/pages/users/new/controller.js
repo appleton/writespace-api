@@ -18,9 +18,7 @@ angular.module('users.new', [
           $state.go('auth.notes');
         });
       }).catch(function(err) {
-        if (err.data && err.data.errors) {
-          $scope.error = err.data.errors.join(', ');
-        }
+        if (err.data && err.data.errors) $scope.errors = err.data.errors;
       });
     };
 

@@ -5,6 +5,7 @@ angular.module('notes', [
   'ui.ace',
   'angularMoment',
   'firstLine.filter',
+  'printErrors.filter',
   'users.service',
   'notes.service',
   'notes.index',

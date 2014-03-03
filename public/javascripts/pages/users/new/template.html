@@ -1,7 +1,9 @@
 <main class="user-form">
   <h1 class="user-form__heading">Create an account</h1>
 
-  <div class="form-errors" ng-show="error">{{error}}</div>
+  <div class="form-errors" ng-show="errors.length">
+    {{errors | printErrors}}
+  </div>
 
   <form class="user-form__body" ng-submit="createUser()">
 
