@@ -15,10 +15,9 @@
           <span class="u-text-truncate u-inline-block">
             {{ (note.text | firstLine) || "untitled" }}
           </span>
-          <span ng-show="note.updatedAt"
-                class="sidebar__body__list__item__link__meta">
-            updated <span am-time-ago="note.updatedAt"></span>
-          </span>
+          <span class="sidebar__body__list__item__link__meta"
+                am-time-ago="note.updatedAt"></span>
+          <span class="sidebar__body__list__item__link__body">add one line of note body here</span>
         </a>
       </li>
     </ul>

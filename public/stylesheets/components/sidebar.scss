@@ -48,6 +48,7 @@
 }
 
 .sidebar__body__list__item__link {
+  overflow: hidden;
   display: block;
   padding: 10px;
 
@@ -56,10 +57,26 @@
   }
 }
 
+.sidebar__body__list__item__link__title {
+  float: left;
+  width: 60%;
+  color: $c-grey;
+}
+
 .sidebar__body__list__item__link__meta {
   display: block;
+  float: right;
+  width: 40%;
   color: $c-light-grey;
   font-size: $t-xs;
+  text-align: right;
+  line-height: 2.4;
+}
+
+.sidebar__body__list__item__link__body {
+  display: block;
+  color: $c-light-grey;
+  font-size: $t-s;
 }
 
 .sidebar__body__empty {
