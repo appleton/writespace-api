@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var server = require('./server');
 var injecter = require('gulp-inject');
+var templateCache = require('gulp-angular-templatecache');
 
 var srcFiles = {
   js:   './public/javascripts/**/*.js',
@@ -52,7 +53,7 @@ gulp.task('js', function() {
 
 gulp.task('templates', function() {
   gulp.src(srcFiles.tmpl)
-      // TODO: transform into $templateCache
+      .pipe(templateCache({ root: '/javascripts' }))
       .pipe(gulp.dest(destFolders.tmpl));
 });
 
@@ -62,8 +63,7 @@ gulp.task('images', function() {
 });
 
 gulp.task('components', function() {
-  gulp.src('./public/components')
-      .pipe(gulp.dest('./dist/components'));
+  gulp.src('./public/components/**/*').pipe(gulp.dest('./dist/components'));
 });
 
 gulp.task('watch', function () {
