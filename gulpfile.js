@@ -61,6 +61,11 @@ gulp.task('images', function() {
       .pipe(gulp.dest(destFolders.img));
 });
 
+gulp.task('components', function() {
+  gulp.src('./public/components')
+      .pipe(gulp.dest('./dist/components'));
+});
+
 gulp.task('watch', function () {
   gulp.watch([srcFiles.img], ['images']);
   gulp.watch([srcFiles.js], ['js']);
@@ -73,5 +78,5 @@ gulp.task('watch', function () {
 gulp.task('deploy:db', require('./tasks/db-deploy'));
 
 gulp.task('default', [
-  'sass', 'js', 'images', 'templates', 'inject', 'server', 'watch'
+  'components', 'sass', 'js', 'images', 'templates', 'inject', 'server', 'watch'
 ]);
