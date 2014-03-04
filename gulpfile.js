@@ -70,4 +70,8 @@ gulp.task('watch', function () {
   gulp.watch([destFiles.js, destFiles.css], ['inject']);
 });
 
-gulp.task('default', ['sass', 'js', 'images', 'templates', 'inject', 'server', 'watch']);
+gulp.task('deploy:db', require('./tasks/db-deploy'));
+
+gulp.task('default', [
+  'sass', 'js', 'images', 'templates', 'inject', 'server', 'watch'
+]);
