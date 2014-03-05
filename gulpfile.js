@@ -46,13 +46,24 @@ gulp.task('inject', ['sass', 'js', 'templates'], function() {
 gulp.task('build:compile', ['inject', 'components'], bundle('./tmp/index.html', {
     appDir: 'tmp',
     buildDir: 'dist',
-    minify: true
+    minify: false
   }
 ));
 
 gulp.task('images', function() {
   return gulp.src('./public/images/**/*')
              .pipe(gulp.dest('./tmp/images'));
+});
+
+gulp.task('build:fonts', function() {
+  var src = [
+    './public/**/fonts/*.eot', './public/**/fonts/*.svg',
+    './public/**/fonts/*.ttf', './public/**/fonts/*.woff',
+    './public/**/fonts/*.otf'
+  ];
+  return gulp.src(src)
+             // TODO: this should strip the file paths and stick it all in /fonts
+             .pipe(gulp.dest('./dist/fonts'));
 });
 
 gulp.task('build:images', function() {
@@ -67,7 +78,7 @@ gulp.task('build:html', ['build:compile'], function() {
              .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('build', ['build:images', 'build:html']);
+gulp.task('build', ['build:fonts', 'build:images', 'build:html']);
 
 gulp.task('deploy:db', require('./tasks/db-deploy'));
 
