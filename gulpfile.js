@@ -45,7 +45,7 @@ gulp.task('inject', ['sass', 'js', 'templates'], function() {
              .pipe(gulp.dest('./tmp'));
 });
 
-gulp.task('build:compile', ['inject', 'components'], bundle('./tmp/index.html', {
+gulp.task('build:compile', ['inject','components'], bundle('./tmp/index.html', {
     appDir: 'tmp',
     buildDir: 'dist',
     // TODO: minifying breaks the app. Why?
