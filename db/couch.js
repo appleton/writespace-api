@@ -2,4 +2,4 @@
 
 var nano = require('nano');
 
-module.exports = nano(process.env.CLOUDANT_URL);
+module.exports = nano(process.env.COUCH_URL);

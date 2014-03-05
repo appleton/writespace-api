@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var injecter = require('gulp-inject');
 var bundle = require('gulp-bundle');
 var useref = require('gulp-useref');
+var template = require('gulp-template');
 var templateCache = require('gulp-angular-templatecache');
 
 var server = require('./server');
@@ -38,10 +39,19 @@ gulp.task('components', function() {
              .pipe(gulp.dest('./tmp/components'));
 });
 
-gulp.task('inject', ['sass', 'js', 'templates'], function() {
+gulp.task('html', function() {
+  var env = process.env.NODE_ENV || 'development';
+  var config = require('./config.json')[env];
+
+  return gulp.src('./public/index.html')
+             .pipe(template(config))
+             .pipe(gulp.dest('./tmp'));
+});
+
+gulp.task('inject', ['html', 'sass', 'js', 'templates'], function() {
   var src = ['./tmp/javascripts/**/*.js', './tmp/stylesheets/**/*.css'];
   return gulp.src(src, { read: false })
-             .pipe(injecter('./public/index.html', { ignorePath: '/tmp' }))
+             .pipe(injecter('./tmp/index.html', { ignorePath: '/tmp' }))
              .pipe(gulp.dest('./tmp'));
 });
 

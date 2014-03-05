@@ -1,15 +1,14 @@
 'use strict';
 
 angular.module('users.service', [
-  'sessions.service',
-  'constants'
+  'sessions.service'
 ]).factory('UsersService', [
   '$q',
   '$http',
   '$window',
-  'COUCH_URL',
   'SessionsService',
-  function($q, $http, $window, COUCH_URL, SessionsService){
+  function($q, $http, $window, SessionsService){
+    var COUCH_URL = $window.CONFIG.COUCH_URL;
 
     function get() {
       return SessionsService.get().then(function(session) {

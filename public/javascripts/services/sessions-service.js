@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('sessions.service', [
-  'constants',
   'param.service'
 ]).factory('SessionsService', [
   '$http',
   'param',
-  'COUCH_URL',
-  function($http, param, COUCH_URL){
+  '$window',
+  function($http, param, $window) {
+    var COUCH_URL = $window.CONFIG.COUCH_URL;
 
     function get() {
       return $http.get(COUCH_URL + '/_session', { withCredentials: true });

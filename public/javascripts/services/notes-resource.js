@@ -2,13 +2,13 @@
 
 angular.module('notes.resource', [
   'pouchdb',
-  'constants',
-  'ui.router',
+  'ui.router'
 ]).factory('NotesResource', [
   'pouchdb',
-  'COUCH_URL',
   '$state',
-  function(pouchdb, COUCH_URL, $state){
+  '$window',
+  function(pouchdb, $state, $window){
+    var COUCH_URL = $window.CONFIG.COUCH_URL;
 
     function init(dbName) {
       var notes = pouchdb.create(dbName);

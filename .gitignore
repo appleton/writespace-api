@@ -3,5 +3,5 @@ node_modules/*
 tmp/*
 
 .env
-
+config.json
 .DS_Store
