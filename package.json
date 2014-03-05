@@ -10,7 +10,9 @@
     "gulp-sass": "~0.7.1",
     "couchapp": "^0.10.0",
     "glob": "^3.2.9",
-    "gulp-angular-templatecache": "^1.1.0"
+    "gulp-angular-templatecache": "^1.1.0",
+    "gulp-bundle": "^0.2.2",
+    "gulp-useref": "^0.1.2"
   },
   "dependencies": {
     "express": "~3.4.8",

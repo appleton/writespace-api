@@ -13,11 +13,6 @@ var userValidation = require('./middleware/user-validator');
 
 var app = express();
 
-// Environment specific app configuration
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
-
 // App configuration
 app.configure(function(){
   app.set('port', process.env.PORT || 1337);
@@ -27,6 +22,15 @@ app.configure(function(){
   app.use(expressValidator());
   app.use(app.router);
   app.use(require('./middleware/serve-ng'));
+});
+
+// Environment specific app configuration
+app.configure('development', function(){
+  app.use(express.errorHandler());
+  app.use(express.static(path.join(__dirname, 'tmp')));
+});
+
+app.configure('production', function(){
   app.use(express.static(path.join(__dirname, 'dist')));
 });
 
