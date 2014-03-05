@@ -48,8 +48,8 @@ gulp.task('inject', ['sass', 'js', 'templates'], function() {
 gulp.task('build:compile', ['inject','components'], bundle('./tmp/index.html', {
     appDir: 'tmp',
     buildDir: 'dist',
-    // TODO: minifying breaks the app. Why?
-    minify: false
+    minify: true,
+    minifyJs: { mangle: false }
   }
 ));
 
