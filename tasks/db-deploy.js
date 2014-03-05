@@ -10,7 +10,7 @@ module.exports = function() {
     files.forEach(function(file) {
       var doc = require(path.join(process.cwd(), file));
       var dbName = path.basename(file, '.js');
-      var url = process.env.COUCH_DB_URL + dbName;
+      var url = process.env.CLOUDANT_URL + '/' + dbName;
 
       couchapp.createApp(doc, url, function(res) {
         console.log(dbName + ' pushed, rev: ' + res.current._rev);
