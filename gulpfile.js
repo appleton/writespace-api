@@ -115,11 +115,13 @@ gulp.task('watch', function () {
   gulp.watch(['./public/javascripts/**/*.js'], ['js']);
   gulp.watch(['./public/stylesheets/**/*.scss'], ['sass']);
   gulp.watch(['./public/javascripts/**/*.html'], ['templates']);
+  gulp.watch(['./public/index.html'], ['html']);
 
-  gulp.watch(['./tmp/javascripts/**/*.js', './tmp/stylesheets/**/*.css'],
-             ['inject']);
+  gulp.watch([
+    './tmp/javascripts/**/*.js',
+    './tmp/stylesheets/**/*.css',
+    './tmp/index.html'
+  ], ['inject']);
 });
 
-gulp.task('default', [
-  'components', 'sass', 'js', 'images', 'templates', 'inject', 'server', 'watch'
-]);
+gulp.task('default', ['components', 'images', 'inject', 'server', 'watch']);
