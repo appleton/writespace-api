@@ -14,7 +14,9 @@ angular.module('users.new', [
 
     $scope.createUser = function() {
       UsersService.create($scope.form).then(function() {
-        return SessionsService.create($scope.form).then(function() {
+        var user = { name: $scope.form.email, password: $scope.form.password };
+
+        return SessionsService.create(user).then(function() {
           $state.go('auth.notes');
         });
       }).catch(function(err) {
