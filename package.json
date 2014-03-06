@@ -1,9 +1,13 @@
 {
   "name": "Notesy",
   "version": "0.0.1",
-  "description": "",
+  "description": "An offline syncing notes app",
   "author": "Andy Appleton",
+  "repository": "https://bitbucket.org/appltn/notesy",
   "license": "MIT",
+  "engines": {
+    "node": "0.10.x"
+  },
   "devDependencies": {
     "gulp": "~3.5.2",
     "gulp-inject": "~0.4.0",
