@@ -26,9 +26,7 @@ angular.module('notes.index', [
     };
 
     $scope.logout = function() {
-      SessionsService.destroy().then(function() {
-        $state.go('sessions');
-      });
+      SessionsService.destroy();
     };
   }
 ]);

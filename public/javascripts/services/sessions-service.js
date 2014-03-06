@@ -21,7 +21,11 @@ angular.module('sessions.service', [
     }
 
     function destroy() {
-      return $http.delete(COUCH_URL + '/_session', { withCredentials: true });
+      var url = COUCH_URL + '/_session';
+      return $http.delete(url, { withCredentials: true }).then(function() {
+        // full page refresh to cancel continuous replication
+        $window.location = '/users/login';
+      });
     }
 
     return {
