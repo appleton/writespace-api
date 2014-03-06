@@ -3,8 +3,8 @@
 angular.module('notes', [
   'ui.router',
   'ui.ace',
-  'angularMoment',
   'line.filter',
+  'timeAgo.filter',
   'printErrors.filter',
   'users.service',
   'notes.service',
