@@ -1,19 +1,10 @@
 .ace-wrapper {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  right: 30px;
-  bottom: 30px;
-}
-
-// srsly
-.ace-wrapper-wrapper {
-  overflow: hidden;
-  position: absolute;
+  position: relative;
   top: 0;
-  left: 0;
-  right: 0;
   bottom: 0;
+  margin: 0 auto;
+  max-width: 700px;
+  height: 100%;
 }
 
 .ace_editor {
