@@ -59,7 +59,6 @@ app.post('/users', userValidation, function(req, res) {
   // TODO: this should be refactored to use promises
   nano.db.use('_users').insert(user, function(err, userBody) {
     if (err) {
-      console.log('User creation error: ', err, userBody);
       return res.json(422, formatError(err));
     }
 
