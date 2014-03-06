@@ -1,18 +1,25 @@
 .ace-wrapper {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  right: 30px;
+  bottom: 30px;
+}
+
+// srsly
+.ace-wrapper-wrapper {
   overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #fff;
 }
 
 .ace_editor {
   top: 0;
   left: 0;
   right: 0;
-  margin: 30px;
   height: 100%;
   // Gotta be important as ace adds its own styles
   font-family: "Nitti Light", "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace !important;

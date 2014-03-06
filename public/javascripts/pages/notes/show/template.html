@@ -6,12 +6,14 @@
   </header>
 
   <div class="ace-wrapper">
-    <div ui-ace="{
-      useWrapMode : true,
-      showGutter: false,
-      theme: 'tomorrow',
-      mode: 'markdown',
-      onLoad: onEditorLoaded
-    }" ng-model="note.text"></div>
+    <div class="ace-wrapper-wrapper">
+      <div ui-ace="{
+        useWrapMode : true,
+        showGutter: false,
+        theme: 'tomorrow',
+        mode: 'markdown',
+        onLoad: onEditorLoaded
+      }" ng-model="note.text"></div>
+    </div>
   </div>
 </main>
