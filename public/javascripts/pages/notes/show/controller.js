@@ -39,9 +39,11 @@ angular.module('notes.show', [
       });
     };
 
-    $scope.$watchCollection('note.text', function() {
+    var putNote = _.debounce(function() {
       NotesService.put($scope.note);
-    });
+    }, 1000);
+
+    $scope.$watchCollection('note.text', putNote);
 
   }
 ]);
