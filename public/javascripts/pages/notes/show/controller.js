@@ -5,9 +5,10 @@ angular.module('notes.show', [
 ]).controller('NotesShowController', [
   '$scope',
   '$state',
+  '$window',
   'note',
   'NotesService',
-  function($scope, $state, note, NotesService) {
+  function($scope, $state, $window, note, NotesService) {
     $scope.note = note;
 
     // Add a shortcut to turn it off in the ace instance
@@ -29,6 +30,16 @@ angular.module('notes.show', [
           readOnly: true
         };
       }));
+
+      editor.commands.addCommands([{
+        name: 'unfocus',
+        bindKey: { mac: 'Esc', win: 'Esc' },
+        exec: function unfocus() {
+          // Hacky. Focus whatever just to remove it from ace
+          $window.document.body.querySelector('button').focus();
+        },
+        readOnly: true
+      }]);
 
       editor.focus();
     };
