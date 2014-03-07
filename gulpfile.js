@@ -4,6 +4,7 @@ var _ = require('lodash');
 var through = require('through2');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var clean = require('gulp-clean');
 var injecter = require('gulp-inject');
 var bundle = require('gulp-bundle');
 var useref = require('gulp-useref');
@@ -15,6 +16,14 @@ var server = require('./server');
 // TODO: make this do livereloading
 gulp.task('server', function() {
   server.listen(1337);
+});
+
+gulp.task('clean', function() {
+  return gulp.src('./tmp', { read: false }).pipe(clean());
+});
+
+gulp.task('clean:build', function() {
+  return gulp.src('./dist', { read: false }).pipe(clean());
 });
 
 gulp.task('sass', function () {
