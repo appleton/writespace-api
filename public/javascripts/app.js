@@ -8,9 +8,7 @@ angular.module('notesy', [
   'users',
   'sessions',
 
-  'auth.interceptor',
-
-  'toggle'
+  'auth.interceptor'
 ]).config([
   '$locationProvider',
   function($locationProvider) {
