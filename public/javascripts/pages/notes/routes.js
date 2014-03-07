@@ -3,6 +3,8 @@
 angular.module('notes', [
   'ui.router',
   'ui.ace',
+
+  'keybinding.directive',
   'line.filter',
   'timeAgo.filter',
   'printErrors.filter',
