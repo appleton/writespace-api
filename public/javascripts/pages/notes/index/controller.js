@@ -28,5 +28,24 @@ angular.module('notes.index', [
     $scope.logout = function() {
       SessionsService.destroy();
     };
+
+    $scope.changeNote = function(isNext) {
+      var notes = _($scope.notes).sortBy('updatedAt');
+      if (isNext) notes = notes.reverse();
+      notes = notes.value();
+
+      var currentNote = _.find(notes, function(note) {
+        return $state.is('auth.notes.show', { id: note._id });
+      });
+
+      var nextNote;
+      if (currentNote == null) {
+        nextNote = _.first(notes);
+      } else {
+        nextNote = notes[_.indexOf(notes, currentNote) + 1];
+      }
+
+      if (nextNote) $state.go('auth.notes.show', { id: nextNote._id });
+    };
   }
 ]);
