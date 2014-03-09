@@ -2,16 +2,19 @@
 
 angular.module('notes.index', [
   'ui.router',
+  'ui.bootstrap',
+  'keyboard.modal',
   'notes.service',
   'sessions.service'
 ]).controller('NotesIndexController', [
   '$scope',
   '$state',
+  '$modal',
   'notes',
   'user',
   'NotesService',
   'SessionsService',
-  function($scope, $state, notes, user, NotesService, SessionsService) {
+  function($scope, $state, $modal, notes, user, NotesService, SessionsService) {
     $scope.notes = notes;
     $scope.user = user;
 
@@ -47,5 +50,20 @@ angular.module('notes.index', [
 
       if (nextNote) $state.go('auth.notes.show', { id: nextNote._id });
     };
+
+    $scope.showKeyboardHints = (function() {
+      var modal;
+
+      return function() {
+        if (modal) return;
+
+        modal = $modal.open({
+          templateUrl: '/javascripts/pages/notes/index/keyboard-modal/template.html',
+          controller: 'KeyboardModalController'
+        });
+
+        modal.result.then(null, function() { modal = null; });
+      };
+    })();
   }
 ]);
