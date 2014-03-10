@@ -1,5 +1,14 @@
 @import "base/sizes.scss";
 
+p {
+  margin-top: 0;
+  margin-bottom: $s-m;
+}
+
+blockquote {
+  margin: 0 0 0 $s-m;
+}
+
 .u-text-xs { font-size: $t-xs; }
 .u-text-s  { font-size: $t-s; }
 .u-text-m  { font-size: $t-m; }

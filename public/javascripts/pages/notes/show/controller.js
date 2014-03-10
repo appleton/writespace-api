@@ -1,14 +1,16 @@
 'use strict';
 
 angular.module('notes.show', [
-  'notes.service'
+  'notes.service',
+  'ui.bootstrap',
+  'delete.modal'
 ]).controller('NotesShowController', [
   '$scope',
-  '$state',
   '$window',
+  '$modal',
   'note',
   'NotesService',
-  function($scope, $state, $window, note, NotesService) {
+  function($scope, $window, $modal, note, NotesService) {
     $scope.note = note;
 
     // Add a shortcut to turn it off in the ace instance
@@ -44,9 +46,11 @@ angular.module('notes.show', [
       editor.focus();
     };
 
-    $scope.deleteNote = function() {
-      NotesService.remove($scope.note).then(function() {
-        $state.go('auth.notes');
+    $scope.showDeleteModal = function() {
+      var modal = $modal.open({
+        templateUrl: '/javascripts/pages/notes/show/delete-modal/template.html',
+        controller: 'DeleteModalController',
+        resolve: { note: function() { return $scope.note; } }
       });
     };
 
