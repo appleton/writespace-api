@@ -46,13 +46,22 @@ angular.module('notes.show', [
       editor.focus();
     };
 
-    $scope.showDeleteModal = function() {
-      var modal = $modal.open({
-        templateUrl: '/javascripts/pages/notes/show/delete-modal/template.html',
-        controller: 'DeleteModalController',
-        resolve: { note: function() { return $scope.note; } }
-      });
-    };
+    $scope.showDeleteModal = (function() {
+      var modal;
+      var tmpl = '/javascripts/pages/notes/show/delete-modal/template.html';
+
+      return function() {
+        if (modal) return;
+
+        modal = $modal.open({
+          templateUrl: tmpl,
+          controller: 'DeleteModalController',
+          resolve: { note: function() { return $scope.note; } }
+        });
+
+        modal.result.then(null, function() { modal = null; });
+      };
+    })();
 
     var putNote = _.debounce(function() {
       NotesService.put($scope.note);
