@@ -13,6 +13,10 @@ angular.module('keybinding.directive', [
       },
       link: function(scope) {
         $window.Mousetrap.bind(scope.keys, scope.onPress);
+
+        scope.$on('$destroy', function() {
+          $window.Mousetrap.unbind(scope.keys);
+        });
       }
     };
 
