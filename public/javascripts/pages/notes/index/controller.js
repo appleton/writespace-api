@@ -3,7 +3,6 @@
 angular.module('notes.index', [
   'ui.router',
   'ui.bootstrap',
-  'keyboard.modal',
   'notes.service',
   'sessions.service'
 ]).controller('NotesIndexController', [
@@ -53,14 +52,12 @@ angular.module('notes.index', [
 
     $scope.showKeyboardHints = (function() {
       var modal;
+      var tmpl = '/javascripts/pages/notes/index/keyboard-modal/template.html';
 
       return function() {
         if (modal) return;
 
-        modal = $modal.open({
-          templateUrl: '/javascripts/pages/notes/index/keyboard-modal/template.html',
-          controller: 'KeyboardModalController'
-        });
+        modal = $modal.open({ templateUrl: tmpl });
 
         modal.result.then(null, function() { modal = null; });
       };
