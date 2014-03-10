@@ -49,7 +49,7 @@ gulp.task('components', function() {
 });
 
 gulp.task('html', function() {
-  var env = process.env.NODE_ENV || 'production';
+  var env = process.env.NODE_ENV || 'development';
   var config = require('./config.json')[env];
 
   return gulp.src('./public/index.html')
