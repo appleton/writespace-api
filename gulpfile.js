@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var through = require('through2');
 var gulp = require('gulp');
+var rev = require('gulp-rev');
 var sass = require('gulp-sass');
 var clean = require('gulp-clean');
 var injecter = require('gulp-inject');
@@ -110,6 +111,13 @@ gulp.task('build:html', ['build:compile'], function() {
   return gulp.src('./tmp/index.html')
              .pipe(useref())
              .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build:rev', ['build:html'], function() {
+  return gulp.src(['./dist/*.js', './dist/*.css'])
+    .pipe(clean())
+    .pipe(rev())
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('build', ['build:fonts', 'build:images', 'build:html']);
