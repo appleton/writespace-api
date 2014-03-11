@@ -117,7 +117,9 @@ gulp.task('build:rev', ['build:html'], function() {
   return gulp.src(['./dist/*.js', './dist/*.css'])
     .pipe(clean())
     .pipe(rev())
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist'))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build', ['build:fonts', 'build:images', 'build:html']);
