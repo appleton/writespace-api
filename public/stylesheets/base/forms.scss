@@ -18,6 +18,18 @@
   }
 }
 
+.input--search {
+  display: inline-block;
+  height: 20px;
+  margin: 0;
+  padding-left: $s-m;
+  padding-right: $s-m;
+  width: auto;
+
+  border-radius: 15px;
+  font-size: $t-m;
+}
+
 .label {
   font-size: $t-s;
   font-weight: bold;
