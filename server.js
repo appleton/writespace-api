@@ -32,7 +32,8 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
-  app.use(express.static(path.join(__dirname, 'dist')));
+  var tenMin = 600;
+  app.use(express.static(path.join(__dirname, 'dist'), { maxAge: tenMin }));
 });
 
 function formatError(error) {
