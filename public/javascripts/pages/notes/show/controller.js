@@ -20,7 +20,7 @@ angular.module('notes.show', [
     ];
 
     $scope.onEditorLoaded = function(editor) {
-      editor.setFontSize(20);
+      editor.setFontSize(18);
       editor.setShowPrintMargin(false);
       editor.setHighlightActiveLine(false);
 
