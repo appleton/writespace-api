@@ -7,13 +7,14 @@ angular.module('notes.index', [
   'sessions.service'
 ]).controller('NotesIndexController', [
   '$scope',
+  '$filter',
   '$state',
   '$modal',
   'notes',
   'user',
   'NotesService',
   'SessionsService',
-  function($scope, $state, $modal, notes, user, NotesService, SessionsService) {
+  function($scope, $filter, $state, $modal, notes, user, NotesService, SessionsService) {
     $scope.notes = notes;
     $scope.user = user;
 
@@ -33,6 +34,12 @@ angular.module('notes.index', [
 
     $scope.changeNote = function(isNext) {
       var notes = _($scope.notes).sortBy('updatedAt');
+
+      // Apply view filter if required
+      if ($scope.search.text && $scope.search.text !== '') {
+        notes = $filter('filter')(notes, $scope.search.text);
+      }
+
       if (isNext) notes = notes.reverse();
       notes = notes.value();
 
