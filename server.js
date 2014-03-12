@@ -1,5 +1,6 @@
 'use strict';
 
+var fs = require('fs');
 var path = require('path');
 
 var express = require('express');
@@ -31,7 +32,15 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
-  app.use(express.static(path.join(__dirname, 'dist')));
+  var oneYear = 30758400000;
+  app.use(express.static(path.join(__dirname, 'dist'), { maxAge: oneYear }));
+
+  // This is no good, index.html should be served by connect.static but there's
+  // no way to avoid setting a cache header just for the html
+  app.get('/', function(req, res) {
+    res.set('Cache-Control', 'public, max-age=0');
+    fs.createReadStream('./dist/index.html').pipe(res);
+  });
 });
 
 function formatError(error) {
