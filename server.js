@@ -32,7 +32,7 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
-  var tenMin = 600;
+  var tenMin = 600000;
   app.use(express.static(path.join(__dirname, 'dist'), { maxAge: tenMin }));
 });
 
