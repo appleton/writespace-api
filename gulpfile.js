@@ -6,6 +6,7 @@ var gulp = require('gulp');
 var rev = require('gulp-rev');
 var sass = require('gulp-sass');
 var clean = require('gulp-clean');
+var replace = require('gulp-replace');
 var injecter = require('gulp-inject');
 var bundle = require('gulp-bundle');
 var useref = require('gulp-useref');
@@ -122,7 +123,20 @@ gulp.task('build:rev', ['build:html'], function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build', ['build:fonts', 'build:images', 'build:html']);
+gulp.task('build:replace', ['build:rev'], function() {
+  var replacements = require('./dist/rev-manifest.json');
+
+  return gulp.src('./dist/index.html')
+    .pipe(replace('/application.js', replacements['/application.js']))
+    .pipe(replace('/application.css', replacements['/application.css']))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build:noclean', ['build:fonts', 'build:images', 'build:replace']);
+
+gulp.task('build', ['clean:build'], function() {
+  return gulp.run('build:noclean');
+});
 
 gulp.task('deploy:db', require('./tasks/db-deploy'));
 
