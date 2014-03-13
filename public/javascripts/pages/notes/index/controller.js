@@ -7,14 +7,13 @@ angular.module('notes.index', [
   'sessions.service'
 ]).controller('NotesIndexController', [
   '$scope',
-  '$filter',
   '$state',
   '$modal',
   'notes',
   'user',
   'NotesService',
   'SessionsService',
-  function($scope, $filter, $state, $modal, notes, user, NotesService, SessionsService) {
+  function($scope, $state, $modal, notes, user, NotesService, SessionsService) {
     $scope.notes = notes;
     $scope.user = user;
 
@@ -23,6 +22,7 @@ angular.module('notes.index', [
     };
 
     $scope.addNote = function() {
+      $scope.search.text = '';
       NotesService.post({ text: '' }).then(function(resp) {
         $state.go('auth.notes.show', { id: resp._id });
       });
@@ -37,7 +37,10 @@ angular.module('notes.index', [
 
       // Apply view filter if required
       if ($scope.search.text && $scope.search.text !== '') {
-        notes = $filter('filter')(notes, $scope.search.text);
+        notes = notes.filter(function(note) {
+          note = note.text.toUpperCase();
+          return note.indexOf($scope.search.text.toUpperCase()) !== -1;
+        });
       }
 
       if (isNext) notes = notes.reverse();
