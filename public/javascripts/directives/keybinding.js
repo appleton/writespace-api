@@ -12,7 +12,10 @@ angular.module('keybinding.directive', [
         onPress: '&'
       },
       link: function(scope) {
-        $window.Mousetrap.bind(scope.keys, scope.onPress);
+        $window.Mousetrap.bind(scope.keys, function(ev) {
+          ev && ev.preventDefault && ev.preventDefault();
+          scope.onPress();
+        });
 
         scope.$on('$destroy', function() {
           $window.Mousetrap.unbind(scope.keys);

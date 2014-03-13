@@ -6,6 +6,7 @@ angular.module('notes', [
   'ui.ace',
 
   'keybinding.directive',
+  'setFocus.directive',
   'line.filter',
   'timeAgo.filter',
   'printErrors.filter',

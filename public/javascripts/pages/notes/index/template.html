@@ -2,6 +2,7 @@
 <keybinding keys="n" on-press="addNote()" />
 <keybinding keys="j" on-press="changeNote(true)" />
 <keybinding keys="k" on-press="changeNote(false)" />
+<keybinding keys="/" on-press="focusSearch()" />
 
 <section class="sidebar">
   <header class="sidebar__header">
@@ -9,7 +10,7 @@
       <i class="fa fa-plus"></i>
     </button>
     <input class="input input--search sidebar__header__search" type="search"
-           placeholder="search" ng-model="search.text" />
+           placeholder="search" ng-model="search.text" set-focus="focusSearch" />
   </header>
 
   <div class="sidebar__body">
