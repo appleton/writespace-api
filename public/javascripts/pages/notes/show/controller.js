@@ -14,7 +14,7 @@ angular.module('notes.show', [
     $scope.note = note;
 
     $scope.editorOptions = {
-      mode: 'gfm',
+      mode: 'markdown',
       theme: 'notesy',
       extraKeys: {
         'Enter': 'newlineAndIndentContinueMarkdownList',
