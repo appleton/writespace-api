@@ -13,37 +13,17 @@ angular.module('notes.show', [
   function($scope, $window, $modal, note, NotesService) {
     $scope.note = note;
 
-    // Add a shortcut to turn it off in the ace instance
-    var DISABLE_SHORTCUTS = [
-      { win: 'Ctrl-F', mac: 'Command-F' },
-      { win: 'Ctrl-L', mac: 'Command-L' }
-    ];
-
-    $scope.onEditorLoaded = function(editor) {
-      editor.setFontSize(18);
-      editor.setShowPrintMargin(false);
-      editor.setHighlightActiveLine(false);
-
-      editor.commands.addCommands(DISABLE_SHORTCUTS.map(function(keys) {
-        return {
-          name: 'disable' + keys.mac,
-          bindKey: keys,
-          exec: function disabled() { return false; },
-          readOnly: true
-        };
-      }));
-
-      editor.commands.addCommands([{
-        name: 'unfocus',
-        bindKey: { mac: 'Esc', win: 'Esc' },
-        exec: function unfocus() {
+    $scope.editorOptions = {
+      mode: 'gfm',
+      theme: 'notesy',
+      extraKeys: {
+        'Enter': 'newlineAndIndentContinueMarkdownList',
+        'Esc': function() {
           // Hacky. Focus whatever just to remove it from ace
           $window.document.body.querySelector('button').focus();
-        },
-        readOnly: true
-      }]);
-
-      editor.focus();
+        }
+      },
+      autoFocus: true
     };
 
     $scope.showDeleteModal = (function() {

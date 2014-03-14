@@ -1,4 +1,4 @@
-<keybinding keys="d" on-press="showDeleteModal()" />
+<keybinding keys="d" on-press="showDeleteModal()"></keybinding>
 
 <main class="main">
   <header class="note-actions main__header">
@@ -7,13 +7,7 @@
     </button>
   </header>
 
-  <div class="ace-wrapper">
-      <div ui-ace="{
-        useWrapMode : true,
-        showGutter: false,
-        theme: 'tomorrow',
-        mode: 'markdown',
-        onLoad: onEditorLoaded
-      }" ng-model="note.text"></div>
+  <div class="editor-wrapper">
+      <textarea ui-codemirror="editorOptions" ng-model="note.text"></textarea>
   </div>
 </main>

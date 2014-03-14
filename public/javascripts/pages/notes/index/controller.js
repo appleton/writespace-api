@@ -16,6 +16,7 @@ angular.module('notes.index', [
   function($scope, $state, $modal, notes, user, NotesService, SessionsService) {
     $scope.notes = notes;
     $scope.user = user;
+    $scope.search = {};
 
     $scope.isState = function(id) {
       return $state.is('auth.notes.show', { id: id });

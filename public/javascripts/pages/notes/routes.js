@@ -3,7 +3,7 @@
 angular.module('notes', [
   'ui.router',
   'ui.bootstrap',
-  'ui.ace',
+  'ui.codemirror',
 
   'keybinding.directive',
   'setFocus.directive',

@@ -7,6 +7,7 @@
   <!-- build:css /application.css -->
   <link rel="stylesheet" href="/components/normalize-css/normalize.css"></link>
   <link rel="stylesheet" href="/components/font-awesome/css/font-awesome.css"></link>
+  <link rel="stylesheet" href="/components/codemirror/lib/codemirror.css">
   <link rel="stylesheet" href="/components/bootstrap/bootstrap.css"></link>
   <!-- inject:css -->
   <!-- endinject -->
@@ -25,10 +26,21 @@
   <script src="/components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="/components/pouchdb-nightly.min.js/index.js"></script>
   <script src="/components/angular-pouchdb/angular-pouchdb.js"></script>
-  <script src="/components/ace-builds/src-min-noconflict/ace.js"></script>
-  <script src="/components/ace-builds/src-min-noconflict/theme-tomorrow.js"></script>
-  <script src="/components/ace-builds/src-min-noconflict/mode-markdown.js"></script>
-  <script src="/components/angular-ui-ace/ui-ace.min.js"></script>
+
+  <script src="/components/codemirror/lib/codemirror.js"></script>
+  <script src="/components/codemirror/addon/mode/overlay.js"></script>
+  <script src="/components/codemirror/mode/xml/xml.js"></script>
+  <script src="/components/codemirror/mode/markdown/markdown.js"></script>
+  <script src="/components/codemirror/mode/gfm/gfm.js"></script>
+  <script src="/components/codemirror/mode/javascript/javascript.js"></script>
+  <script src="/components/codemirror/mode/css/css.js"></script>
+  <script src="/components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="/components/codemirror/mode/clike/clike.js"></script>
+
+
+  <script src="/components/codemirror/addon/edit/continuelist.js"></script>
+
+  <script src="/components/angular-ui-codemirror/ui-codemirror.js"></script>
   <script src="/components/angular-ui-bootstrap/ui-bootstrap-custom-tpls-0.10.0.js"></script>
   <script src="/components/mousetrap/mousetrap.min.js"></script>
 
