@@ -24,7 +24,7 @@
 
 .cm-s-notesy {
   &.CodeMirror {
-    background: #F8F8F8;
+    background: #fcfcfc;
     color: #424242;
   }
 
@@ -37,15 +37,7 @@
     background: #B6D6FD;
   }
 
-  .cm-link {
-    color: #929292;
-  }
-
   .cm-string {
-    color: #929292;
-  }
-
-  .cm-tag {
     color: #929292;
   }
 }
