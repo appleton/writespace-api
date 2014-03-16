@@ -50,7 +50,7 @@ angular.module('notes.show', [
       NotesService.put($scope.note);
     }, 1000);
 
-    $scope.$watchCollection('note.text', putNote);
+    $scope.$watch('note.text', putNote);
 
   }
 ]);
