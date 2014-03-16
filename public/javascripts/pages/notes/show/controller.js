@@ -16,14 +16,17 @@ angular.module('notes.show', [
     $scope.editorOptions = {
       mode: 'markdown',
       theme: 'notesy',
+      lineWrapping: true,
       extraKeys: {
         'Enter': 'newlineAndIndentContinueMarkdownList',
         'Esc': function() {
-          // Hacky. Focus whatever just to remove it from ace
+          // Hacky. Focus whatever just to remove focus from the editor
           $window.document.body.querySelector('button').focus();
         }
       },
-      autoFocus: true
+      onLoad: function(editor) {
+        $scope.focusEditor = function() { editor.focus(); };
+      }
     };
 
     $scope.showDeleteModal = (function() {
