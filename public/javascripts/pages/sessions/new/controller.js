@@ -12,11 +12,13 @@ angular.module('sessions.new', [
 
     $scope.login = function() {
       delete $scope.error;
+      $scope.formDisabled = true;
 
       SessionsService.create($scope.form).then(function() {
         $state.go('auth.notes');
       }).catch(function(err) {
         $scope.error = err.data.reason;
+        $scope.formDisabled = false;
       });
     };
 

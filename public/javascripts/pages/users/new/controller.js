@@ -13,6 +13,8 @@ angular.module('users.new', [
     $scope.form = {};
 
     $scope.createUser = function() {
+      $scope.formDisabled = true;
+
       UsersService.create($scope.form).then(function() {
         var user = { name: $scope.form.email, password: $scope.form.password };
 
@@ -21,6 +23,7 @@ angular.module('users.new', [
         });
       }).catch(function(err) {
         if (err.data && err.data.errors) $scope.errors = err.data.errors;
+        $scope.formDisabled = false;
       });
     };
 
