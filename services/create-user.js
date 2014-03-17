@@ -19,7 +19,7 @@ function createUser(user) {
     // Retry on failure unless the user already exists
     if (err.status_code !== 409) return createUser(user);
 
-    err.message = 'User already exitsts';
+    err.message = 'User already exists';
     throw err;
   });
 }
