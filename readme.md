@@ -17,3 +17,4 @@ NB: if using nginx, you'll need to add this to your /etc/hosts:
 ## Stop
 1. Kill couch: `docker stop couch`
 2. Kill nginx: `sudo nginx stop`
+
