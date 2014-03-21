@@ -9,6 +9,7 @@ dotenv.load();
 
 var userValidation = require('./middleware/user-validator');
 var createUser = require('./services/create-user');
+var resetPassword = require('./services/reset-password');
 
 var app = express();
 
@@ -46,6 +47,17 @@ app.post('/users', userValidation, function(req, res) {
     res.json(201, user);
   }).catch(function(err) {
     console.log('User creation error: ', err);
+    res.json(422, formatError(err));
+  });
+});
+
+app.post('/users/passwords/new', function(req, res) {
+  req.accepts('application/json');
+
+  // TODO: send an email with the link
+  resetPassword.generateFor(req.body.email).then(function() {
+    res.json(201);
+  }).catch(function(err) {
     res.json(422, formatError(err));
   });
 });
