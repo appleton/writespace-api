@@ -1,46 +1,56 @@
 'use strict';
 
 var crypto = require('crypto');
-var _ = require('lodash');
 var Q = require('q');
+var qretry = require('./qretry');
 var nano = require('../db/couch');
 var users = nano.db.use('_users');
+
+var RETRY_POLICY = {
+  maxRetry: 5,
+  interval: 200,
+  intervalMultiplicator: 1
+};
 
 function generateNotesDbName(email) {
   email = (email || '');
   return 'notes_' + crypto.createHash('sha1').update(email).digest('hex');
 }
 
+// Insert a new user document.
+// On failure:
+//   - if it's a duplicate, error immediately
+//   - if it fails for some other reason, retry according to the policy
 function createUser(user) {
-  return Q.ninvoke(users, 'insert', user).catch(function(err) {
-    var _user = _.assign(_.clone(user), { password: '[FILTERED]' });
-    console.log('User creation error: ', _user, err);
+  function create(user) {
+    return Q.ninvoke(users, 'insert', user);
+  }
 
-    // Retry on failure unless the user already exists
-    if (err.status_code !== 409) return createUser(user);
+  return create(user).catch(function(err) {
+    // Start retrying on failure unless the user already exists
+    if (err.status_code !== 409) {
+      return qretry(function() { return create(user); }, RETRY_POLICY);
+    }
 
+    // Bail immediately if user already exists
     err.message = 'User already exists';
     throw err;
   });
 }
 
 function createNotesDb(dbName) {
-  return Q.ninvoke(nano.db, 'create', dbName).catch(function(err) {
-    console.log('Notes db creation error: ', dbName, err);
-    return createNotesDb(dbName);
-  });
+  return qretry(function() {
+    return Q.ninvoke(nano.db, 'create', dbName);
+  }, RETRY_POLICY);
 }
 
 function setNotesDbPermissions(user) {
   var notes = nano.use(user.notes_db);
   var securityDesign = { readers: { names: [ user.name ], roles: [] } };
 
-  return Q.ninvoke(notes, 'insert', securityDesign, '_security')
-    .catch(function(err) {
-      var _user = _.assign(_.clone(user), { password: '[FILTERED]' });
-      console.log('Notes db permissions error: ', _user, err);
-      return setNotesDbPermissions(user);
-    });
+  return qretry(function() {
+    return Q.ninvoke(notes, 'insert', securityDesign, '_security');
+  }, RETRY_POLICY);
 }
 
 module.exports = function(params) {

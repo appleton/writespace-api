@@ -45,6 +45,7 @@ app.post('/users', userValidation, function(req, res) {
   createUser(req.body).then(function(user) {
     res.json(201, user);
   }).catch(function(err) {
+    console.log('User creation error: ', err);
     res.json(422, formatError(err));
   });
 });
