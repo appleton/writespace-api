@@ -9,8 +9,13 @@ angular.module('passwords.service', [
       return $http.post('/users/passwords', user);
     }
 
+    function update(data) {
+      return $http.post('/users/passwords/edit', data);
+    }
+
     return {
-      create: create
+      create: create,
+      update: update
     };
   }
 ]);

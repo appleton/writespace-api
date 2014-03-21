@@ -58,13 +58,21 @@ app.post('/users/passwords', function(req, res) {
   var email = req.body.email;
 
   passwordReset.generateFor(email).then(function(token) {
-    var link = 'http://app.notesy.co/users/passwords/edit?token=' + token;
+    var link = 'http://app.notesy.co/users/passwords/edit/' + token;
     userMailer.passwordReset(email, { resetLink: link }).deliver();
 
     res.json(201, { msg: 'A password reset link has been sent to ' + email });
   }).catch(function(err) {
     res.json(422, formatError(err));
   });
+});
+
+app.post('/users/passwords/edit', function(req, res) {
+  req.accepts('application/json');
+
+  // TODO: change password!
+  console.log(req.body);
+  res.json(201, { msg: 'Password updated succesfully' });
 });
 
 module.exports = app;
