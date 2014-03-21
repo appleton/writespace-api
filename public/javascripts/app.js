@@ -7,6 +7,7 @@ angular.module('notesy', [
   'notes',
   'users',
   'sessions',
+  'passwords',
 
   'auth.interceptor'
 ]).config([
