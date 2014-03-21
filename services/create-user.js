@@ -41,7 +41,12 @@ function createUser(user) {
 function createNotesDb(dbName) {
   return qretry(function() {
     return Q.ninvoke(nano.db, 'create', dbName);
-  }, RETRY_POLICY);
+  }, RETRY_POLICY).catch(function(err) {
+    console.log('Error creating notes db: ', err);
+    err.message = 'Sorry, there was an error creating your account. ' +
+                  'We are looking into it';
+    throw err;
+  });
 }
 
 function setNotesDbPermissions(user) {
@@ -50,7 +55,9 @@ function setNotesDbPermissions(user) {
 
   return qretry(function() {
     return Q.ninvoke(notes, 'insert', securityDesign, '_security');
-  }, RETRY_POLICY);
+  }, RETRY_POLICY).catch(function(err) {
+    console.log('Error setting security policy: ', err);
+  });
 }
 
 module.exports = function(params) {
