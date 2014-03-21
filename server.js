@@ -9,7 +9,8 @@ dotenv.load();
 
 var userValidation = require('./middleware/user-validator');
 var createUser = require('./services/create-user');
-var resetPassword = require('./services/reset-password');
+var passwordReset = require('./services/password-reset');
+var userMailer = require('./mailers/user-mailer');
 
 var app = express();
 
@@ -51,12 +52,16 @@ app.post('/users', userValidation, function(req, res) {
   });
 });
 
-app.post('/users/passwords/new', function(req, res) {
+app.post('/users/passwords', function(req, res) {
   req.accepts('application/json');
 
-  // TODO: send an email with the link
-  resetPassword.generateFor(req.body.email).then(function() {
-    res.json(201);
+  var email = req.body.email;
+
+  passwordReset.generateFor(email).then(function(token) {
+    var link = 'http://app.notesy.co/users/passwords/edit?token=' + token;
+    userMailer.passwordReset(email, { resetLink: link }).deliver();
+
+    res.json(201, { msg: 'A password reset link has been sent to ' + email });
   }).catch(function(err) {
     res.json(422, formatError(err));
   });

@@ -13,7 +13,7 @@ var adminUser = process.env.COUCH_URL.split(/https?:\/\//)[1].split(':')[0];
 // Create the db and set security permissions if necessary
 function createTokensDb() {
   return Q.ninvoke(nano.db, 'list').then(function(res) {
-    var exists = res.indexOf(TOKENS_DB) !== -1;
+    var exists = res[0].indexOf(TOKENS_DB) !== -1;
     if (exists) return;
     return Q.ninvoke(nano.db, 'create', TOKENS_DB);
   }).then(function() {
@@ -54,7 +54,9 @@ function generateFor(email) {
       createdAt: (new Date()).toString()
     };
 
-    return Q.ninvoke(tokens, 'insert', tokenDocument);
+    return Q.ninvoke(tokens, 'insert', tokenDocument).then(function() {
+      return token;
+    });
   });
 }
 
