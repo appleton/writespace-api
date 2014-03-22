@@ -16,7 +16,7 @@
 <body ng-app="notesy">
   <div ng-controller="AlertController">
     <alert ng-repeat="alert in appAlerts" type="{{ alert.type }}" close="closeAlert($index)">
-      {{ alert.message }}
+      <span ng-bind="alert.message"></span>
     </alert>
   </div>
 
