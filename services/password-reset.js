@@ -43,6 +43,48 @@ function generateFor(email) {
   });
 }
 
+function validateResetCutoff(token) {
+  return Q.ninvoke(tokens, 'get', token).then(function(resp) {
+    var doc = resp[0];
+
+    // Reset tokens are only valid for an hour
+    var createdAt = new Date(doc.createdAt);
+    var cutoff = new Date(createdAt.getTime() + (1 * 60 * 60 * 1000));
+    var now = new Date();
+
+    if (now > cutoff) {
+      throw new Error('Password reset token has expired. ' +
+                      'Please reset your password within an hour');
+    }
+    return doc;
+  }).catch(function(err) {
+    err.message = 'Invalid reset token';
+    throw err;
+  });
+}
+
+function changePasswordFor(userId, password) {
+  return Q.ninvoke(users, 'get', userId).then(function(resp) {
+    var doc = resp[0];
+    doc.password = password;
+    return Q.ninvoke(users, 'insert', doc);
+  });
+}
+
+function deleteToken(tokenDocument) {
+  return Q.ninvoke(tokens, 'destroy', tokenDocument._id, tokenDocument._rev);
+}
+
+function reset(params) {
+  return validateResetCutoff(params.token).then(function(tokenDocument) {
+    return changePasswordFor(tokenDocument.user, params.password)
+      .then(function() {
+        return deleteToken(tokenDocument);
+      });
+  });
+}
+
 module.exports = {
-  generateFor: generateFor
+  generateFor: generateFor,
+  reset: reset
 };

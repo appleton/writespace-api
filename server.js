@@ -70,9 +70,11 @@ app.post('/users/passwords', function(req, res) {
 app.post('/users/passwords/edit', function(req, res) {
   req.accepts('application/json');
 
-  // TODO: change password!
-  console.log(req.body);
-  res.json(201, { msg: 'Password updated succesfully' });
+  passwordReset.reset(req.body).then(function() {
+    res.json(201, { msg: 'Password updated succesfully' });
+  }).catch(function(err) {
+    res.json(422, formatError(err));
+  });
 });
 
 module.exports = app;
