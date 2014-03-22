@@ -37,8 +37,9 @@ function generateFor(email) {
       createdAt: (new Date()).toString()
     };
 
-    return Q.ninvoke(tokens, 'insert', tokenDocument).then(function() {
-      return token;
+    return Q.ninvoke(tokens, 'insert', tokenDocument).then(function(res) {
+      var doc = res[0];
+      return doc.id;
     });
   });
 }
