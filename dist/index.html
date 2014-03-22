@@ -4,15 +4,21 @@
 
   <title>Notesy</title>
 
-  <link rel="stylesheet" href="/application-d358db45.css"/>
+  <link rel="stylesheet" href="/application-955a465d.css"/>
 </head>
 <body ng-app="notesy">
+  <div ng-controller="AlertController">
+    <alert ng-repeat="alert in appAlerts" type="{{ alert.type }}" close="closeAlert($index)">
+      {{ alert.message }}
+    </alert>
+  </div>
+
   <ui-view autoscroll="false"></ui-view>
 
   <script>
     window.CONFIG = { COUCH_URL: 'http://db.notesy.co' };
   </script>
 
-  <script src="/application-e6c218c9.js"></script>
+  <script src="/application-552aab97.js"></script>
 </body>
 </html>
