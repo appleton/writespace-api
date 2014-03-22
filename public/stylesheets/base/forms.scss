@@ -41,3 +41,10 @@
   color: $c-red;
   text-align: center;
 }
+
+.form-message {
+  padding: $s-xxs $s-m;
+  background: rgba($c-green, 0.1);
+  color: $c-green;
+  text-align: center;
+}

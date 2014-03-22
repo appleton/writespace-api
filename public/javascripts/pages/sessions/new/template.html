@@ -4,10 +4,11 @@
   <form novalidate class="user-form__body" ng-submit="login()">
 
     <label class="label" for="email">Email address</label>
-    <input class="input" type="email" ng-model="form.name" />
+    <input id="email" name="email" class="input" type="email" ng-model="form.name" />
 
-    <label class="label" for="email">Password</label>
-    <input class="input" type="password" ng-model="form.password" />
+    <label class="label" for="password">Password</label>
+    <a class="u-text-s" ui-sref="passwords.new()">Forgot?</a>
+    <input id="password" name="password" class="input" type="password" ng-model="form.password" />
 
     <button class="user-form__body__btn btn btn--green btn--large" ng-disabled="formDisabled">
       Log in

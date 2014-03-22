@@ -14,6 +14,12 @@
   <!-- endbuild -->
 </head>
 <body ng-app="notesy">
+  <div ng-controller="AlertController">
+    <alert ng-repeat="alert in appAlerts" type="{{ alert.type }}" close="closeAlert($index)">
+      {{ alert.message }}
+    </alert>
+  </div>
+
   <ui-view autoscroll="false"></ui-view>
 
   <script>
