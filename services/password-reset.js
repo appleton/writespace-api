@@ -4,23 +4,8 @@ var crypto = require('crypto');
 var Q = require('q');
 var nano = require('../db/couch');
 
-var TOKENS_DB = 'password_reset_tokens';
-
-var tokens = nano.db.use(TOKENS_DB);
 var users = nano.db.use('_users');
-var adminUser = process.env.COUCH_URL.split(/https?:\/\//)[1].split(':')[0];
-
-// Create the db and set security permissions if necessary
-function createTokensDb() {
-  return Q.ninvoke(nano.db, 'list').then(function(res) {
-    var exists = res[0].indexOf(TOKENS_DB) !== -1;
-    if (exists) return;
-    return Q.ninvoke(nano.db, 'create', TOKENS_DB);
-  }).then(function() {
-    var securityDesign = { readers: { names: [adminUser], roles: [] } };
-    return Q.ninvoke(tokens, 'insert', securityDesign, '_security');
-  });
-}
+var tokens = nano.db.use('password_reset_tokens');
 
 function newToken() {
   Q.ninvoke(crypto, 'randomBytes', 24).then(function(buffer) {
@@ -44,8 +29,6 @@ function checkUserExists(email) {
 
 function generateFor(email) {
   return checkUserExists(email).then(function() {
-    return createTokensDb();
-  }).then(function() {
     return newToken();
   }).then(function(token) {
     var tokenDocument = {
