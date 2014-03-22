@@ -24,6 +24,12 @@ app.configure(function(){
   app.use(expressValidator());
   app.use(app.router);
   app.use(require('./middleware/serve-ng'));
+  app.use(function(req, res, next) {
+    if (path.extname(req.path) === 'manifest') {
+      res.header('Content-Type', 'text/cache-manifest');
+    }
+    next();
+  });
 });
 
 // Environment specific app configuration

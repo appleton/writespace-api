@@ -11,6 +11,7 @@ var injecter = require('gulp-inject');
 var bundle = require('gulp-bundle');
 var useref = require('gulp-useref');
 var template = require('gulp-template');
+var manifest = require('gulp-manifest');
 var templateCache = require('gulp-angular-templatecache');
 
 var server = require('./server');
@@ -137,10 +138,29 @@ gulp.task('build:replace', ['build:rev'], function() {
     .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('build:manifest', ['build:noclean'], function() {
+  var src = [
+    './dist/**/*.eot', './dist/**/*.svg', './dist/**/*.ttf', './dist/**/*.woff',
+    './dist/**/*.otf', './dist/**/*.png', './dist/**/*.jpg', './dist/**/*.gif',
+    './dist/**/*.js', './dist/**/*.css'
+  ];
+
+  return gulp.src(src)
+    .pipe(manifest({
+      hash: true,
+      preferOnline: true,
+      network: ['http://*', 'https://*', '*'],
+      filename: 'app.manifest',
+      exclude: 'app.manifest',
+      absolutePaths: true
+    }))
+    .pipe(gulp.dest('./dist'));
+});
+
 gulp.task('build:noclean', ['build:fonts', 'build:images', 'build:replace']);
 
 gulp.task('build', ['clean:build'], function() {
-  return gulp.run('build:noclean');
+  return gulp.run('build:manifest');
 });
 
 gulp.task('deploy:db', require('./tasks/db-deploy'));

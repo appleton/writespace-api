@@ -21,7 +21,8 @@
     "gulp-clean": "^0.2.4",
     "gulp-template": "^0.1.1",
     "gulp-rev": "^0.3.0",
-    "gulp-replace": "^0.2.0"
+    "gulp-replace": "^0.2.0",
+    "gulp-manifest": "git+ssh://git@github.com/mrappleton/gulp-manifest"
   },
   "dependencies": {
     "express": "~3.4.8",
