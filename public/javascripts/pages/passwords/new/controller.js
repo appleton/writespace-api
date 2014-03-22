@@ -1,20 +1,22 @@
 'use strict';
 
 angular.module('passwords.new', [
-  'passwords.service'
+  'passwords.service',
+  'alert.service'
 ]).controller('PasswordsNewController', [
   '$scope',
+  '$state',
   'PasswordsService',
-  function($scope, PasswordsService) {
+  'AlertService',
+  function($scope, $state, PasswordsService, AlertService) {
     $scope.form = {};
 
     $scope.resetPassword = function() {
       $scope.formDisabled = true;
 
       PasswordsService.create($scope.form).then(function(resp) {
-        $scope.message = resp.data.msg;
-        delete $scope.errors;
-        $scope.formDisabled = false;
+        AlertService.success(resp.data.msg);
+        $state.go('sessions');
       }).catch(function(err) {
         delete $scope.message;
         if (err.data && err.data.errors) $scope.errors = err.data.errors;

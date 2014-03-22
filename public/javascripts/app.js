@@ -9,7 +9,8 @@ angular.module('notesy', [
   'sessions',
   'passwords',
 
-  'auth.interceptor'
+  'auth.interceptor',
+  'alert.directive'
 ]).config([
   '$locationProvider',
   function($locationProvider) {
