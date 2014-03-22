@@ -25,6 +25,7 @@ angular.module('users.service', [
         var url = COUCH_URL + '/_users/' + $window.encodeURIComponent(slug);
 
         return $http.get(url, { withCredentials: true }).then(function(user) {
+          $window.localStorage.setItem('notesyUser', JSON.stringify(user.data));
           return user.data;
         });
       });

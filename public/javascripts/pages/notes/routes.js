@@ -23,9 +23,17 @@ angular.module('notes', [
       user: [
         'UsersService',
         '$state',
-        function(UsersService, $state) {
+        '$window',
+        function(UsersService, $state, $window) {
           return UsersService.get().catch(function(err) {
+            // Go to login if we're not authed
             if (err.status === 401) $state.go('sessions');
+
+            // If we're offline, try to return user data from localStorage
+            if (err.status === 404) {
+              var user = $window.localStorage.getItem('notesyUser');
+              if (user) return JSON.parse(user);
+            }
           });
         }
       ]

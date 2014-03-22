@@ -23,6 +23,7 @@ angular.module('sessions.service', [
     function destroy() {
       var url = COUCH_URL + '/_session';
       return $http.delete(url, { withCredentials: true }).then(function() {
+        $window.localStorage.removeItem('notesyUser');
         // full page refresh to cancel continuous replication
         $window.location = '/users/login';
       });
