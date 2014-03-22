@@ -1,19 +1,22 @@
 'use strict';
 
 angular.module('passwords.edit', [
-  'passwords.service'
+  'passwords.service',
+  'alert.service'
 ]).controller('PasswordsEditController', [
   '$scope',
   '$state',
   '$stateParams',
   'PasswordsService',
-  function($scope, $state, $stateParams, PasswordsService) {
+  'AlertService',
+  function($scope, $state, $stateParams, PasswordsService, AlertService) {
     $scope.form = { token: $stateParams.token };
 
     $scope.editPassword = function() {
       $scope.formDisabled = true;
 
-      PasswordsService.update($scope.form).then(function() {
+      PasswordsService.update($scope.form).then(function(resp) {
+        AlertService.success(resp.data.msg);
         $state.go('sessions');
       }).catch(function(err) {
         delete $scope.message;

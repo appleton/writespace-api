@@ -71,7 +71,7 @@ app.post('/users/passwords/edit', function(req, res) {
   req.accepts('application/json');
 
   passwordReset.reset(req.body).then(function() {
-    res.json(201, { msg: 'Password updated succesfully' });
+    res.json(201, { msg: 'Password updated successfully' });
   }).catch(function(err) {
     res.json(422, formatError(err));
   });
