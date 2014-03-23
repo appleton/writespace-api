@@ -10,6 +10,7 @@ angular.module('notesy', [
   'passwords',
 
   'auth.interceptor',
+  'offline.interceptor',
   'alert.directive'
 ]).config([
   '$locationProvider',
