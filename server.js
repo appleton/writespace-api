@@ -40,8 +40,18 @@ app.configure('development', function(){
 });
 
 app.configure('production', function(){
-  var tenMin = 600000;
-  app.use(express.static(path.join(__dirname, 'dist'), { maxAge: tenMin }));
+  // Far future caching for js and css
+  var oneYearInSeconds = 31536000;
+
+  app.use(function(req, res, next) {
+    var ext = path.extname(req.path);
+    if (ext === '.js' || ext === '.css') {
+      res.setHeader('Cache-Control', 'public, max-age=' + oneYearInSeconds);
+    }
+    return next();
+  });
+
+  app.use(express.static(path.join(__dirname, 'dist')));
 });
 
 function formatError(error) {
