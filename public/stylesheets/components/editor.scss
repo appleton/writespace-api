@@ -9,16 +9,24 @@
   height: 100%;
 }
 
-.CodeMirror {
+.CodeMirror, .editor {
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   height: auto;
+  width: 100%;
+  border: none;
+  background: #fcfcfc;
   font-size: 18px;
   font-family: "Source code pro", "Inconsolata-dz", "Inconsolata", "Menlo", "Ubuntu Mono", "Consolas", monospace;
   line-height: 25px;
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .cm-s-notesy {

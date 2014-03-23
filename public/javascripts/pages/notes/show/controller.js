@@ -13,6 +13,10 @@ angular.module('notes.show', [
   function($scope, $window, $modal, note, NotesService) {
     $scope.note = note;
 
+    $scope.isTouch = ('ontouchstart' in $window) ||
+                     ($window.DocumentTouch &&
+                      $window.document instanceof $window.DocumentTouch);
+
     $scope.editorOptions = {
       mode: 'markdown',
       theme: 'notesy',
