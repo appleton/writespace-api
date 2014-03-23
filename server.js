@@ -20,7 +20,8 @@ app.configure(function(){
   app.use(express.compress());
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  app.use(express.json());
+  app.use(express.urlencoded());
   app.use(expressValidator());
   app.use(app.router);
   app.use(require('./middleware/serve-ng'));
