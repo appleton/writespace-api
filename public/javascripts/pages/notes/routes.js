@@ -7,6 +7,7 @@ angular.module('notes', [
 
   'keybinding.directive',
   'setFocus.directive',
+  'initFocus.directive',
   'line.filter',
   'timeAgo.filter',
   'printErrors.filter',
