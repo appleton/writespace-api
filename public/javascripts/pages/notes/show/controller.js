@@ -26,6 +26,7 @@ angular.module('notes.show', [
       },
       onLoad: function(editor) {
         $scope.focusEditor = function() { editor.focus(); };
+        $scope.focusEditor();
       }
     };
 
