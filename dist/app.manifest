@@ -16,7 +16,7 @@ CACHE:
 /fonts/FontAwesome.otf
 /images/arrow.png
 /application-124a3491.js
-/application-04bd7ba0.css
+/application-e580f9b9.css
 
 
 NETWORK:
@@ -28,4 +28,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: a9f12810c85290de4ab3a87fb2dd85d6e2ceaf66cea73a2864a87b40a4fa17f4
+# hash: 6bfc5407aee003bc6863150aa297e13c62ab95a411edcbf35cf1f35a6db51102
