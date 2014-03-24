@@ -9,8 +9,10 @@
     <button class="action u-c-light-grey" ng-click="addNote()">
       <i class="fa fa-plus"></i>
     </button>
-    <input class="input input--search sidebar__header__search" type="search"
-           placeholder="search" ng-model="search.text" set-focus="focusSearch" />
+    <div class="sidebar__header__search">
+      <input class="input input--search" type="search"
+             placeholder="search" ng-model="search.text" set-focus="focusSearch" />
+    </div>
   </header>
 
   <div class="sidebar__body">

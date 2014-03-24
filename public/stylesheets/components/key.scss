@@ -1,4 +1,5 @@
 @import "base/colours.scss";
+@import "base/media-queries.scss";
 
 .key {
   display: inline-block;
@@ -15,4 +16,10 @@
 .key-list {
   list-style: none;
   padding: 0;
+}
+
+.key-hint {
+  @include respond-to(mobile) {
+    display: none;
+  }
 }

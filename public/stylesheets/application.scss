@@ -1,4 +1,5 @@
 @import "base/colours.scss";
+@import "base/media-queries.scss";
 
 *, *:before, *:after {
     -webkit-box-sizing: border-box;
@@ -15,4 +16,9 @@ html {
 body {
   margin: 0;
   padding: 0;
+
+  @include respond-to(mobile) {
+    max-width: 100%;
+    overflow: hidden;
+  }
 }
