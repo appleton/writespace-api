@@ -31,7 +31,7 @@ angular.module('notes', [
             if (err.status === 401) $state.go('sessions');
 
             // If we're offline, try to return user data from localStorage
-            if (err.status === 404) {
+            if (err.status === 0 || !$window.navigator.onLine) {
               var user = $window.localStorage.getItem('notesyUser');
               if (user) return JSON.parse(user);
             }
