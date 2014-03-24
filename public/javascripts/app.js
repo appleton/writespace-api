@@ -22,11 +22,15 @@ angular.module('notesy', [
   '$window',
   function($rootScope, $window) {
     $window.addEventListener('online', function() {
-      $rootScope.$broadcast('online');
+      $rootScope.$apply(function() {
+        $rootScope.$broadcast('online');
+      });
     });
 
     $window.addEventListener('offline', function() {
-      $rootScope.$broadcast('offline');
+      $rootScope.$apply(function() {
+        $rootScope.$broadcast('offline');
+      });
     });
   }
 ]);
