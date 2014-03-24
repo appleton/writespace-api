@@ -6,6 +6,7 @@ angular.module('notes.service', [
   'NotesResource',
   function(NotesResource){
     var notes;
+    var _NotesResource = NotesResource;
 
     // Private functions
     function findInCache(id) {
@@ -67,6 +68,10 @@ angular.module('notes.service', [
       NotesResource.changes({ continuous: true, onChange: onChange });
     }
 
+    function replicate(dbName) {
+      _NotesResource.replicate(dbName);
+    }
+
     function allDocs() {
       return NotesResource.allDocs({ include_docs: true }).then(function(resp) {
         _.each(_.pluck(resp.rows, 'doc'), function(newNote) {
@@ -120,6 +125,7 @@ angular.module('notes.service', [
 
     return {
       init: init,
+      replicate: replicate,
       allDocs: allDocs,
       get: get,
       put: put,

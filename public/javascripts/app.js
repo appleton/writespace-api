@@ -17,4 +17,16 @@ angular.module('notesy', [
   function($locationProvider) {
     $locationProvider.html5Mode(true);
   }
+]).run([
+  '$rootScope',
+  '$window',
+  function($rootScope, $window) {
+    $window.addEventListener('online', function() {
+      $rootScope.$broadcast('online');
+    });
+
+    $window.addEventListener('offline', function() {
+      $rootScope.$broadcast('offline');
+    });
+  }
 ]);

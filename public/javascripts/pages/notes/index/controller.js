@@ -73,5 +73,10 @@ angular.module('notes.index', [
         modal.result.then(null, function() { modal = null; });
       };
     })();
+
+    // Restart replication when we go back online
+    $scope.$on('online', function() {
+      NotesService.replicate($scope.user.notes_db);
+    });
   }
 ]);

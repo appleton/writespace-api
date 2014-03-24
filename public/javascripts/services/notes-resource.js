@@ -12,6 +12,12 @@ angular.module('notes.resource', [
 
     function init(dbName) {
       var notes = pouchdb.create(dbName);
+      replicate(dbName);
+
+      return notes;
+    }
+
+    function replicate(dbName) {
       var remote = COUCH_URL + '/' + dbName;
 
       pouchdb.replicate(dbName, remote, {
@@ -32,12 +38,11 @@ angular.module('notes.resource', [
         continuous: true,
         create_target: true
       });
-
-      return notes;
     }
 
     return {
-      init: init
+      init: init,
+      replicate: replicate
     };
 
   }
