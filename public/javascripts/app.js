@@ -32,5 +32,13 @@ angular.module('notesy', [
         $rootScope.$broadcast('offline');
       });
     });
+
+    var pageChangeCount = 0;
+    $rootScope.$on('$stateChangeSuccess', function() {
+      if ('_gauges' in $window && pageChangeCount > 0) {
+        $window._gauges.push(['track']);
+      }
+      pageChangeCount++;
+    });
   }
 ]);
