@@ -13,6 +13,7 @@
     "normalize-css": "~3.0.0",
     "font-awesome": "~4.0.3",
     "mousetrap": "~1.4.6",
-    "angular-ui-codemirror": "~0.1.0"
+    "angular-ui-codemirror": "~0.1.0",
+    "dropbox-js": "http://cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js"
   }
 }

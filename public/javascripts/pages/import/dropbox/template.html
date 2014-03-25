@@ -1,0 +1,18 @@
+<button ng-if="!isAuthenticated" ng-click="authenticate()">
+  Connect to dropbox
+</button>
+
+<ul ng-if="isAuthenticated">
+  <li ng-repeat="file in files | orderBy:'name'">
+    <span ng-if="file.isFolder" class="fa fa-folder"></span>
+    <span ng-if="file.isFile" class="fa fa-file-o"></span>
+    <a ng-if="file.isFolder" ui-sref="import.dropbox({ path: file.path })">
+      {{file.name}}
+    </a>
+    <span ng-if="file.isFile">{{file.name}}</span>
+
+    <button ng-if="file.isFolder" ng-click="importFrom()">
+      Import <span ng-if="file.isFolder">this folder</span>
+    </button>
+  </li>
+</ul>
