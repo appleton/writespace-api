@@ -18,3 +18,6 @@ NB: if using nginx, you'll need to add this to your /etc/hosts:
 1. Kill couch: `docker stop couch`
 2. Kill nginx: `sudo nginx stop`
 
+## Access production Couchdb admin
+`ssh -NL 49001:localhost:49001 notesy.do`
+`open localhost:49001/_utils`
