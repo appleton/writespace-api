@@ -11,7 +11,7 @@
       <span ng-if="path.isCurrent">{{path.name}}</span>
     </span>
   </li>
-  <li ng-repeat="file in files | orderBy:'name'">
+  <li ng-repeat="file in files | orderBy:['isFile', 'name']">
     <span ng-if="file.isFolder" class="fa fa-folder"></span>
     <span ng-if="file.isFile" class="fa fa-file-o"></span>
     <a ng-if="file.isFolder" ui-sref="import.dropbox({ path: file.path })">
