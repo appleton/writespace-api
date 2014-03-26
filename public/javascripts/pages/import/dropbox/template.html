@@ -4,10 +4,12 @@
 
 <ul ng-if="isAuthenticated">
   <li>
-    <a ng-if="!isRoot" ui-sref="import.dropbox({ path: parentPath })">
-      /Dropbox{{parentPath}}
-    </a>
-    <span ng-if="isRoot">/Dropbox</span>
+    <span ng-repeat="path in parents">
+      <a ng-if="!path.isCurrent" ui-sref="import.dropbox({ path: path.path })">
+        {{path.name}}
+      </a>
+      <span ng-if="path.isCurrent">{{path.name}}</span>
+    </span>
   </li>
   <li ng-repeat="file in files | orderBy:'name'">
     <span ng-if="file.isFolder" class="fa fa-folder"></span>
