@@ -11,10 +11,7 @@ angular.module('notes.resource', [
     var COUCH_URL = $window.CONFIG.COUCH_URL;
 
     function init(dbName) {
-      var notes = pouchdb.create(dbName);
-      replicate(dbName);
-
-      return notes;
+      return pouchdb.create(dbName);
     }
 
     function replicate(dbName) {

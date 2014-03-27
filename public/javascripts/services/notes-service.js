@@ -64,6 +64,8 @@ angular.module('notes.service', [
       // Only init once
       if (notes) return;
       NotesResource = NotesResource.init(dbName);
+      replicate(dbName);
+
       notes = [];
       NotesResource.changes({ continuous: true, onChange: onChange });
     }
