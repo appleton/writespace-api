@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('import.dropbox.importer', [
-  'notes.resource'
+  'notes.resource',
+  'alert.service'
 ]).controller('ImportDropboxModalController', [
   '$scope',
+  '$state',
   '$q',
   '$modalInstance',
   'dropboxClient',
@@ -11,7 +13,19 @@ angular.module('import.dropbox.importer', [
   'files',
   'user',
   'NotesResource',
-  function($scope, $q, $modalInstance, dropboxClient, path, files, user, NotesResource) {
+  'AlertService',
+  function(
+    $scope,
+    $state,
+    $q,
+    $modalInstance,
+    dropboxClient,
+    path,
+    files,
+    user,
+    NotesResource,
+    AlertService
+  ) {
     NotesResource = NotesResource.init(user.notes_db);
     $scope.form = {};
 
@@ -48,15 +62,24 @@ angular.module('import.dropbox.importer', [
       });
     }
 
+    $scope.importedCount = 0;
     $scope.import = function() {
+      $scope.isImporting = true;
+
       var promises = files.map(function(file) {
         return readFile(file.path).then(function(result) {
           return createNote(result);
+        }).then(function(result) {
+          $scope.importedCount++;
+          return result;
         });
       });
 
       $q.all(promises).then(function(results) {
-        console.log('DONE!', results);
+        var message = 'Imported ' + results.length + ' notes succesfully';
+        AlertService.success(message);
+        $state.go('auth.notes');
+        $modalInstance.close('Imported');
       });
     };
   }
