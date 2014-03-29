@@ -1,0 +1,19 @@
+@import "base/sizes.scss";
+@import "base/colours.scss";
+
+.import__file-list {
+  max-height: 150px;
+  overflow: scroll;
+  margin: 0;
+  padding: $s-m $s-l;
+  list-style: none;
+  background: $c-page-bg;
+}
+
+.import__actions {
+  min-height: 55px;
+}
+
+.import__actions__checkbox {
+  line-height: 35px;
+}

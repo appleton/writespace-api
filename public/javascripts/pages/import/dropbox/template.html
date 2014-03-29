@@ -19,7 +19,7 @@
     </a>
     <span ng-if="file.isFile">{{file.name}}</span>
 
-    <button ng-if="file.isFolder" ng-click="importFrom()">
+    <button ng-if="file.isFolder" ng-click="importFrom(file.path)">
       Import <span ng-if="file.isFolder">this folder</span>
     </button>
   </li>

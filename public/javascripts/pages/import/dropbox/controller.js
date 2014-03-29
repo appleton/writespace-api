@@ -1,12 +1,17 @@
 'use strict';
 
 angular.module('import.dropbox', [
+  'ui.bootstrap',
+  'import.dropbox.importer'
 ]).controller('ImportDropboxController', [
   '$scope',
   '$stateParams',
+  '$modal',
+  '$q',
   'dropboxClient',
   'folderList',
-  function($scope, $stateParams, dropboxClient, folderList) {
+  'user',
+  function($scope, $stateParams, $modal, $q, dropboxClient, folderList, user) {
     $scope.isAuthenticated = dropboxClient.isAuthenticated();
     $scope.files = folderList;
 
@@ -32,5 +37,26 @@ angular.module('import.dropbox', [
       dropboxClient.authenticate();
     };
 
+    $scope.importFrom = function(path) {
+      $modal.open({
+        templateUrl: '/javascripts/pages/import/dropbox/importer/template.html',
+        controller: 'ImportDropboxModalController',
+        resolve: {
+          user: function() { return user; },
+          path: function() { return path; },
+          dropboxClient: function() { return dropboxClient; },
+          files: function() {
+            var deferred = $q.defer();
+
+            dropboxClient.readdir(path, function(err, entries, res, data) {
+              if (err) deferred.reject(err);
+              deferred.resolve(data);
+            });
+
+            return deferred.promise;
+          }
+        }
+      });
+    };
   }
 ]);

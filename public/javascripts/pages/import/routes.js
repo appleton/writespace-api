@@ -8,7 +8,19 @@ angular.module('import', [
 
   $stateProvider.state('import', {
     abstract: true,
-    template: '<ui-view />'
+    template: '<ui-view />',
+    resolve: {
+      user: [
+        'UsersService',
+        '$state',
+        function(UsersService, $state) {
+          return UsersService.get().catch(function(err) {
+            // Go to login if we're not authed
+            if (err.status === 401) $state.go('sessions');
+          });
+        }
+      ]
+    }
   });
 
   $stateProvider.state('import.dropbox', {

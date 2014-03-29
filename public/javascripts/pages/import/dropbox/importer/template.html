@@ -1,0 +1,22 @@
+<h1 class="modal__header">
+  Import {{files.length}} notes from <code>/Dropbox{{path}}</code>
+</h1>
+
+<ul class="import__file-list">
+  <li ng-repeat="file in files | filter:isFile | orderBy:'name' ">
+    <span class="fa fa-file-o u-margin-Rs"></span>
+    {{file.name}}
+  </li>
+</ul>
+
+<div class="modal__actions import__actions">
+  <div class="import__actions__checkbox u-pull-left">
+    <label for="includeTitle">Include file name as note title?</label>
+    <input type="checkbox" ng-model="form.includeTitle" name="includeTitle" id="includeTitle" />
+  </div>
+
+  <div class="u-pull-right">
+    <button ng-click="cancel()" class="btn btn--grey btn--hollow">Cancel</button>
+    <button ng-click="import()" class="btn btn--green u-margin-Ls">Import</button>
+  </div>
+</div>
