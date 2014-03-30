@@ -27,6 +27,7 @@ angular.module('import.dropbox.importer', [
     AlertService
   ) {
     NotesResource = NotesResource.init(user.notes_db);
+
     $scope.form = {};
 
     $scope.path = path;
@@ -64,6 +65,9 @@ angular.module('import.dropbox.importer', [
 
     $scope.importedCount = 0;
     $scope.import = function() {
+      // Save some CPU and bandwidth whist replicaing
+      NotesResource.stopReplication();
+
       $scope.isImporting = true;
 
       var promises = files.map(function(file) {

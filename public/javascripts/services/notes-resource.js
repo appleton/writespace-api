@@ -21,7 +21,6 @@ angular.module('notes.resource', [
     }
 
     function replicate(dbName) {
-      console.log(alreadyReplicating());
       if (alreadyReplicating()) return;
 
       var remote = COUCH_URL + '/' + dbName;

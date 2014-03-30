@@ -2,8 +2,7 @@
 
 angular.module('import.dropbox', [
   'ui.bootstrap',
-  'import.dropbox.importer',
-  'notes.resource'
+  'import.dropbox.importer'
 ]).controller('ImportDropboxController', [
   '$scope',
   '$stateParams',
@@ -12,19 +11,7 @@ angular.module('import.dropbox', [
   'dropboxClient',
   'folderList',
   'user',
-  'NotesResource',
-  function(
-    $scope,
-    $stateParams,
-    $modal,
-    $q,
-    dropboxClient,
-    folderList,
-    user,
-    NotesResource
-  ) {
-    NotesResource.stopReplication();
-
+  function($scope, $stateParams, $modal, $q, dropboxClient, folderList, user) {
     $scope.isAuthenticated = dropboxClient.isAuthenticated();
     $scope.files = folderList;
 
