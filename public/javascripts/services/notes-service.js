@@ -74,6 +74,10 @@ angular.module('notes.service', [
       _NotesResource.replicate(dbName);
     }
 
+    function stopReplication(dbName) {
+      _NotesResource.stopReplication(dbName);
+    }
+
     function allDocs() {
       return NotesResource.allDocs({ include_docs: true }).then(function(resp) {
         _.each(_.pluck(resp.rows, 'doc'), function(newNote) {
@@ -128,6 +132,7 @@ angular.module('notes.service', [
     return {
       init: init,
       replicate: replicate,
+      stopReplication: stopReplication,
       allDocs: allDocs,
       get: get,
       put: put,

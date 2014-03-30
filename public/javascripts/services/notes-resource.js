@@ -9,15 +9,24 @@ angular.module('notes.resource', [
   '$window',
   function(pouchdb, $state, $window){
     var COUCH_URL = $window.CONFIG.COUCH_URL;
+    var srcReplication, destReplication;
 
     function init(dbName) {
       return pouchdb.create(dbName);
     }
 
+    function alreadyReplicating() {
+      return (srcReplication && !srcReplication.cancelled) ||
+               (destReplication && !destReplication.cancelled);
+    }
+
     function replicate(dbName) {
+      console.log(alreadyReplicating());
+      if (alreadyReplicating()) return;
+
       var remote = COUCH_URL + '/' + dbName;
 
-      pouchdb.replicate(dbName, remote, {
+      srcReplication = pouchdb.replicate(dbName, remote, {
         continuous: true,
         create_target: true,
         complete: function(resp) {
@@ -31,15 +40,21 @@ angular.module('notes.resource', [
         }
       });
 
-      pouchdb.replicate(remote, dbName, {
+      destReplication = pouchdb.replicate(remote, dbName, {
         continuous: true,
         create_target: true
       });
     }
 
+    function stopReplication() {
+      srcReplication && srcReplication.cancel && srcReplication.cancel();
+      destReplication && destReplication.cancel && destReplication.cancel();
+    }
+
     return {
       init: init,
-      replicate: replicate
+      replicate: replicate,
+      stopReplication: stopReplication
     };
 
   }
