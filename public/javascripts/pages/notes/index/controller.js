@@ -14,6 +14,8 @@ angular.module('notes.index', [
   'NotesService',
   'SessionsService',
   function($scope, $state, $modal, notes, user, NotesService, SessionsService) {
+    NotesService.replicate(user.notes_db);
+
     $scope.notes = notes;
     $scope.user = user;
     $scope.search = {};
