@@ -4,6 +4,33 @@
 <keybinding keys="k" on-press="changeNote(false)"></keybinding>
 <keybinding keys="/" on-press="focusSearch()"></keybinding>
 
+<header class="app-header u-text-right">
+  <span class="u-text-s u-margin-Rm">{{user.name}}</span>
+
+  <div class="app-header__settings">
+    <button dropdown-toggle class="fa fa-cog action">
+      <span class="action__text">Settings</span>
+    </button>
+
+    <ul class="app-header__settings__dropdown">
+      <li>
+        <a class="app-header__settings__dropdown__item" ui-sref="import.dropbox">
+          <i class="app-header__settings__dropdown__icon fa fa-dropbox"></i>
+          Import from Dropbox
+        </a>
+      </li>
+
+      <li>
+        <button class="app-header__settings__dropdown__item" ng-click="logout()">
+          <i class="app-header__settings__dropdown__icon fa fa-sign-out"></i>
+          Log out
+        </button>
+      </li>
+    </ul>
+  </div>
+</header>
+
+
 <section class="sidebar">
   <header class="sidebar__header">
     <button class="action u-c-light-grey" ng-click="addNote()">
@@ -43,12 +70,5 @@
     </div>
   </div>
 </section>
-
-<header class="app-header u-text-right">
-  <span class="u-text-s u-margin-Rm">{{user.name}}</span>
-  <button class="btn btn--light btn--small btn--hollow" ng-click="logout()">
-    Log out
-  </button>
-</header>
 
 <ui-view autoscroll="false"></ui-view>
