@@ -3,13 +3,14 @@
 angular.module('import', [
   'ui.router',
   'import.dropbox',
-  'dropbox.service'
+  'import.dropbox.importer',
+  'dropbox.service',
+  'ui.bootstrap'
 ]).config(['$stateProvider', function($stateProvider) {
 
-  $stateProvider.state('auth.notes.importDropbox', {
-    url: 'import/dropbox?path',
-    templateUrl: '/javascripts/pages/import/dropbox/template.html',
-    controller: 'ImportDropboxController',
+  $stateProvider.state('auth.notes.import', {
+    abstract: true,
+    template: '<ui-view />',
     resolve: {
       dropboxClient: [
         '$q',
@@ -25,25 +26,43 @@ angular.module('import', [
 
           return deferred.promise;
         }
-      ],
-      folderList: [
-        '$q',
-        '$stateParams',
-        'dropboxClient',
-        function($q, $stateParams, dropboxClient) {
-          if (!dropboxClient.isAuthenticated()) return;
-          var deferred = $q.defer();
-          var path = $stateParams.path || '/';
-
-          dropboxClient.readdir(path, function(err, entries, res, data) {
-            if (err) deferred.reject(err);
-            deferred.resolve(data);
-          });
-
-          return deferred.promise;
-        }
       ]
     }
+  });
+
+  $stateProvider.state('auth.notes.import.dropbox', {
+    url: 'import/dropbox',
+
+    onEnter: [
+      '$q', '$state', '$modal', 'user', 'dropboxClient',
+      function($q, $state, $modal, user, dropboxClient) {
+        $modal.open({
+          templateUrl: '/javascripts/pages/import/dropbox/importer/template.html',
+          controller: 'ImportDropboxModalController',
+          resolve: {
+            user: function() { return user; },
+
+            dropboxClient: function() { return dropboxClient; },
+
+            files: [
+              function() {
+                var deferred = $q.defer();
+
+                dropboxClient.readdir('/', function(err, entries, res, data) {
+                  if (err) deferred.reject(err);
+                  deferred.resolve(data);
+                });
+
+                return deferred.promise;
+              }
+            ]
+          }
+        }).result.finally(function() {
+          // Always go to index on modal close
+          $state.go('auth.notes');
+        });
+      }
+    ]
   });
 
 }]);

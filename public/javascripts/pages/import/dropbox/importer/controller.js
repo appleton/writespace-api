@@ -9,7 +9,6 @@ angular.module('import.dropbox.importer', [
   '$q',
   '$modalInstance',
   'dropboxClient',
-  'path',
   'files',
   'user',
   'NotesResource',
@@ -20,7 +19,6 @@ angular.module('import.dropbox.importer', [
     $q,
     $modalInstance,
     dropboxClient,
-    path,
     files,
     user,
     NotesResource,
@@ -30,7 +28,7 @@ angular.module('import.dropbox.importer', [
 
     $scope.form = {};
 
-    $scope.path = path;
+    $scope.path = '/';
     $scope.files = files;
 
     $scope.cancel = $modalInstance.dismiss.bind($modalInstance, 'cancel');
