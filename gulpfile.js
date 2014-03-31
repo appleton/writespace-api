@@ -55,7 +55,7 @@ gulp.task('html', function() {
   var env = process.env.NODE_ENV || 'development';
   var config = require('./config.json')[env];
 
-  return gulp.src('./public/index.html')
+  return gulp.src('./public/*.html')
              .pipe(template(config))
              .pipe(gulp.dest('./tmp'));
 });
@@ -67,7 +67,12 @@ gulp.task('inject', ['html', 'sass', 'js', 'templates'], function() {
              .pipe(gulp.dest('./tmp'));
 });
 
-gulp.task('build:compile', ['inject','components'], bundle('./tmp/index.html', {
+gulp.task('build:static', function() {
+  return gulp.src('./tmp/dropbox-callback.html')
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build:compile', ['inject','components', 'build:static'], bundle('./tmp/index.html', {
     appDir: 'tmp',
     buildDir: 'dist',
     minify: true,
