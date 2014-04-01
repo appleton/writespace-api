@@ -29,13 +29,17 @@ angular.module('import', [
     }
   });
 
+  var openModal;
+
   $stateProvider.state('auth.notes.import.dropbox', {
     url: 'import/dropbox',
 
     onEnter: [
       '$q', '$state', '$modal', 'user', 'dropboxClient',
       function($q, $state, $modal, user, dropboxClient) {
-        $modal.open({
+        if (openModal) openModal.close();
+
+        openModal = $modal.open({
           templateUrl: '/javascripts/pages/import/dropbox/template.html',
           controller: 'ImportDropboxModalController',
           resolve: {
@@ -57,7 +61,10 @@ angular.module('import', [
               }
             ]
           }
-        }).result.finally(function() {
+        });
+
+        openModal.result.finally(function() {
+          openModal = null;
           // Always go to index on modal close
           $state.go('auth.notes');
         });
