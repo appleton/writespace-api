@@ -1,0 +1,12 @@
+
+@-webkit-keyframes spinnerRotate {
+  from { -webkit-transform:rotate(0deg);  }
+  to   { -webkit-transform:rotate(360deg); }
+}
+
+.icon--spin {
+  -webkit-animation-name: spinnerRotate;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}

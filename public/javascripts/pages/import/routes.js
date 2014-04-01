@@ -3,7 +3,6 @@
 angular.module('import', [
   'ui.router',
   'import.dropbox',
-  'import.dropbox.importer',
   'dropbox.service',
   'ui.bootstrap'
 ]).config(['$stateProvider', function($stateProvider) {
@@ -37,7 +36,7 @@ angular.module('import', [
       '$q', '$state', '$modal', 'user', 'dropboxClient',
       function($q, $state, $modal, user, dropboxClient) {
         $modal.open({
-          templateUrl: '/javascripts/pages/import/dropbox/importer/template.html',
+          templateUrl: '/javascripts/pages/import/dropbox/template.html',
           controller: 'ImportDropboxModalController',
           resolve: {
             user: function() { return user; },
@@ -46,6 +45,7 @@ angular.module('import', [
 
             files: [
               function() {
+                if (!dropboxClient.isAuthenticated()) return;
                 var deferred = $q.defer();
 
                 dropboxClient.readdir('/', function(err, entries, res, data) {

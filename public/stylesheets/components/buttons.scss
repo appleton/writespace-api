@@ -62,6 +62,10 @@
   @include button-color($c-red);
 }
 
+.btn--blue {
+  @include button-color(#1081DE);
+}
+
 // Button modifiers
 
 .btn--large {
@@ -104,14 +108,11 @@
   padding: 0;
   border: none;
   background: none;
-  color: lighten($c-light-grey, 10%);
+  color: $c-link-blue;
 }
 
-.btn--text:hover {
-  color: lighten($c-light-grey, 15%);
-}
-
+.btn--text:hover,
 .btn--text:active,
 .btn--text:focus {
-  color: lighten($c-light-grey, 5%);
+  color: darken($c-link-blue, 20%);
 }
