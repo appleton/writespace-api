@@ -19,6 +19,7 @@ angular.module('notes.index', [
     $scope.notes = notes;
     $scope.user = user;
     $scope.search = {};
+    $scope.virtualScrollState = { highWater: 100, lowWater: 100 };
 
     $scope.isState = function(id) {
       return $state.is('auth.notes.show', { id: id });

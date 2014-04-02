@@ -43,24 +43,27 @@
   </header>
 
   <div class="sidebar__body">
-    <ul ng-show="notes.length" class="sidebar__body__list">
-      <li ng-repeat="note in notes | filter:search | orderBy:'updatedAt':true track by note._id"
-          class="sidebar__body__list__item"
-          ng-class="{ 'is-active': isState(note._id) }">
-        <a ui-sref="auth.notes.show({id: note._id})"
-           class="sidebar__body__list__item__link">
-          <span class="u-text-truncate u-inline-block">
-            {{ (note.text | line:1) || "untitled" }}
-          </span>
-          <span class="sidebar__body__list__item__link__meta">
-            {{ note.updatedAt | timeAgo }}
-          </span>
-          <span class="sidebar__body__list__item__link__body u-text-truncate u-inline-block">
-            {{ note.text | line:2 }}
-          </span>
-        </a>
-      </li>
-    </ul>
+    <div class="sidebar__body__list">
+      <ul ng-show="notes.length" class="sidebar__body__list">
+        <li sf-virtual-repeat="note in notes | filter:search | orderBy:'updatedAt':true"
+            ng-model="virtualScrollState"
+            class="sidebar__body__list__item"
+            ng-class="{ 'is-active': isState(note._id) }">
+          <a ui-sref="auth.notes.show({id: note._id})"
+             class="sidebar__body__list__item__link">
+            <span class="u-text-truncate u-inline-block">
+              {{ (note.text | line:1) || "untitled" }}
+            </span>
+            <span class="sidebar__body__list__item__link__meta">
+              {{ note.updatedAt | timeAgo }}
+            </span>
+            <span class="sidebar__body__list__item__link__body u-text-truncate u-inline-block">
+              {{ note.text | line:2 }}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
     <div ng-hide="notes.length" class="sidebar__body__empty">
       <p class="u-text-center">
