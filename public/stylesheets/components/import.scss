@@ -10,6 +10,12 @@
   background: $c-page-bg;
 }
 
+.import__file-list__icon {
+  display: inline-block;
+  margin-right: $s-xs;
+  width: 15px;
+}
+
 .import__file-breadcrumbs {
   padding: $s-xs $s-l;
   border-bottom: 1px solid lighten($c-light-grey, 20%);

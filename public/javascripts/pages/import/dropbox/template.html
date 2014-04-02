@@ -13,11 +13,12 @@
   <ul class="import__file-list">
     <li ng-repeat="file in files | orderBy:['isFile', 'name']">
       <span ng-if="file.isFolder">
-        <i class="fa fa-folder u-margin-Rs"></i>
+        <i ng-hide="isLoading(file.path)" class="import__file-list__icon fa fa-folder"></i>
+        <i ng-show="isLoading(file.path)" class="import__file-list__icon fa fa-refresh icon--spin"></i>
+
         <button ng-click="navigateTo(file.path)" class="btn btn--text">
           {{file.name}}
         </button>
-        <i ng-show="isLoading(file.path)" class="fa fa-refresh icon--spin u-text-xs"></i>
       </span>
 
       <span ng-if="file.isFile">
