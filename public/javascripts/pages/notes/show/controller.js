@@ -9,8 +9,11 @@ angular.module('notes.show', [
   '$window',
   '$modal',
   'note',
+  'user',
   'NotesService',
-  function($scope, $window, $modal, note, NotesService) {
+  function($scope, $window, $modal, note, user, NotesService) {
+    NotesService.replicate(user.notes_db);
+
     $scope.note = note;
 
     $scope.isTouch = ('ontouchstart' in $window) ||

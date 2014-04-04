@@ -8,6 +8,7 @@ angular.module('notesy', [
   'users',
   'sessions',
   'passwords',
+  'import',
 
   'auth.interceptor',
   'offline.interceptor',

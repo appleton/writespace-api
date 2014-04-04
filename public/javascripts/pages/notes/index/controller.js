@@ -14,9 +14,12 @@ angular.module('notes.index', [
   'NotesService',
   'SessionsService',
   function($scope, $state, $modal, notes, user, NotesService, SessionsService) {
+    NotesService.replicate(user.notes_db);
+
     $scope.notes = notes;
     $scope.user = user;
     $scope.search = {};
+    $scope.virtualScrollState = { highWater: 50, lowWater: 50 };
 
     $scope.isState = function(id) {
       return $state.is('auth.notes.show', { id: id });

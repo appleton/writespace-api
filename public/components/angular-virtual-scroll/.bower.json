@@ -1,0 +1,20 @@
+{
+  "name": "angular-virtual-scroll",
+  "version": "0.6.0",
+  "author": "Paul Thomas <paul@stackfull.com>",
+  "main": "./angular-virtual-scroll.min.js",
+  "dependencies": {
+    "angular": ">= 1.0.0"
+  },
+  "homepage": "https://github.com/stackfull/angular-virtual-scroll-bower",
+  "_release": "0.6.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.6.0",
+    "commit": "8126e0350810cc0f03d9753556d85ac47f2bcdea"
+  },
+  "_source": "git://github.com/stackfull/angular-virtual-scroll-bower.git",
+  "_target": "~0.6.0",
+  "_originalSource": "angular-virtual-scroll",
+  "_direct": true
+}

@@ -1,0 +1,62 @@
+<div ng-if="isAuthenticated">
+  <h1 class="modal__header">Pick a folder import notes from</h1>
+
+  <div class="import__file-breadcrumbs">
+    <span ng-repeat="path in parents">
+      <button ng-if="!path.isCurrent" ng-click="navigateTo(path.path)" class="btn btn--text">
+        {{path.name}}
+      </button>
+      <span ng-if="path.isCurrent" class="u-text-s">{{path.name}}</span>
+    </span>
+  </div>
+
+  <ul class="import__file-list">
+    <li ng-repeat="file in files | orderBy:['isFile', 'name']">
+      <span ng-if="file.isFolder">
+        <i ng-hide="isLoading(file.path)" class="import__file-list__icon fa fa-folder"></i>
+        <i ng-show="isLoading(file.path)" class="import__file-list__icon fa fa-refresh icon--spin"></i>
+
+        <button ng-click="navigateTo(file.path)" class="btn btn--text">
+          {{file.name}}
+        </button>
+      </span>
+
+      <span ng-if="file.isFile">
+        <i ng-if="file.isFile" class="fa fa-file-o u-margin-Rs"></i>
+        {{file.name}}
+      </span>
+    </li>
+  </ul>
+
+  <div class="modal__actions import__actions" ng-hide="isImporting">
+    <div class="import__actions__checkbox u-pull-left">
+      <label for="includeTitle">Include file name as note title?</label>
+      <input type="checkbox" ng-model="form.includeTitle" name="includeTitle" id="includeTitle" />
+    </div>
+
+    <div class="u-pull-right">
+      <button ng-click="import()" class="btn btn--green u-margin-Ls">
+        Import {{countFiles(files)}} notes from /Dropbox{{path}}
+      </button>
+    </div>
+  </div>
+
+  <div class="modal__actions import__actions u-text-center" ng-show="isImporting">
+    Importing {{importedCount}}/{{countFiles(files)}} don't close your browser window
+    until it's done!
+    <progress max="{{countFiles(files)}}" value="{{importedCount}}" class="import__progress"></progress>
+  </div>
+</div>
+
+<div ng-if="!isAuthenticated">
+  <h1 class="modal__header">
+    Connect to Dropbox to import notes
+  </h1>
+
+  <div class="modal__body">
+    <button ng-click="authenticate()" class="btn btn--blue">
+      <i class="fa fa-dropbox"></i>
+      Connect to Dropbox
+    </button>
+  </div>
+</div>

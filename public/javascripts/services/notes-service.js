@@ -64,12 +64,18 @@ angular.module('notes.service', [
       // Only init once
       if (notes) return;
       NotesResource = NotesResource.init(dbName);
+      replicate(dbName);
+
       notes = [];
       NotesResource.changes({ continuous: true, onChange: onChange });
     }
 
     function replicate(dbName) {
       _NotesResource.replicate(dbName);
+    }
+
+    function stopReplication(dbName) {
+      _NotesResource.stopReplication(dbName);
     }
 
     function allDocs() {
@@ -126,6 +132,7 @@ angular.module('notes.service', [
     return {
       init: init,
       replicate: replicate,
+      stopReplication: stopReplication,
       allDocs: allDocs,
       get: get,
       put: put,
