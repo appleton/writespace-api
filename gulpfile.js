@@ -97,20 +97,20 @@ gulp.task('build:fonts', ['fonts'], function() {
     './public/**/fonts/*.otf'
   ];
   return gulp.src(src)
-             // Remove any nesting from the file path and stick them all in
-             // /fonts
-             .pipe(through.obj(function(data, enc, cb) {
-                var path = data.path;
-                var cwd = process.cwd();
-                var fileName = _.last(path.split(cwd + '/public/components'));
+    // Remove any nesting from the file path and stick them all in
+    // /fonts
+    .pipe(through.obj(function(data, enc, cb) {
+      var path = data.path;
+      var cwd = process.cwd();
+      var fileName = _.last(path.split(cwd + '/public/components'));
 
-                fileName = _.last(fileName.split('/fonts/'));
-                data.path = cwd + '/fonts/' + fileName;
-                this.push(data);
+      fileName = _.last(fileName.split('/fonts/'));
+      data.path = cwd + '/fonts/' + fileName;
+      this.push(data);
 
-                cb();
-              }))
-             .pipe(gulp.dest('./dist/fonts'));
+      cb();
+    }))
+    .pipe(gulp.dest('./dist/fonts'));
 });
 
 gulp.task('build:images', function() {
