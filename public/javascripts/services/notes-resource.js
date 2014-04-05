@@ -23,7 +23,8 @@ angular.module('notes.resource', [
     function replicate(dbName) {
       if (alreadyReplicating()) return;
 
-      var remote = COUCH_URL + '/' + dbName;
+      var protocol = $window.location.protocol;
+      var remote = protocol + COUCH_URL + '/' + dbName;
 
       srcReplication = pouchdb.replicate(dbName, remote, {
         continuous: true,
