@@ -5,6 +5,7 @@ angular.module('notes', [
   'ui.bootstrap',
   'ui.codemirror',
 
+  'abstractRoutes',
   'keybinding.directive',
   'setFocus.directive',
   'initFocus.directive',
@@ -16,30 +17,6 @@ angular.module('notes', [
   'notes.index',
   'notes.show'
 ]).config(['$stateProvider', function($stateProvider) {
-
-  $stateProvider.state('auth', {
-    abstract: true,
-    template: '<ui-view />',
-    resolve: {
-      user: [
-        'UsersService',
-        '$state',
-        '$window',
-        function(UsersService, $state, $window) {
-          return UsersService.get().catch(function(err) {
-            // Go to login if we're not authed
-            if (err.status === 401) $state.go('sessions');
-
-            // If we're offline, try to return user data from localStorage
-            if (err.status === 0 || !$window.navigator.onLine) {
-              var user = $window.localStorage.getItem('notesyUser');
-              if (user) return JSON.parse(user);
-            }
-          });
-        }
-      ]
-    }
-  });
 
   $stateProvider.state('auth.notes', {
     url: '/',

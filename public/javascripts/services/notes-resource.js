@@ -30,7 +30,7 @@ angular.module('notes.resource', [
           //       checking auth errors, hence the res.message comparison.
           if (resp.error &&
               resp.message === 'You are not authorized to access this db.') {
-            $state.go('sessions');
+            $state.go('noAuth.sessions');
           }
         }
       });

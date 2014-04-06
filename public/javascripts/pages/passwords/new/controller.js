@@ -16,7 +16,7 @@ angular.module('passwords.new', [
 
       PasswordsService.create($scope.form).then(function(resp) {
         AlertService.success(resp.data.msg);
-        $state.go('sessions');
+        $state.go('noAuth.sessions');
       }).catch(function(err) {
         delete $scope.message;
         if (err.data && err.data.errors) $scope.errors = err.data.errors;
