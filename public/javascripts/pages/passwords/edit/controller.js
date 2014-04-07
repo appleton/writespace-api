@@ -17,7 +17,7 @@ angular.module('passwords.edit', [
 
       PasswordsService.update($scope.form).then(function(resp) {
         AlertService.success(resp.data.msg);
-        $state.go('sessions');
+        $state.go('noAuth.sessions');
       }).catch(function(err) {
         delete $scope.message;
         if (err.data && err.data.errors) $scope.errors = err.data.errors;

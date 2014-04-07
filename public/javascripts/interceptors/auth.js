@@ -14,7 +14,7 @@ angular.module('auth.interceptor', [
     return function(promise) {
       return promise.catch(function(response) {
         if (response.status === 401 && !isAuthResponse(response)) {
-          $injector.get('$state').go('sessions');
+          $injector.get('$state').go('noAuth.sessions');
         }
         return promise;
       });

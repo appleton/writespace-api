@@ -40,9 +40,14 @@
   left: 0;
   bottom: 0;
   overflow: hidden;
+
+  @include respond-to(mobile) {
+    padding-bottom: $s-header-height;
+  }
 }
 
 .sidebar__body__list {
+  -webkit-overflow-scrolling: touch;
   overflow: scroll;
   height: 100%;
   margin: 0;

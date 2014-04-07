@@ -5,3 +5,4 @@ tmp/*
 .env
 config.json
 .DS_Store
+newrelic_agent.log
