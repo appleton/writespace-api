@@ -43,6 +43,7 @@
 }
 
 .sidebar__body__list {
+  -webkit-overflow-scrolling: touch;
   overflow: scroll;
   height: 100%;
   margin: 0;
