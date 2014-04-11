@@ -11,7 +11,7 @@ angular.module('dropbox.service', [
     });
 
     client.authDriver(new $window.Dropbox.AuthDriver.Popup({
-      receiverUrl: 'http://localhost:1337/dropbox-callback.html'
+      receiverUrl: $window.location.origin + '/dropbox-callback.html'
     }));
 
     return client;
