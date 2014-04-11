@@ -45,7 +45,7 @@
   <div class="sidebar__body">
     <div class="sidebar__body__list">
       <ul ng-show="notes.length" class="sidebar__body__list">
-        <li sf-virtual-repeat="note in notes | filter:search | orderBy:'updatedAt':true"
+        <li ng-repeat="note in notes | filter:search | orderBy:'updatedAt':true"
             ng-model="virtualScrollState"
             class="sidebar__body__list__item"
             ng-class="{ 'is-active': isState(note._id) }">
