@@ -22,6 +22,8 @@
   padding: 9px 10px 11px;
   background: #fff;
   border-bottom: 1px solid $c-border;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  z-index: 2;
 }
 
 .sidebar__header__nav {
@@ -116,6 +118,7 @@
   left: 0;
   bottom: 0;
   overflow: hidden;
+  z-index: 1;
 
   @include respond-to(mobile) {
     padding-bottom: $s-header-height;
