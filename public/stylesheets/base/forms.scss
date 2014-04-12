@@ -25,12 +25,15 @@
   display: inline-block;
   height: 30px;
   margin: 0;
-  padding-left: $s-m;
-  padding-right: $s-m;
+  padding-left: $s-xs;
+  padding-right: $s-xs;
   width: 100%;
 
-  border-radius: 15px;
-  font-size: $t-m;
+  border: none;
+  border-bottom: 1px solid $c-border;
+  border-radius: 0;
+  font-size: $t-s;
+  font-weight: 200;
 
   &[type=search] {
     box-sizing: border-box;
