@@ -8,7 +8,7 @@
   margin-bottom: -1px;
   padding: 10px;
   background: #fff;
-  border-bottom: 1px solid lighten($c-light-grey, 20%);
+  border-bottom: 1px solid $c-border;
 
   @include respond-to(mobile) {
     position: fixed;
@@ -17,7 +17,7 @@
     right: 0;
     margin-left: 0;
     z-index: 3;
-    border-top: 1px solid lighten($c-light-grey, 20%);
+    border-top: 1px solid $c-border;
     border-bottom: none;
   }
 }
@@ -40,7 +40,7 @@
   z-index: 200;
 
   background: #fff;
-  border: 1px solid lighten($c-light-grey, 20%);
+  border: 1px solid $c-border;
   border-radius: 3px;
   box-shadow: 0 1px 5px 0 rgba(67, 81, 102, 0.2);
   list-style: none;
@@ -59,7 +59,7 @@
     top: -9px;
     right: 7px;
     border-width: 0 10px 9px;
-    border-bottom-color: lighten($c-light-grey, 20%);
+    border-bottom-color: $c-border;
   }
 }
 
@@ -74,14 +74,14 @@
 
   background: none;
   border: none;
-  border-bottom: 1px solid lighten($c-light-grey, 20%);
+  border-bottom: 1px solid $c-border;
   color: $c-grey;
   font-size: $t-s;
   text-align: left;
 
   &:hover {
     background: $c-page-bg;
-    border-bottom-color: lighten($c-light-grey, 20%);
+    border-bottom-color: $c-border;
     color: lighten($c-grey, 10%);
   }
 }

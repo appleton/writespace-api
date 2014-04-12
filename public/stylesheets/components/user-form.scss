@@ -13,7 +13,7 @@
 .user-form__heading {
   margin: 0;
   padding: $s-s $s-m;
-  border-bottom: 1px solid lighten($c-light-grey, 20%);
+  border-bottom: 1px solid $c-border;
   font-size: $t-m;
   text-align: center;
 }

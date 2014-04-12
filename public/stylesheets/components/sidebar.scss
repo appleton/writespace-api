@@ -8,7 +8,7 @@
   left: 0;
   bottom: 0;
   width: $sidebar-width;
-  border-right: 1px solid lighten($c-light-grey, 20%);
+  border-right: 1px solid $c-border;
 
   @include respond-to(mobile) {
     width: 100%;
@@ -21,7 +21,7 @@
   margin-bottom: -1px;
   padding: 9px 10px 11px;
   background: #fff;
-  border-bottom: 1px solid lighten($c-light-grey, 20%);
+  border-bottom: 1px solid $c-border;
 }
 
 .sidebar__header__search {
@@ -56,24 +56,29 @@
 }
 
 .sidebar__body__list__item {
-  min-height: 72px;
-  border-bottom: 1px solid lighten($c-light-grey, 20%);
+  min-height: 70px;
+  background: #FFF;
+  border-left: 2px solid #FFF;
+  border-bottom: 1px solid $c-border;
 
   &:last-child {
     border-bottom: none;
   }
 
   &.is-active {
-    background: #fff;
+    background: $c-page-bg;
+    border-left: 2px solid $c-blue;
   }
 }
 
 .sidebar__body__list__item__link {
   overflow: hidden;
   display: block;
-  padding: 10px;
+  padding: 8px 10px;
+  color: $c-grey;
 
   &:hover {
+    color: $c-blue;
     border-bottom: none;
   }
 }
