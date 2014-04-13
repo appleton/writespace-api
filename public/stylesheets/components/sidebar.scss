@@ -22,13 +22,13 @@
   padding: 9px 10px 11px;
   background: #fff;
   border-bottom: 1px solid $c-border;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   z-index: 2;
 }
 
 .sidebar__header__nav {
   position: absolute;
-  top: 4px;
+  top: 7px;
   left: 10px;
   width: 20px;
 }
@@ -36,9 +36,9 @@
 .sidebar__header__nav__dropdown {
   display: none;
   position: absolute;
-  top: 40px;
+  top: 30px;
   left: -7px;
-  width: 180px;
+  width: 280px;
   margin: 0;
   padding: 0;
   z-index: 200;
@@ -51,23 +51,32 @@
   &:before, &:after {
     content: "";
     position: absolute;
-    top: -8px;
+    top: -6px;
     left: 8px;
     border-style: solid;
-    border-width: 0 9px 8px;
+    border-width: 0 7px 6px;
     border-color: transparent transparent #fff;
   }
 
   &:before {
-    top: -9px;
+    top: -7px;
     left: 7px;
-    border-width: 0 10px 9px;
+    border-width: 0 8px 7px;
     border-bottom-color: $c-border;
   }
 }
 
 .open > .sidebar__header__nav__dropdown {
   display: block;
+}
+
+.sidebar__header__nav__dropdown__header {
+  display: block;
+  width: 100%;
+  padding: 2px $s-m;
+  border-bottom: 1px solid $c-border;
+  color: $c-light-grey;
+  text-align: center;
 }
 
 .sidebar__header__nav__dropdown__item {
@@ -83,7 +92,7 @@
   text-align: left;
 
   &:hover {
-    background: $c-page-bg;
+    background: #F8F8F8;
     border-bottom-color: $c-border;
     color: lighten($c-grey, 10%);
   }
@@ -99,7 +108,7 @@
 
 .sidebar__header__search {
   position: absolute;
-  top: 6px;
+  top: 9px;
   left: 40px;
   right: 40px;
   width: auto;
@@ -108,7 +117,7 @@
 
 .sidebar__header__add {
   position: absolute;
-  top: 4px;
+  top: 7px;
   right: 10px;
   width: 20px;
 }
@@ -138,17 +147,21 @@
 
 .sidebar__body__list__item {
   min-height: 70px;
-  background: $c-page-bg;
-  border-left: 2px solid #FFF;
+  background: #F8F8F8;
+  border-left: 3px solid #FFF;
   border-bottom: 1px solid $c-border;
+
+  &:hover {
+    background: $c-page-bg;
+  }
 
   &:last-child {
     border-bottom: none;
   }
 
   &.is-active {
-    background: #fff;
-    border-left: 2px solid $c-blue;
+    background: #FFF;
+    border-left: 3px solid $c-blue;
   }
 }
 
@@ -159,8 +172,8 @@
   color: $c-grey;
 
   &:hover {
-    color: $c-blue;
     border-bottom: none;
+    color: $c-grey;
   }
 }
 

@@ -23,15 +23,15 @@
 
 .input--search {
   display: inline-block;
-  height: 24px;
+  height: 26px;
   margin: 0;
-  padding-left: $s-s;
-  padding-right: $s-s;
+  padding: 3px 0 4px;
   width: 100%;
 
-  border-radius: 20px;
+  border: none;
   font-size: $t-s;
   font-weight: 200;
+  text-align: center;
 
   &[type=search] {
     box-sizing: border-box;
