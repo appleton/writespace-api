@@ -148,7 +148,6 @@
 .sidebar__body__list__item {
   min-height: 70px;
   background: #F8F8F8;
-  border-left: 3px solid #FFF;
   border-bottom: 1px solid $c-border;
 
   &:hover {
@@ -161,7 +160,6 @@
 
   &.is-active {
     background: #FFF;
-    border-left: 3px solid $c-blue;
   }
 }
 
