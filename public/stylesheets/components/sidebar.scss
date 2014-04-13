@@ -28,6 +28,7 @@
 
 .sidebar__header__nav {
   position: absolute;
+  top: 4px;
   left: 10px;
   width: 20px;
 }
@@ -98,7 +99,7 @@
 
 .sidebar__header__search {
   position: absolute;
-  top: 3px;
+  top: 6px;
   left: 40px;
   right: 40px;
   width: auto;
@@ -107,6 +108,7 @@
 
 .sidebar__header__add {
   position: absolute;
+  top: 4px;
   right: 10px;
   width: 20px;
 }
