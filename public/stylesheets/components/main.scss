@@ -10,11 +10,11 @@
   bottom: 0;
   padding: 0 30px;
   z-index: 2;
+  background: $c-page-bg;
 
   @include respond-to(mobile) {
     left: 0;
     padding: 0 30px;
-    bottom: $s-header-height;
   }
 }
 

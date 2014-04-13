@@ -130,10 +130,6 @@
   bottom: 0;
   overflow: hidden;
   z-index: 1;
-
-  @include respond-to(mobile) {
-    padding-bottom: $s-header-height;
-  }
 }
 
 .sidebar__body__list {
