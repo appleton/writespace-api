@@ -12,8 +12,8 @@
 <section class="sidebar">
   <header class="sidebar__header">
     <div class="sidebar__header__nav sidebar__header__nav">
-      <button dropdown-toggle class="icon icon--nav action">
-        <span class="action__text">Settings</span>
+      <button dropdown-toggle class="icon icon--nav action"  title="Navigation">
+        <span class="action__text">Navigation</span>
       </button>
 
       <ul class="sidebar__header__nav__dropdown">
@@ -42,7 +42,7 @@
              placeholder="search" ng-model="search.text" set-focus="focusSearch" />
     </div>
 
-    <button class="sidebar__header__add action u-c-light-grey" ng-click="addNote()">
+    <button class="sidebar__header__add action u-c-light-grey" ng-click="addNote()"  title="New note">
       <i class="icon icon--plus"></i>
       <span class="action__text">New note</span>
     </button>
