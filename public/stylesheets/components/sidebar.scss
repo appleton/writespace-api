@@ -136,7 +136,7 @@
 
 .sidebar__body__list__item {
   min-height: 70px;
-  background: #FFF;
+  background: $c-page-bg;
   border-left: 2px solid #FFF;
   border-bottom: 1px solid $c-border;
 
@@ -145,7 +145,7 @@
   }
 
   &.is-active {
-    background: $c-page-bg;
+    background: #fff;
     border-left: 2px solid $c-blue;
   }
 }
