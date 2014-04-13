@@ -163,12 +163,16 @@
   overflow: hidden;
   display: block;
   padding: 10px 10px;
-  color: $c-grey;
+  color: #777;
 
   &:hover {
     border-bottom: none;
     color: $c-grey;
   }
+}
+
+.is-active .sidebar__body__list__item__link {
+  color: $c-grey;
 }
 
 .sidebar__body__list__item__link__title {
