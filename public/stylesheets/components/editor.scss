@@ -33,8 +33,13 @@
 
 .cm-s-notesy {
   &.CodeMirror {
-    background: $c-page-bg;
+    background: transparent;
     color: #424242;
+  }
+
+  .CodeMirror-lines {
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 
   .CodeMirror-cursor {
