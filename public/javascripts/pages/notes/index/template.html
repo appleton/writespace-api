@@ -59,11 +59,15 @@
             ng-class="{ 'is-active': isState(note._id) }">
           <a ui-sref="auth.notes.show({id: note._id})"
              class="sidebar__body__list__item__link">
-            <span class="u-text-truncate u-inline-block">
+            <span class="sidebar__body__list__item__link__title u-text-truncate u-inline-block">
               {{ (note.text | line:1) || "untitled" }}
             </span>
             <span class="sidebar__body__list__item__link__meta">
               {{ note.updatedAt | timeAgo }}
+              <i class="sidebar__body__list__item__link__meta__icon icon" ng-class="{
+                'icon--arrow--blue': isState(note._id),
+                'icon--arrow--grey': !isState(note._id)
+              }"></i>
             </span>
             <span class="sidebar__body__list__item__link__body u-text-truncate u-inline-block">
               {{ note.text | line:2 }}

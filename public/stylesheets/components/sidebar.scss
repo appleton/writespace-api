@@ -178,19 +178,22 @@
 }
 
 .sidebar__body__list__item__link__title {
-  float: left;
-  width: 60%;
-  color: $c-grey;
+  width: 62%;
 }
 
 .sidebar__body__list__item__link__meta {
   display: block;
   float: right;
-  width: 40%;
+  width: 35%;
   color: $c-light-grey;
   font-size: $t-xs;
   text-align: right;
   line-height: 2.4;
+}
+
+.sidebar__body__list__item__link__meta__icon {
+  position: relative;
+  top: 1px;
 }
 
 .sidebar__body__list__item__link__body {
