@@ -115,6 +115,22 @@
   display: block;
 }
 
+.sidebar__header__search__label {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: #B0B0B0;
+  font-size: $t-s;
+  font-weight: 200;
+  text-align: center;
+}
+
+.input:focus + .sidebar__header__search__label {
+  display: none;
+}
+
 .sidebar__header__add {
   position: absolute;
   top: 7px;
@@ -130,6 +146,7 @@
   bottom: 0;
   overflow: hidden;
   z-index: 1;
+  background: #F8F8F8;
 }
 
 .sidebar__body__list {
@@ -148,10 +165,6 @@
 
   &:hover {
     background: $c-page-bg;
-  }
-
-  &:last-child {
-    border-bottom: none;
   }
 
   &.is-active {

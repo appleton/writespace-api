@@ -40,8 +40,12 @@
     </div>
 
     <div class="sidebar__header__search">
-      <input class="input input--search" type="search"
-             placeholder="search" ng-model="search.text" set-focus="focusSearch" />
+      <input class="input input--search" type="search" name="search" id="search"
+             ng-model="search.text" set-focus="focusSearch" />
+      <label ng-hide="search.text.length" class="sidebar__header__search__label" for="search">
+        <i class="icon icon--search u-margin-Rxxs"></i>
+        search
+      </label>
     </div>
 
     <button class="sidebar__header__add action u-c-light-grey" ng-click="addNote()"  title="New note">
