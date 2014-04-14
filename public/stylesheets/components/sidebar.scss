@@ -201,7 +201,11 @@
 }
 
 .sidebar__body__empty {
-  padding: 10px;
-  background: url(/images/arrow.png) no-repeat 12px 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 10px 10px;
+  background: url(/images/arrow.png) no-repeat 95% 5px;
   background-size: 41px;
 }
