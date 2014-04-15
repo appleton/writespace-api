@@ -150,17 +150,16 @@ gulp.task('build:manifest', ['build:noclean'], function() {
     './dist/**/*.js', './dist/**/*.css'
   ];
 
-  return ;
-  //gulp.src(src)
-    // .pipe(manifest({
-    //   hash: true,
-    //   preferOnline: true,
-    //   network: ['http://*', 'https://*', '*'],
-    //   filename: 'app.manifest',
-    //   exclude: 'app.manifest',
-    //   absolutePaths: true
-    // }))
-    // .pipe(gulp.dest('./dist'));
+  return gulp.src(src)
+    .pipe(manifest({
+      hash: true,
+      preferOnline: true,
+      network: ['http://*', 'https://*', '*'],
+      filename: 'app.manifest',
+      exclude: 'app.manifest',
+      absolutePaths: true
+    }))
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('build:noclean', ['build:fonts', 'build:images', 'build:replace']);
