@@ -11,6 +11,7 @@ var userValidation = require('./middleware/user-validator');
 var createUser = require('./services/create-user');
 var passwordReset = require('./services/password-reset');
 var userMailer = require('./mailers/user-mailer');
+var adminMailer = require('./mailers/admin-mailer');
 
 var app = express();
 
@@ -62,6 +63,10 @@ app.post('/users', userValidation, function(req, res) {
 
   createUser(req.body).then(function(user) {
     res.json(201, user);
+
+    adminMailer.newUser(process.env.ADMIN_EMAIL, {
+      newUser: req.body.email
+    }).deliver();
   }).catch(function(err) {
     console.log('User creation error: ', err);
     res.json(422, formatError(err));
