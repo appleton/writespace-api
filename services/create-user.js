@@ -54,7 +54,11 @@ function setNotesDbPermissions(user) {
   var securityDesign = { readers: { names: [ user.name ], roles: [] } };
 
   return qretry(function() {
-    return Q.ninvoke(notes, 'insert', securityDesign, '_security');
+    return Q.ninvoke(notes, 'insert', securityDesign, '_security')
+      .then(function() {
+        delete user.password;
+        return user;
+      });
   }, RETRY_POLICY).catch(function(err) {
     console.log('Error setting security policy: ', err);
   });
