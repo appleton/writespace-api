@@ -1,4 +1,4 @@
-// angular-virtual-scroll - v0.6.0
+// angular-virtual-scroll - v0.6.1
 
 // Include this first to define the module that the directives etc. hang off.
 //
@@ -252,13 +252,13 @@ mod.directive("sfScroller", function(){
           height = style && style.getPropertyValue('height');
 
       if( height && height !== '0px' && height !== 'auto' ){
-        $log.info('Row height is "%s" from css height', height);
+        $log.debug('Row height is "%s" from css height', height);
       }else if( maxHeight && maxHeight !== '0px' && maxHeight !== 'none' ){
         height = maxHeight;
-        $log.info('Row height is "%s" from css max-height', height);
+        $log.debug('Row height is "%s" from css max-height', height);
       }else if( element.clientHeight ){
         height = element.clientHeight+'px';
-        $log.info('Row height is "%s" from client height', height);
+        $log.debug('Row height is "%s" from client height', height);
       }else{
         throw new Error("Unable to compute height of row");
       }
@@ -333,24 +333,26 @@ mod.directive("sfScroller", function(){
           element.css(elementCss);
         }
 
-        function makeNewScope (idx, collection, containerScope) {
-          var childScope = containerScope.$new();
+        function makeNewScope (idx, colExpr, containerScope) {
+          var childScope = containerScope.$new(),
+              collection = containerScope.$eval(colExpr);
           childScope[ident.value] = collection[idx];
           childScope.$index = idx;
           childScope.$first = (idx === 0);
           childScope.$last = (idx === (collection.length - 1));
           childScope.$middle = !(childScope.$first || childScope.$last);
           childScope.$watch(function updateChildScopeItem(){
+            collection = containerScope.$eval(colExpr);
             childScope[ident.value] = collection[idx];
           });
           return childScope;
         }
 
-        function addElements (start, end, collection, containerScope, insPoint) {
+        function addElements (start, end, colExpr, containerScope, insPoint) {
           var frag = document.createDocumentFragment();
           var newElements = [], element, idx, childScope;
           for( idx = start; idx !== end; idx ++ ){
-            childScope = makeNewScope(idx, collection, containerScope);
+            childScope = makeNewScope(idx, colExpr, containerScope);
             element = linker(childScope, angular.noop);
             setElementCss(element);
             newElements.push(element);
@@ -380,11 +382,11 @@ mod.directive("sfScroller", function(){
           scope.$apply(function(){
             state.firstVisible = Math.floor(evt.target.scrollTop / rowHeight);
             state.visible = Math.ceil(dom.viewport[0].clientHeight / rowHeight);
-            $log.log('scroll to row %o', state.firstVisible);
+            $log.debug('scroll to row %o', state.firstVisible);
             sticky = evt.target.scrollTop + evt.target.clientHeight >= evt.target.scrollHeight;
             recomputeActive();
-            $log.log(' state is now %o', state);
-            $log.log(' sticky = %o', sticky);
+            $log.debug(' state is now %o', state);
+            $log.debug(' sticky = %o', sticky);
           });
         }
 
@@ -414,11 +416,10 @@ mod.directive("sfScroller", function(){
         // and remove scopes and elements
         function sfVirtualRepeatListener(newValue, oldValue, scope){
           var oldEnd = oldValue.start + oldValue.active,
-              collection = scope.$eval(ident.collection),
               newElements;
           if( newValue === oldValue ){
-            $log.info('initial listen');
-            newElements = addElements(newValue.start, oldEnd, collection, scope, iterStartElement);
+            $log.debug('initial listen');
+            newElements = addElements(newValue.start, oldEnd, ident.collection, scope, iterStartElement);
             rendered = newElements;
             if( rendered.length ){
               rowHeight = computeRowHeight(newElements[0][0]);
@@ -430,33 +431,33 @@ mod.directive("sfScroller", function(){
                                 : oldValue.start - newValue.start;
             var endDelta = newEnd >= oldEnd ? newEnd - oldEnd : oldEnd - newEnd;
             var contiguous = delta < (forward ? oldValue.active : newValue.active);
-            $log.info('change by %o,%o rows %s', delta, endDelta, forward ? 'forward' : 'backward');
+            $log.debug('change by %o,%o rows %s', delta, endDelta, forward ? 'forward' : 'backward');
             if( !contiguous ){
-              $log.info('non-contiguous change');
+              $log.debug('non-contiguous change');
               destroyActiveElements('pop', rendered.length);
-              rendered = addElements(newValue.start, newEnd, collection, scope, iterStartElement);
+              rendered = addElements(newValue.start, newEnd, ident.collection, scope, iterStartElement);
             }else{
               if( forward ){
-                $log.info('need to remove from the top');
+                $log.debug('need to remove from the top');
                 destroyActiveElements('shift', delta);
               }else if( delta ){
-                $log.info('need to add at the top');
+                $log.debug('need to add at the top');
                 newElements = addElements(
                   newValue.start,
                   oldValue.start,
-                  collection, scope, iterStartElement);
+                  ident.collection, scope, iterStartElement);
                 rendered = newElements.concat(rendered);
               }
               if( newEnd < oldEnd ){
-                $log.info('need to remove from the bottom');
+                $log.debug('need to remove from the bottom');
                 destroyActiveElements('pop', oldEnd - newEnd);
               }else if( endDelta ){
                 var lastElement = rendered[rendered.length-1];
-                $log.info('need to add to the bottom');
+                $log.debug('need to add to the bottom');
                 newElements = addElements(
                   oldEnd,
                   newEnd,
-                  collection, scope, lastElement);
+                  ident.collection, scope, lastElement);
                 rendered = rendered.concat(newElements);
               }
             }
