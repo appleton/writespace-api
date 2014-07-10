@@ -15,8 +15,8 @@ CACHE:
 /fonts/sourcecodepro-regular-webfont.woff
 /fonts/FontAwesome.otf
 /images/arrow.png
-/application-0d58dc3e.js
-/application-0616d131.css
+/application-0d58dc3e_1.js
+/application-0616d131_1.css
 
 
 NETWORK:
@@ -28,4 +28,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: 79877398d52f8900ab5abc4dbc2fd88770fe4b524fda0fcbc0db09be1363b039
+# hash: 79877398d52f8900ab5abc4dbc2fd88770fe4b524fda0fcbc0db09be1363b039_1
