@@ -15,6 +15,6 @@
     "mousetrap": "~1.4.6",
     "angular-ui-codemirror": "~0.1.0",
     "dropbox-js": "http://cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js",
-    "angular-virtual-scroll": "~0.6.1"
+    "angular-virtual-scroll": "~0.6.0"
   }
 }

@@ -4,7 +4,6 @@ angular.module('notes', [
   'ui.router',
   'ui.bootstrap',
   'ui.codemirror',
-  'sf.virtualScroll',
 
   'abstractRoutes',
   'keybinding.directive',
