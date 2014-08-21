@@ -9,15 +9,15 @@ angular.module('notes.resource', [
   '$window',
   function(pouchdb, $state, $window){
     var COUCH_URL = $window.CONFIG.COUCH_URL;
-    var srcReplication, destReplication;
+    var sync, db;
 
     function init(dbName) {
-      return pouchdb.create(dbName);
+      db = pouchdb.create(dbName);
+      return db;
     }
 
     function alreadyReplicating() {
-      return (srcReplication && !srcReplication.cancelled) ||
-               (destReplication && !destReplication.cancelled);
+      return (sync && !sync.cancelled);
     }
 
     function replicate(dbName) {
@@ -26,7 +26,7 @@ angular.module('notes.resource', [
       var protocol = $window.location.protocol;
       var remote = protocol + COUCH_URL + '/' + dbName;
 
-      srcReplication = pouchdb.replicate(dbName, remote, {
+      sync = db.replicate.sync(db, remote, {
         continuous: true,
         create_target: true,
         complete: function(resp) {
@@ -39,16 +39,10 @@ angular.module('notes.resource', [
           }
         }
       });
-
-      destReplication = pouchdb.replicate(remote, dbName, {
-        continuous: true,
-        create_target: true
-      });
     }
 
     function stopReplication() {
-      srcReplication && srcReplication.cancel && srcReplication.cancel();
-      destReplication && destReplication.cancel && destReplication.cancel();
+      sync && sync.cancel && sync.cancel();
     }
 
     return {
