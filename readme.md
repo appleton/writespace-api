@@ -35,6 +35,8 @@ gulp clean && gulp
 open http://localhost:1337
 ```
 
+6. (Bonus) You can see the state of the database by visiting `http://localhost:5984/_utils/` and signing in as your admin user. This signin is shared with the notesy app (which you can't sign into as admin) so make sure you do it in an incognito window.
+
 ## Notes for Andy which don't really matter
 
 Docker (not required for dev):
