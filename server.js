@@ -24,34 +24,11 @@ app.configure(function(){
   app.use(express.urlencoded());
   app.use(expressValidator());
   app.use(app.router);
-  app.use(require('./middleware/serve-ng'));
-  app.use(function(req, res, next) {
-    if (path.extname(req.path) === 'manifest') {
-      res.header('Content-Type', 'text/cache-manifest');
-    }
-    next();
-  });
 });
 
 // Environment specific app configuration
 app.configure('development', function(){
   app.use(express.errorHandler());
-  app.use(express.static(path.join(__dirname, 'tmp')));
-});
-
-app.configure('production', function(){
-  // Far future caching for js and css
-  var oneYearInSeconds = 31536000;
-
-  app.use(function(req, res, next) {
-    var ext = path.extname(req.path);
-    if (ext === '.js' || ext === '.css') {
-      res.setHeader('Cache-Control', 'public, max-age=' + oneYearInSeconds);
-    }
-    return next();
-  });
-
-  app.use(express.static(path.join(__dirname, 'dist')));
 });
 
 function formatError(error) {
