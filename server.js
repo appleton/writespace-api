@@ -4,6 +4,7 @@ var path = require('path');
 
 var express = require('express');
 var expressValidator = require('express-validator');
+var cors = require('cors');
 var dotenv = require('dotenv');
 dotenv.load();
 
@@ -20,6 +21,7 @@ app.configure(function(){
   app.set('port', process.env.PORT || 1337);
   app.use(express.compress());
   app.use(express.logger('dev'));
+  app.use(cors({ origin: process.env.CORS_ORIGIN }));
   app.use(express.json());
   app.use(express.urlencoded());
   app.use(expressValidator());

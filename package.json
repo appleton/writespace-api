@@ -12,13 +12,14 @@
     "node": "0.10.x"
   },
   "dependencies": {
-    "express": "~3.4.8",
-    "nano": "~5.7.1",
+    "cors": "^2.5.3",
     "dotenv": "~0.2.4",
+    "express": "~3.4.8",
     "express-validator": "^1.0.1",
-    "q": "^1.0.0",
     "lodash": "^2.4.1",
     "mandrill-api": "^1.0.39",
-    "newrelic": "^1.4.0"
+    "nano": "~5.7.1",
+    "newrelic": "^1.4.0",
+    "q": "^1.0.0"
   }
 }
