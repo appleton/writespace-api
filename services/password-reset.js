@@ -78,10 +78,11 @@ function deleteToken(tokenDocument) {
 
 function reset(params) {
   return validateResetCutoff(params.token).then(function(tokenDocument) {
-    return changePasswordFor(tokenDocument.user, params.password)
-      .then(function() {
-        return deleteToken(tokenDocument);
-      });
+    return changePasswordFor(tokenDocument.user, params.password).then(function() {
+      return deleteToken(tokenDocument);
+    }).then(function() {
+      return { email: tokenDocument.user.split('org.couchdb.user:')[1] };
+    });
   });
 }
 

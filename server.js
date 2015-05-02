@@ -21,7 +21,10 @@ app.configure(function(){
   app.set('port', process.env.PORT || 1337);
   app.use(express.compress());
   app.use(express.logger('dev'));
-  app.use(cors({ origin: process.env.CORS_ORIGIN }));
+  app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
+  }));
   app.use(express.json());
   app.use(express.urlencoded());
   app.use(expressValidator());
@@ -52,13 +55,15 @@ app.post('/users', userValidation, function(req, res) {
   });
 });
 
-app.post('/users/passwords', function(req, res) {
+app.options('/passwords', cors({ credentials: true }));
+
+app.post('/passwords', function(req, res) {
   req.accepts('application/json');
 
   var email = req.body.email;
 
   passwordReset.generateFor(email).then(function(token) {
-    var link = 'http://app.notesy.co/users/passwords/edit/' + token;
+    var link = 'http://app.notesy.co/user/password/edit?token=' + token;
     userMailer.passwordReset(email, { resetLink: link }).deliver();
 
     res.json(201, { msg: 'A password reset link has been sent to ' + email });
@@ -67,11 +72,11 @@ app.post('/users/passwords', function(req, res) {
   });
 });
 
-app.post('/users/passwords/edit', function(req, res) {
+app.put('/passwords', function(req, res) {
   req.accepts('application/json');
 
-  passwordReset.reset(req.body).then(function() {
-    res.json(201, { msg: 'Password updated successfully' });
+  passwordReset.reset(req.body).then(function(user) {
+    res.json(201, user);
   }).catch(function(err) {
     res.json(422, formatError(err));
   });
