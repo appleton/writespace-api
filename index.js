@@ -1,10 +1,12 @@
 'use strict';
 
-require('newrelic');
 var http = require('http');
 var app = require('./server');
 
-if (process.env.NODE_ENV === 'production') http.globalAgent.maxSockets = 20;
+if (process.env.NODE_ENV === 'production') {
+  require('newrelic');
+  http.globalAgent.maxSockets = 20;
+}
 
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){
