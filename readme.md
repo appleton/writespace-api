@@ -1,41 +1,40 @@
 # Setup
 
-1. Install couchdb
+* Install couchdb
 
 ```sh
 brew install couchdb
 ```
 
-2. Use the couchdb config from this repo and restart couch:
+* Use the couchdb config from this repo and restart couch:
 
 ```sh
-cd notesy-ng
-cp db/local.ini /usr/local/etc/couchdb
-launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist
+$ cd notesy-api
+$ cp db/local.ini /usr/local/etc/couchdb
+$ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist
+$ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist
 ```
 
-3. Set up a couchdb admin user ([docs](http://guide.couchdb.org/draft/security.html#users)):
+* Set up a couchdb admin user ([docs](http://guide.couchdb.org/draft/security.html#users)):
 
 ```sh
-curl -X PUT http://localhost:5984/_config/admins/YOUR_ADMIN_USERNAME -d '"YOUR ADMIN PASSWORD"'
+$ curl -X PUT http://localhost:5984/_config/admins/YOUR_ADMIN_USERNAME -d '"YOUR ADMIN PASSWORD"'
 ```
 
-4. Configure your .env file:
+* Configure your .env file:
 
 ```sh
-echo COUCH_URL=http://YOUR_ADMIN_USER:YOUR_ADMIN_PASSWORD@localhost:5984 > .env
+$ echo COUCH_URL=http://YOUR_ADMIN_USER:YOUR_ADMIN_PASSWORD@localhost:5984 > .env
 ```
 
-5. Run the app!
+* Run the app!
 
 ```sh
-npm install
-gulp clean && gulp
-open http://localhost:1337
+$ npm install
+$ npm start
 ```
 
-6. (Bonus) You can see the state of the database by visiting `http://localhost:5984/_utils/` and signing in as your admin user. This signin is shared with the notesy app (which you can't sign into as admin) so make sure you do it in an incognito window.
+* (Bonus) You can see the state of the database by visiting `http://localhost:5984/_utils/` and signing in as your admin user. This signin is shared with the notesy app (which you can't sign into as admin) so make sure you do it in an incognito window.
 
 ## Notes for Andy which don't really matter
 
