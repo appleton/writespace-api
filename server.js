@@ -63,7 +63,7 @@ app.post('/passwords', function(req, res) {
   var email = req.body.email;
 
   passwordReset.generateFor(email).then(function(token) {
-    var link = 'http://app.notesy.co/user/password/edit?token=' + token;
+    var link = 'http://app.scribly.co/user/password/edit?token=' + token;
     userMailer.passwordReset(email, { resetLink: link }).deliver();
 
     res.json(201, { msg: 'A password reset link has been sent to ' + email });

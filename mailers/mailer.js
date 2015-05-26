@@ -22,8 +22,8 @@ Mailer.prototype.deliver = function(cb) {
         text: body,
         to: self.to,
         subject: self.subject,
-        from_email: 'no-reply@notesy.co',
-        from_name: 'notesy'
+        from_email: process.env.EMAIL_FROM,
+        from_name: 'scribly'
       }
     }, cb);
   });

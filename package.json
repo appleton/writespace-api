@@ -1,15 +1,15 @@
 {
-  "name": "Notesy",
-  "version": "0.0.1",
+  "name": "scribly-api",
+  "version": "1.0.0",
   "description": "An offline syncing notes app",
   "author": "Andy Appleton",
-  "repository": "https://bitbucket.org/appltn/notesy",
+  "repository": "https://github.com/appleton/scribly-api",
   "license": "MIT",
   "scripts": {
     "start": "node index.js"
   },
   "engines": {
-    "node": "0.10.x"
+    "iojs": "2.1.x"
   },
   "dependencies": {
     "cors": "^2.5.3",

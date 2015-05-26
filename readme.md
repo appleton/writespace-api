@@ -9,7 +9,7 @@ brew install couchdb
 * Use the couchdb config from this repo and restart couch:
 
 ```sh
-$ cd notesy-api
+$ cd scribly-api
 $ cp db/local.ini /usr/local/etc/couchdb
 $ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist
 $ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.couchdb.plist
@@ -34,7 +34,7 @@ $ npm install
 $ npm start
 ```
 
-* (Bonus) You can see the state of the database by visiting `http://localhost:5984/_utils/` and signing in as your admin user. This signin is shared with the notesy app (which you can't sign into as admin) so make sure you do it in an incognito window.
+* (Bonus) You can see the state of the database by visiting `http://localhost:5984/_utils/` and signing in as your admin user. This signin is shared with the scribly app (which you can't sign into as admin) so make sure you do it in an incognito window.
 
 ## Notes for Andy which don't really matter
 
