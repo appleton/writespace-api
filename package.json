@@ -9,7 +9,7 @@
     "start": "node index.js"
   },
   "engines": {
-    "iojs": "2.1.x"
+    "node": "5.6.x"
   },
   "dependencies": {
     "cors": "^2.5.3",
