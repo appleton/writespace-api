@@ -17,7 +17,7 @@
     "express": "~3.4.8",
     "express-validator": "^1.0.1",
     "lodash": "^2.4.1",
-    "mandrill-api": "^1.0.39",
+    "mailgun-js": "^0.7.7",
     "nano": "~5.7.1",
     "newrelic": "^1.4.0",
     "q": "^1.0.0"
