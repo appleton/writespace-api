@@ -2,12 +2,15 @@
 
 var fs = require('fs');
 var _ = require('lodash');
-var mandrill = require('mandrill-api/mandrill');
-var client = new mandrill.Mandrill(process.env.MANDRILL_API_KEY);
+var Mailgun = require('mailgun-js');
+var client = new Mailgun({
+  apiKey: process.env.MAILGUN_API_KEY,
+  domain: process.env.MAILGUN_DOMAIN
+});
 
 function Mailer(opts) {
   if (!_.isArray(opts.to)) opts.to = [opts.to];
-  this.to = opts.to.map(function(email) { return { email: email }; });
+  this.to = opts.to;
   this.subject = opts.subject;
   this.data = opts.data;
   this.template = opts.template;
@@ -17,14 +20,11 @@ Mailer.prototype.deliver = function(cb) {
   var self = this;
 
   this.render(function(err, body) {
-    client.messages.send({
-      message: {
-        text: body,
-        to: self.to,
-        subject: self.subject,
-        from_email: 'no-reply@notesy.co',
-        from_name: 'notesy'
-      }
+    client.messages().send({
+      from: 'Notesy <no-reply@notesy.co>',
+      to: self.to,
+      subject: self.subject,
+      text: body
     }, cb);
   });
 };
