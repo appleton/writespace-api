@@ -6,7 +6,7 @@ module.exports = {
   passwordReset: function(to, data) {
     return new Mailer({
       to: to,
-      subject: 'Notesy password reset',
+      subject: 'Writespace password reset',
       data: data,
       template: 'password-reset'
     });

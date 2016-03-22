@@ -21,7 +21,7 @@ Mailer.prototype.deliver = function(cb) {
 
   this.render(function(err, body) {
     client.messages().send({
-      from: 'Scribly <' + process.env.EMAIL_FROM + '>',
+      from: 'Writespace <' + process.env.EMAIL_FROM + '>',
       to: self.to,
       subject: self.subject,
       text: body
