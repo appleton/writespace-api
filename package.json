@@ -21,5 +21,8 @@
     "nano": "~5.7.1",
     "newrelic": "^1.4.0",
     "q": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1"
   }
 }

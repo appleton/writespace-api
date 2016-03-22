@@ -36,8 +36,15 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-function formatError(error) {
-  return { errors: [{ msg: error.message }] };
+function formatError(attribute, error) {
+  return {
+    errors: [{
+      source: {
+        pointer: `data/attributes/${attribute}`
+      },
+      detail: error.message
+    }]
+  };
 }
 
 app.post('/users', userValidation, function(req, res) {
@@ -51,7 +58,7 @@ app.post('/users', userValidation, function(req, res) {
     }).deliver();
   }).catch(function(err) {
     console.log('User creation error: ', err);
-    res.json(422, formatError(err));
+    res.json(422, formatError('user', err));
   });
 });
 
@@ -68,7 +75,7 @@ app.post('/passwords', function(req, res) {
 
     res.json(201, { msg: 'A password reset link has been sent to ' + email });
   }).catch(function(err) {
-    res.json(422, formatError(err));
+    res.json(422, formatError('email', err));
   });
 });
 
@@ -78,7 +85,7 @@ app.put('/passwords', function(req, res) {
   passwordReset.reset(req.body).then(function(user) {
     res.json(201, user);
   }).catch(function(err) {
-    res.json(422, formatError(err));
+    res.json(422, formatError('password', err));
   });
 });
 
