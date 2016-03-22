@@ -1,9 +1,9 @@
 {
-  "name": "scribly-api",
+  "name": "writespace-api",
   "version": "1.0.0",
   "description": "An offline syncing notes app",
   "author": "Andy Appleton",
-  "repository": "https://github.com/appleton/scribly-api",
+  "repository": "https://github.com/appleton/writespace-api",
   "license": "MIT",
   "scripts": {
     "start": "node index.js"
