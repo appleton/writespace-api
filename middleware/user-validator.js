@@ -4,7 +4,6 @@ function capitalize(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-
 module.exports = function(req, res, next) {
   req.checkBody('email', 'is required').notEmpty();
   req.checkBody('email', 'is not valid').isEmail();
