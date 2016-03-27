@@ -6,7 +6,8 @@
   "repository": "https://github.com/appleton/writespace-api",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "engines": {
     "node": "5.6.x"

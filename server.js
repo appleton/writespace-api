@@ -1,7 +1,5 @@
 'use strict';
 
-var path = require('path');
-
 var express = require('express');
 var expressValidator = require('express-validator');
 var cors = require('cors');
