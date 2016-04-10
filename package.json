@@ -18,6 +18,7 @@
     "dotenv": "0.2.4",
     "errorhandler": "1.4.3",
     "express": "4.13.4",
+    "express-pouchdb": "1.0.3",
     "express-validator": "1.0.1",
     "lodash": "2.4.1",
     "mailgun-js": "0.7.7",
