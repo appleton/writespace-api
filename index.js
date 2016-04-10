@@ -1,7 +1,6 @@
-'use strict';
-
-var http = require('http');
-var app = require('./server');
+const http = require('http');
+const app  = require('./server');
+const PORT = process.env.PORT || 1337;
 
 if (process.env.NODE_ENV === 'production') {
   require('newrelic');
@@ -9,6 +8,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Start the server
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+http.createServer(app).listen(PORT, function() {
+  console.log('Express server listening on port ' + PORT);
 });

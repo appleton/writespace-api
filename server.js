@@ -1,10 +1,15 @@
-'use strict';
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+if (NODE_ENV === 'development') {
+  require('dotenv').load();
+}
 
 var express = require('express');
+var morgan = require('morgan')
+var bodyParser = require('body-parser');
+var errorHandler = require('errorhandler');
 var expressValidator = require('express-validator');
 var cors = require('cors');
-var dotenv = require('dotenv');
-dotenv.load();
 
 var userValidation = require('./middleware/user-validator');
 var createUser = require('./services/create-user');
@@ -14,25 +19,18 @@ var adminMailer = require('./mailers/admin-mailer');
 
 var app = express();
 
-// App configuration
-app.configure(function(){
-  app.set('port', process.env.PORT || 1337);
-  app.use(express.compress());
-  app.use(express.logger('dev'));
-  app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-  }));
-  app.use(express.json());
-  app.use(express.urlencoded());
-  app.use(expressValidator());
-  app.use(app.router);
-});
+app.use(morgan('combined'))
+app.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  credentials: true
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(expressValidator());
 
-// Environment specific app configuration
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
+if (NODE_ENV === 'development') {
+  app.use(errorHandler());
+}
 
 function formatError(attribute, error) {
   return {
