@@ -1,22 +1,23 @@
-'use strict';
+#!/usr/bin/env node
 
 // Migrate all databases and associated security documents from src to dest.
 
-var _ = require('lodash');
-var nano = require('nano');
-var src = 'http://user:pass@sourcecouch.com/';
-var dest = 'http://user:pass@destcouch.com/';
+const nano = require('nano');
+const src  = 'https://USER:PASS@db.source.com/';
+const dest = 'https://USER:PASS@db.destination.com/';
 
-var srcDb = nano(src);
-var destDb = nano(dest);
+const srcDb = nano(src);
+const destDb = nano(dest);
 
 srcDb.db.list(function(err, res) {
-  var dbs = _.filter(res, function(name) { return name !== '_replicator'; });
+  const dbs = res.filter((name) => name !== '_replicator');
 
   dbs.forEach(function(name) {
     console.log('replicating ' + name);
-    srcDb.db.replicate(name, dest + name, {
-      create_target: true
+
+    destDb.db.replicate(src + name, name, {
+      create_target: true,
+      continuous: true
     }, function(err) {
       if (err) return console.log('error ', err);
       console.log('replicated ' + name);
@@ -28,7 +29,8 @@ srcDb.db.list(function(err, res) {
         if (err) return console.log('error ', err);
 
         console.log('setting security doc for ' + name + ' to: ', res);
-        destDb.use(name).insert('_security', res, function(err) {
+
+        destDb.use(name).insert(res, '_security', function(err) {
           if (err) return console.log('error ', err);
           console.log('set security doc for ' + name);
         });
