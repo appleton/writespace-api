@@ -7,7 +7,10 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "db:clone": "bin/db/clone",
+    "db:destroy": "bin/db/destroy",
+    "db:destroy-replications": "bin/db/destroy-replications"
   },
   "engines": {
     "node": "5.10.x"
@@ -27,6 +30,7 @@
     "q": "1.0.0"
   },
   "devDependencies": {
-    "nodemon": "1.9.1"
+    "nodemon": "1.9.1",
+    "scripty": "^1.1.0"
   }
 }

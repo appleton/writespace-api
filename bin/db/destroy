@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const nano  = require('nano');
+const couch = nano(process.env.COUCH_URL);
+
+console.log('Listing databases');
+
+couch.db.list((err, res) => {
+  res.forEach((dbName) => {
+    console.log('Destroying: ', dbName);
+
+    couch.db.destroy(dbName, function(err, res) {
+      if (err) {
+        console.log('Error destroying ', dbName, err);
+      } else {
+        console.log('Destroyed: ', dbName, res);
+      }
+    });
+  });
+});
