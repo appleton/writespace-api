@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+const nano  = require('nano');
+const couch = nano(process.env.COUCH_URL);
+const replicator = couch.use('_replicator');
+
+console.log('Listing replications');
+
+replicator.list((err, docs) => {
+  docs.rows.forEach((doc) => {
+    if (err) console.log('Error listing replications: ', err);
+
+    if (doc.id === '_design/_replicator') return;
+    console.log('Destroying replication: ', doc.id);
+
+    replicator.destroy(doc.id, doc.value.rev, (err) => {
+      if (err) console.log('Error destroying replication: ', err);
+      console.log('Destroyed replication: ', doc.id);
+    });
+  });
+});

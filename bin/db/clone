@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+
+/*
+ * Migrate all databases and associated security documents from src to dest.
+ * 1. List databases
+ * 2. For every database except for _replications and _users, copy the _security
+ *    document from src to dest
+ */
+
+const Q    = require('q');
+const nano = require('nano');
+const src  = process.env.SRC_DB;
+const dest = process.env.DEST_DB;
+
+const srcDb  = nano(src);
+const destDb = nano(dest);
+
+function resolved(value) {
+  const deferred = Q.defer();
+  deferred.resolve(value);
+  return deferred.promise;
+}
+
+function logPromise(label, promise) {
+  console.log(`Starting ${label}`);
+
+  return promise.then((res) => {
+    console.log(`Completed ${label}`);
+    return res;
+  }).catch((error) => {
+    console.log(`Error in ${label}`, error);
+    throw error;
+  });
+}
+
+function createDb(database) {
+  if (database === '_users') return resolved();
+
+  const promise = Q.ninvoke(destDb.db, 'create', database);
+  return logPromise(`creating ${database}`, promise);
+}
+
+function getSecurity(database) {
+  const promise = Q.ninvoke(srcDb.use(database), 'get', '_security');
+  return logPromise(`getting security for ${database}`, promise);
+}
+
+function setSecurity(database, securityDoc) {
+  const message = `setting security doc for ${database} to ${securityDoc}`;
+  const promise = Q.ninvoke(
+    destDb.use(database), 'insert', securityDoc, '_security'
+  );
+  return logPromise(message, promise);
+}
+
+function copySecurity(database) {
+  if (database === '_users') return resolved();
+
+  return getSecurity(database).then((res) => setSecurity(database, res[0]));
+}
+
+function copyDatabases(databases) {
+  return Q.all(databases.map((database) => {
+    return createDb(database).then(() => copySecurity(database));
+  }));
+}
+
+srcDb.db.list(function(err, dbs) {
+  dbs = dbs.filter((database) => database !== '_replicator');
+  copyDatabases(dbs)
+    .then(() => console.log('Done!'))
+    .catch((error) => console.log('error: ', error));
+});

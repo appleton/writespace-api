@@ -7,23 +7,32 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "db:clone": "bin/db/clone",
+    "db:replicate": "bin/db/replicate",
+    "db:destroy": "bin/db/destroy",
+    "db:destroy-replications": "bin/db/destroy-replications",
+    "db:utils": "open http://localhost:5985/_utils; ssh -NL 5985:localhost:5984 writespace.do"
   },
   "engines": {
-    "node": "5.6.x"
+    "node": "5.10.x"
   },
   "dependencies": {
-    "cors": "^2.5.3",
-    "dotenv": "~0.2.4",
-    "express": "~3.4.8",
-    "express-validator": "^1.0.1",
-    "lodash": "^2.4.1",
-    "mailgun-js": "^0.7.7",
-    "nano": "~5.7.1",
-    "newrelic": "^1.4.0",
-    "q": "^1.0.0"
+    "body-parser": "1.15.0",
+    "cors": "2.7.1",
+    "dotenv": "0.2.4",
+    "errorhandler": "1.4.3",
+    "express": "4.13.4",
+    "express-validator": "1.0.1",
+    "lodash": "2.4.1",
+    "mailgun-js": "0.7.7",
+    "morgan": "1.7.0",
+    "nano": "5.7.1",
+    "newrelic": "1.4.0",
+    "q": "1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.9.1"
+    "nodemon": "1.9.1",
+    "scripty": "^1.1.0"
   }
 }

@@ -1,90 +1,27 @@
-'use strict';
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
-var express = require('express');
-var expressValidator = require('express-validator');
-var cors = require('cors');
-var dotenv = require('dotenv');
-dotenv.load();
-
-var userValidation = require('./middleware/user-validator');
-var createUser = require('./services/create-user');
-var passwordReset = require('./services/password-reset');
-var userMailer = require('./mailers/user-mailer');
-var adminMailer = require('./mailers/admin-mailer');
-
-var app = express();
-
-// App configuration
-app.configure(function(){
-  app.set('port', process.env.PORT || 1337);
-  app.use(express.compress());
-  app.use(express.logger('dev'));
-  app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-  }));
-  app.use(express.json());
-  app.use(express.urlencoded());
-  app.use(expressValidator());
-  app.use(app.router);
-});
-
-// Environment specific app configuration
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
-
-function formatError(attribute, error) {
-  return {
-    errors: [{
-      source: {
-        pointer: `data/attributes/${attribute}`
-      },
-      detail: error.message
-    }]
-  };
+if (NODE_ENV === 'development') {
+  require('dotenv').load();
 }
 
-app.post('/users', userValidation, function(req, res) {
-  req.accepts('application/json');
+const express      = require('express');
+const morgan       = require('morgan')
+const errorHandler = require('errorhandler');
+const cors         = require('cors');
 
-  createUser(req.body).then(function(user) {
-    res.json(201, user);
+const app = express();
 
-    adminMailer.newUser(process.env.ADMIN_EMAIL, {
-      newUser: req.body.email
-    }).deliver();
-  }).catch(function(err) {
-    console.log('User creation error: ', err);
-    res.json(422, formatError('user', err));
-  });
-});
+app.use(morgan('combined'));
 
-app.options('/passwords', cors({ credentials: true }));
+app.use(cors({
+  origin: process.env.CORS_ORIGIN, credentials: true
+}));
 
-app.post('/passwords', function(req, res) {
-  req.accepts('application/json');
+if (NODE_ENV === 'development') {
+  app.use(errorHandler());
+}
 
-  var email = req.body.email;
-
-  passwordReset.generateFor(email).then(function(token) {
-    var link = 'https://app.writespace.it/user/password/edit?token=' + token;
-    userMailer.passwordReset(email, { resetLink: link }).deliver();
-
-    res.json(201, { msg: 'A password reset link has been sent to ' + email });
-  }).catch(function(err) {
-    res.json(422, formatError('email', err));
-  });
-});
-
-app.put('/passwords', function(req, res) {
-  req.accepts('application/json');
-
-  passwordReset.reset(req.body).then(function(user) {
-    res.json(201, user);
-  }).catch(function(err) {
-    res.json(422, formatError('password', err));
-  });
-});
+app.use(require('./lib/routes/users'));
+app.use(require('./lib/routes/passwords'));
 
 module.exports = app;
