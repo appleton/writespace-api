@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+/*
+ * Continuously replicate all databases from src to dest.
+ * 1. List databases
+ * 2. For every database except for _replications, set up a new 2 way
+ *    replication
+ */
+
+const Q    = require('q');
+const nano = require('nano');
+const src  = process.env.SRC_DB;
+const dest = process.env.DEST_DB;
+
+const srcDb  = nano(src);
+const destDb = nano(dest);
+
+function syncDatabases(databases) {
+  console.log(`Replicating ${databases.length} databases`);
+
+  const pushes = databases.map((database) => {
+    return {
+      source: `${src}/${database}`,
+      target: `${dest}/${database}`,
+      continuous: true
+    };
+  });
+
+  const pulls = databases.map((database) => {
+    return {
+      source: `${dest}/${database}`,
+      target: `${src}/${database}`,
+      continuous: true
+    };
+  });
+
+  return Q.ninvoke(destDb.use('_replicator'), 'bulk', {
+    docs: pushes.concat(pulls)
+  });
+}
+
+srcDb.db.list(function(err, dbs) {
+  dbs = dbs.filter((database) => database !== '_replicator');
+    syncDatabases(dbs)
+    .then(() => console.log('Done!'))
+    .catch((error) => console.log('error: ', error));
+});

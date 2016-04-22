@@ -3,9 +3,7 @@
 /*
  * Migrate all databases and associated security documents from src to dest.
  * 1. List databases
- * 2. For every database except for _replications, set up a new 2 way
- *    replication
- * 3. For every database except for _replications and _users, copy the _security
+ * 2. For every database except for _replications and _users, copy the _security
  *    document from src to dest
  */
 
@@ -67,34 +65,9 @@ function copyDatabases(databases) {
   }));
 }
 
-function syncDatabases(databases) {
-  console.log(`Replicating ${databases.length} databases`);
-
-  const pushes = databases.map((database) => {
-    return {
-      source: `${src}/${database}`,
-      target: `${dest}/${database}`,
-      continuous: true
-    };
-  });
-
-  const pulls = databases.map((database) => {
-    return {
-      source: `${dest}/${database}`,
-      target: `${src}/${database}`,
-      continuous: true
-    };
-  });
-
-  return Q.ninvoke(destDb.use('_replicator'), 'bulk', {
-    docs: pushes.concat(pulls)
-  });
-}
-
 srcDb.db.list(function(err, dbs) {
   dbs = dbs.filter((database) => database !== '_replicator');
   copyDatabases(dbs)
-    // .then(() => syncDatabases(dbs))
     .then(() => console.log('Done!'))
     .catch((error) => console.log('error: ', error));
 });

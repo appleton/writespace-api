@@ -9,8 +9,9 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "db:clone": "bin/db/clone",
+    "db:replicate": "bin/db/replicate",
     "db:destroy": "bin/db/destroy",
-    "db:destroy-replications": "bin/db/destroy-replications"
+    "db:destroy-replications": "bin/db/destroy-replications",
     "db:utils": "open http://localhost:5985/_utils; ssh -NL 5985:localhost:5984 writespace.do"
   },
   "engines": {
