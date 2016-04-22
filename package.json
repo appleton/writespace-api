@@ -11,6 +11,7 @@
     "db:clone": "bin/db/clone",
     "db:destroy": "bin/db/destroy",
     "db:destroy-replications": "bin/db/destroy-replications"
+    "db:utils": "open http://localhost:5985/_utils; ssh -NL 5985:localhost:5984 writespace.do"
   },
   "engines": {
     "node": "5.10.x"

@@ -40,6 +40,5 @@ $ npm start
 
 ## Access production Couchdb admin
 ```sh
-ssh -NL 5985:localhost:5984 writespace.do
-open localhost:5985/_utils
+npm run db:utils
 ```
