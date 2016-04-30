@@ -3,7 +3,6 @@ const app  = require('./server');
 const PORT = process.env.PORT || 1337;
 
 if (process.env.NODE_ENV === 'production') {
-  require('newrelic');
   http.globalAgent.maxSockets = 20;
 }
 
