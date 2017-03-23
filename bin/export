@@ -1,0 +1,24 @@
+#!/usr/local/bin/node
+
+require('dotenv').load();
+const db = require('nano')(process.env.COUCH_URL);
+const crypto = require('crypto');
+const marked = require('marked');
+const fs = require('fs');
+const email = process.env.EMAIL || process.argv.pop();
+if (!email) throw new Error('Email is required');
+
+const notesDB = `notes_${crypto.createHash('sha1').update(email).digest('hex')}`;
+
+fs.mkdirSync('exported');
+
+db.use(notesDB).list({ include_docs: true }, (err, res) => {
+  fs.mkdirSync(`exported/${email}`);
+  res.rows.forEach((row, index) => {
+    const html = marked(row.doc.text);
+    const name = `exported/${email}/${index}.html`
+    fs.writeFileSync(name, html);
+    const fd = fs.openSync(name, 'a');
+    fs.futimesSync(fd, new Date(row.doc.createdAt), new Date(row.doc.updatedAt));
+  });
+});
