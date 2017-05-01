@@ -1,3 +1,7 @@
+# Writespace API
+
+*This is the server component of a side project which is now unmaintained. I'm leaving it here as an example of an Ember.js app which uses PouchDB and service workers to work offline.*
+
 # Setup
 
 * Install couchdb
